@@ -4,76 +4,65 @@ Duration: 3-4 weeks
 Who can use it: Only you
 What Is Included
 INFRASTRUCTURE:
-├── GitHub repository set up
-├── Google Drive folder structure finalised
-├── Config class with all settings
-├── Environment variable management
-└── Session restart script (5-minute cold start)
+GitHub repository set up
+Google Drive folder structure finalised
+Config class with all settings
+Environment variable management
+Session restart script (5-minute cold start)
 
 THE BRAIN
-├── PDF quality classifier
-├── Section boundary detector
-├── Hierarchical chunker (parent + child)
-├── Table extractor with structure
-├── Financial fact extractor
-├── Deduplication layer
-├── Four ChromaDB collections
-├── Local embedding (all-MiniLM-L6-v2)
-├── Hybrid search (semantic + BM25)
-├── Query classification
-├── Query decomposition and expansion
-├── REACT agent loop
-├── Gap analyser
-├── Synthesis engine
-└── Working memory
+PDF quality classifier
+Section boundary detector
+Hierarchical chunker (parent + child)
+Table extractor with structure
+Financial fact extractor
+Deduplication layer
+Four ChromaDB collections
+Local embedding (all-MiniLM-L6-v2)
+Hybrid search (semantic + BM25)
+Query classification
+Query decomposition and expansion
+REACT agent loop
+Gap analyser
+Synthesis engine
+Working memory
 
 ROBUSTNESS (Phase 1 level):
-├── Structured logger
-│   File-based, JSON format, to Drive
-│   INFO/WARNING/ERROR/CRITICAL levels
-├── Basic error classification
-│   Transient vs permanent errors
-│   Retry for transient (3 attempts, backoff)
-│   Fail fast for permanent
-├── Input validation
-│   Question length limits
-│   Scrip existence check
-│   PDF format validation
-└── Timeouts on all external calls
+Structured logger
+File-based, JSON format, to Drive
+INFO/WARNING/ERROR/CRITICAL levels
+Basic error classification
+Transient vs permanent errors
+Retry for transient (3 attempts, backoff)
+Fail fast for permanent
+Input validation
+Question length limits
+Scrip existence check
+PDF format validation
+Timeouts on all external calls
     LLM: 30 seconds
     ChromaDB: 10 seconds
 
 DATA LAYER:
-├── SQLite for metadata
-│   Processed files tracking
-│   Query history
-│   Chunk statistics
-└── All data on Drive (persists)
+SQLite for metadata
+Processed files tracking
+Query history
+Chunk statistics
+All data on Drive (persists)
 
 TESTING:
-├── Manual test script
-│   10 known questions with expected answers
-│   Run after every code change
-└── Basic assertion checks on chunk counts
+Manual test script
+10 known questions with expected answers
+Run after every code change
+Basic assertion checks on chunk counts
 What Is Not Included In Phase 1
-├── Multiple companies (one company only)
-├── News pipeline
-├── Financial data API
-├── Any user interface
-├── Authentication
-├── Concurrency handling
-└── Monitoring
-Phase 1 Success Criteria
-Before moving to Phase 2, these must all pass:
-
-□ 7 PDFs processed without errors
-□ Chunk counts in expected range per PDF
-□ 10 test questions all produce cited answers
-□ Zero silent failures (every error logged)
-□ Session restart takes < 5 minutes
-□ Query response time < 30 seconds
-□ No hallucinated numbers in 20 test queries
-□ Log file shows clear trail for every query
+Multiple companies (one company only)
+News pipeline
+Financial data API
+Any user interface
+Authentication
+Concurrency handling
+Monitoring
 
 Phase 2 — Multi-Company + Internal Tool
 Goal: Expand to 5 companies, add news and financial data, build a usable internal interface. Show this to 5-10 trusted people and get feedback.
@@ -81,81 +70,70 @@ Duration: 4-6 weeks
 Who can use it: You + trusted testers (manually share Streamlit URL via ngrok)
 What Is Included
 DATA EXPANSION:
-├── Pipeline runs for all 5 companies
-├── News ingestion pipeline
-│   NewsAPI integration
-│   Sentiment classification
-│   Embedded into news_chunks collection
-├── Financial data layer
-│   BSE XBRL parsing
-│   Manual entry fallback
-│   Stored in SQLite
-└── Report generation agent
+Pipeline runs for all 5 companies
+News ingestion pipeline
+NewsAPI integration
+Sentiment classification
+Embedded into news_chunks collection
+Financial data layer
+BSE XBRL parsing
+Manual entry fallback
+Stored in SQLite
+Report generation agent
     Runs all 8 seed prompts per company
     Stores sections in SQLite
     Regenerates when new PDF processed
 
 ROBUSTNESS ADDITIONS:
-├── Circuit breaker pattern
-│   For LLM API calls
-│   For ChromaDB operations
-│   Fail open (degraded mode) not fail closed
-├── LLM response parser hardening
-│   Multiple format fallbacks
-│   Never fails silently on parse error
-│   Falls back to raw response if structured fails
-├── Concurrency protection
-│   Thread locks on BM25 index
-│   Thread locks on ChromaDB writes
-│   Queue for PDF processing (one at a time)
-├── Memory bounds
-│   BM25 index max 50,000 documents
-│   LRU cache for embeddings
-│   Explicit cleanup after PDF processing
-└── Health check function
+Circuit breaker pattern
+For LLM API calls
+For ChromaDB operations
+Fail open (degraded mode) not fail closed
+LLM response parser hardening
+Multiple format fallbacks
+Never fails silently on parse error
+Falls back to raw response if structured fails
+Concurrency protection
+Thread locks on BM25 index
+Thread locks on ChromaDB writes
+Queue for PDF processing (one at a time)
+Memory bounds
+BM25 index max 50,000 documents
+LRU cache for embeddings
+Explicit cleanup after PDF processing
+Health check function
     Checks all components before accepting queries
     Returns status dict, logs issues
 
 INTERNAL STREAMLIT UI:
-├── Company selector
-├── Living report display
-│   All sections with timestamps
-│   News feed with sentiment colours
-├── Query interface
-│   Chat-style input
-│   Answer with citations
-│   Follow-up question buttons
-│   Conversation history in session
-└── Admin panel (simple)
+Company selector
+Living report display
+All sections with timestamps
+News feed with sentiment colours
+Query interface
+Chat-style input
+Answer with citations
+Follow-up question buttons
+Conversation history in session
+Admin panel (simple)
     Trigger PDF processing
     View processing logs
     Check chunk counts per company
 
 PERSISTENCE IMPROVEMENTS:
-├── SQLite schema hardened
-│   All Phase 1 tables plus report_sections
-│   Soft deletes (never hard delete)
-│   Timestamps on everything
-└── Drive backup script
+SQLite schema hardened
+All Phase 1 tables plus report_sections
+Soft deletes (never hard delete)
+Timestamps on everything
+Drive backup script
     Weekly SQLite backup
     Alert if Drive space < 2GB
 What Is Not Included In Phase 2
-├── Real user authentication
-├── Railway deployment
-├── Payment system
-├── Production database (still SQLite)
-└── Automated scheduling (still manual triggers)
-Phase 2 Success Criteria
-□ All 5 companies processed and queryable
-□ News pipeline runs without errors
-□ Report generated for all companies
-□ Streamlit UI usable by non-technical person
-│  (test: give to someone unfamiliar, watch them use it)
-□ 5 trusted people have used it and given feedback
-□ At least one person says: "I would pay for this"
-□ Response time < 15 seconds for 95% of queries
-□ Zero crashes during tester sessions
-□ All errors logged with enough context to debug
+Real user authentication
+Railway deployment
+Payment system
+Production database (still SQLite)
+Automated scheduling (still manual triggers)
 
 Phase 3 — Production Deployment
 Goal: Move off Colab onto Railway. Persistent server, real URL, no session resets. First paying customers.
@@ -166,30 +144,30 @@ THIS IS SIMPLER THAN IT SOUNDS.
 Because we used abstractions from the start.
 
 WHAT CHANGES:
-├── Config.CHROMA_PATH: Drive path → Railway volume path
-├── Config.SQLITE_DB_PATH: Drive path → Railway volume path
-├── Config.UPLOAD_PATH: Drive path → Railway volume path
-└── API keys: os.environ (same approach, different values)
+Config.CHROMA_PATH: Drive path → Railway volume path
+Config.SQLITE_DB_PATH: Drive path → Railway volume path
+Config.UPLOAD_PATH: Drive path → Railway volume path
+API keys: os.environ (same approach, different values)
 
 WHAT DOES NOT CHANGE:
-├── All Python code (zero changes)
-├── All ChromaDB operations (same client API)
-├── All LLM calls (same Gemini client)
-├── All embedding operations (same model)
-└── All agent logic (completely unchanged)
+All Python code (zero changes)
+All ChromaDB operations (same client API)
+All LLM calls (same Gemini client)
+All embedding operations (same model)
+All agent logic (completely unchanged)
 
 MIGRATION STEPS:
-1. Export ChromaDB from Drive (zip the folder)
-2. Export SQLite database (copy the file)
-3. Deploy to Railway (push GitHub repo)
-4. Upload ChromaDB zip to Railway volume
-5. Upload SQLite to Railway volume
-6. Set environment variables in Railway dashboard
-7. Test all 5 companies work
-8. Point domain to Railway URL
+Export ChromaDB from Drive (zip the folder)
+Export SQLite database (copy the file)
+Deploy to Railway (push GitHub repo)
+Upload ChromaDB zip to Railway volume
+Upload SQLite to Railway volume
+Set environment variables in Railway dashboard
+Test all 5 companies work
+Point domain to Railway URL
 What Is Included In Phase 3
 INFRASTRUCTURE:
-├── Railway deployment
+Railway deployment
 │   FastAPI backend (replaces notebook API calls)
 │   Gunicorn worker for concurrent requests
 │   Persistent volume for ChromaDB + SQLite
