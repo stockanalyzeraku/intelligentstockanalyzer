@@ -33,7 +33,7 @@ class LocalEmbedder:
 
     def name(self) -> str:
         """Return the embedding function identifier for ChromaDB compatibility."""
-        return CONFIG.EMBEDDING_MODEL  # ← THIS IS THE FIX
+        return self._CONFIG.EMBEDDING_MODEL  # ← THIS IS THE FIX
 
     def _load_model(self) -> None:
         """Load all-MiniLM-L6-v2 from sentence-transformers."""
@@ -104,6 +104,7 @@ class LocalEmbedder:
 
 # Load at import time so subsequent cells don't wait
 EMBEDDER = LocalEmbedder.get_instance()
+
 
 # ----------------------------------------------------------------------------
 # Cell 7: Embedding Model
