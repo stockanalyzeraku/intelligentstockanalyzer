@@ -23,6 +23,7 @@ class Config:
     Call Config.validate() at startup to fail fast on missing prerequisites.
     """
 
+    _instance: Optional["Config"] = None
     # ── Paths ─────────────────────────────────────────────────────────────
     BASE_PATH: str = get_base_path()
     UPLOADS_PATH: str = field(init=False)
@@ -107,6 +108,21 @@ class Config:
                 "Run Cell 2 first to create the folder structure."
             )
         print("[Config] Validation passed.")
+    
+    @classmethod
+    def get_instance(cls) -> "Config":
+        """
+        Return the singleton Config, loading the file if needed.
+
+        Returns
+        -------
+        Config
+        """ 
+        if cls._instance is None:
+            cls._instance = cls()
+        return cls._instance
+
+
 
 
 # Singleton instance used by all modules
