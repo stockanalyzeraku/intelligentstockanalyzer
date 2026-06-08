@@ -11,6 +11,7 @@ from dataclasses import dataclass, field
 from enum import Enum
 from typing import List, Tuple
 from logger import get_logger
+import pdfplumber
 
 
 class PDFType(Enum):
@@ -97,6 +98,11 @@ def classify_and_extract(pdf_path: str) -> Tuple[PDFType, List[PageContent]]:
 
     pages: List[PageContent] = []
     try:
+        plumber_doc = pdfplumber.open(pdf_path)
+    except Exception as exc:
+        _pdf_logger.error("Cannot open PDF with pdfplumber", path=pdf_path, error=str(exc))
+        plumber_doc = None
+    try:
         doc = fitz.open(pdf_path)
     except Exception as exc:
         _pdf_logger.error("Cannot open PDF", path=pdf_path, error=str(exc))
@@ -105,7 +111,7 @@ def classify_and_extract(pdf_path: str) -> Tuple[PDFType, List[PageContent]]:
     with doc:
         for page_num in range(len(doc)):
             page = doc[page_num]
-            text = page.get_text("text") or ""
+            text = _extract_with_pdfplumber(plumber_doc, page_num, _pdf_logger)
             image_list = page.get_images(full=False)
             has_images = len(image_list) > 0
             is_scanned = _is_page_scanned(text, has_images)
@@ -138,23 +144,109 @@ def classify_and_extract(pdf_path: str) -> Tuple[PDFType, List[PageContent]]:
         native_pages=native_count,
     )
     return pdf_type, pages
+    
+def _extract_with_pdfplumber(plumber_doc, page_num: int, logger) -> str:
+    """
+    Uses pdfplumber to extract text with layout awareness.
+    Handles multi-column layouts better than raw fitz.
+    """
+    if not plumber_doc:
+        return ""
 
-# pc = PageContent(page_number = 1,text = "", char_count  = 0, is_scanned  = False, has_images  = False)
-# path = os.path.join(os.path.dirname(os.path.abspath(__file__)),"uploads")
-# pdf_type, pages = classify_and_extract(os.path.join(path,"KALYANKJIL_ANNUAL_2025.pdf"))
-# output_dir  = os.path.join(os.path.dirname(os.path.abspath(__file__)), "raw_file")
-# os.makedirs(output_dir, exist_ok=True)
+    try:
+        page = plumber_doc.pages[page_num]
 
-# output_file = os.path.join(output_dir, "KALYANKJIL_ANNUAL_2025.txt")
+        # ── Extract words with their coordinates ──────────────
+        words = page.extract_words(
+            x_tolerance     = 3,    # horizontal gap tolerance between words
+            y_tolerance     = 3,    # vertical gap tolerance between words
+            keep_blank_chars= False,
+            use_text_flow   = True  # respects natural reading flow
+        )
 
-# with open(output_file, "w", encoding="utf-8") as f:
-#     for page in pages:
-#         f.write(f"Page {page.page_number}\n")
-#         f.write(f"{'-'*50}\n")
-#         f.write(page.text)
-#         f.write("\n\n")
+        if not words:
+            return ""
 
-# print(f"✅ Saved to: {output_file}")
+        # ── Detect columns by clustering x positions ──────────
+        text = _reconstruct_text_by_columns(words, page.width)
+        return text
+
+    except Exception as exc:
+        logger.error(f"pdfplumber failed on page {page_num + 1}: {exc}")
+        return ""
+
+
+def _reconstruct_text_by_columns(words: list, page_width: float) -> str:
+    """
+    Groups words into columns based on x position,
+    then reads each column top to bottom.
+    """
+    if not words:
+        return ""
+
+    # ── Sort all words by y position first (top to bottom) ────
+    words_sorted = sorted(words, key=lambda w: (round(w["top"] / 10), w["x0"]))
+
+    # ── Detect column boundaries ───────────────────────────────
+    # Divide page into left/middle/right thirds
+    col1_end = page_width * 0.36   # left column ends at 36% of page
+    col2_end = page_width * 0.68   # middle column ends at 68% of page
+
+    col1_words = [w for w in words if w["x0"] < col1_end]
+    col2_words = [w for w in words if col1_end <= w["x0"] < col2_end]
+    col3_words = [w for w in words if w["x0"] >= col2_end]
+
+    # ── If no clear multi-column layout, return as single flow ─
+    if not col2_words and not col3_words:
+        return " ".join(w["text"] for w in words_sorted)
+
+    # ── Sort each column top to bottom ────────────────────────
+    def words_to_text(col_words):
+        if not col_words:
+            return ""
+        sorted_words = sorted(col_words, key=lambda w: (round(w["top"] / 5), w["x0"]))
+        lines        = []
+        current_line = []
+        current_y    = None
+
+        for word in sorted_words:
+            if current_y is None or abs(word["top"] - current_y) < 5:
+                current_line.append(word["text"])
+                current_y = word["top"]
+            else:
+                lines.append(" ".join(current_line))
+                current_line = [word["text"]]
+                current_y    = word["top"]
+
+        if current_line:
+            lines.append(" ".join(current_line))
+
+        return "\n".join(lines)
+
+    # ── Combine columns with separator ────────────────────────
+    col1_text = words_to_text(col1_words)
+    col2_text = words_to_text(col2_words)
+    col3_text = words_to_text(col3_words)
+
+    sections  = [c for c in [col1_text, col2_text, col3_text] if c.strip()]
+    return "\n\n--- COLUMN BREAK ---\n\n".join(sections)
+
+#pc = PageContent(page_number = 1,text = "", char_count  = 0, is_scanned  = False, has_images  = False)
+path = os.path.join(os.path.dirname(os.path.abspath(__file__)),"uploads")
+pdf_type, pages = classify_and_extract(os.path.join(path,"KALYANKJIL_ANNUAL_2025.pdf"))
+output_dir  = os.path.join(os.path.dirname(os.path.abspath(__file__)), "raw_file")
+os.makedirs(output_dir, exist_ok=True)
+
+output_file = os.path.join(output_dir, "KALYANKJIL_ANNUAL_2025_pdfplumber.txt")
+
+with open(output_file, "w", encoding="utf-8") as f:
+    for page in pages:
+        f.write(f"Page {page.page_number}\n")
+        f.write(f"{'-'*50}\n")
+        f.write(page.text)
+        f.write("\n\n")
+
+print(f"✅ Saved to: {output_file}")
 # ----------------------------------------------------------------------------
 # Cell 9: PDF Classifier
 # Purpose: Classify PDFs as NATIVE/SCANNED/MIXED and extract page content.
