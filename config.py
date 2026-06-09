@@ -126,8 +126,8 @@ class Config:
 
 
 # Singleton instance used by all modules
-CONFIG = Config()
-
+#CONFIG = Config.get_instance()
+#print(CONFIG)
 # ----------------------------------------------------------------------------
 # File Name: Config
 # Purpose: Provide a single Config dataclass as the project's source of truth.

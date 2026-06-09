@@ -10,6 +10,7 @@ import os
 import re
 from typing import Optional
 from logger import get_logger
+import config
 
 class ValidationError(ValueError):
     """Raised when input validation fails."""
@@ -29,8 +30,11 @@ class InputValidator:
         re.IGNORECASE,
     )
 
-    @staticmethod
-    def validate_question(question: str) -> str:
+    def __init__(self):
+        self._CONFIG = config.Config.get_instance()
+
+    
+    def validate_question(self, question: str) -> str:
         """
         Validate and sanitise a user question.
 
@@ -55,20 +59,20 @@ class InputValidator:
             _v_logger.error("Question is not a string", type=type(question).__name__)
             raise ValidationError("Question must be a string.")
         question = question.strip()
-        if len(question) < CONFIG.MIN_QUESTION_LENGTH:
+        if len(question) < self._CONFIG.MIN_QUESTION_LENGTH:
             raise ValidationError(
-                f"Question too short (min {CONFIG.MIN_QUESTION_LENGTH} chars)."
+                f"Question too short (min {self._CONFIG.MIN_QUESTION_LENGTH} chars)."
             )
-        if len(question) > CONFIG.MAX_QUESTION_LENGTH:
+        if len(question) > self._CONFIG.MAX_QUESTION_LENGTH:
             raise ValidationError(
-                f"Question too long (max {CONFIG.MAX_QUESTION_LENGTH} chars)."
+                f"Question too long (max {self._CONFIG.MAX_QUESTION_LENGTH} chars)."
             )
         if InputValidator._INJECTION_PATTERNS.search(question):
             _v_logger.warning("Possible prompt injection detected", question=question[:80])
             raise ValidationError("Question contains disallowed patterns.")
         return question
 
-    @staticmethod
+    
     def validate_scrip(scrip: str) -> str:
         """
         Validate a stock scrip symbol (e.g. 'RELIANCE', 'TCS').
@@ -98,7 +102,7 @@ class InputValidator:
             )
         return scrip
 
-    @staticmethod
+    
     def validate_fiscal_year(fy: str) -> str:
         """
         Normalise a fiscal year string to FY25 format.
@@ -133,8 +137,8 @@ class InputValidator:
             return f"FY{m.group(1)}"
         raise ValidationError(f"Cannot parse fiscal year from: '{fy}'")
 
-    @staticmethod
-    def validate_pdf_path(path: str) -> str:
+    
+    def validate_pdf_path(self, path: str) -> str:
         """
         Validate a PDF file path for safety and accessibility.
 
@@ -159,7 +163,7 @@ class InputValidator:
             raise ValidationError("PDF path must be a string.")
         abs_path = os.path.realpath(path)
         # Path traversal check
-        uploads_real = os.path.realpath(CONFIG.UPLOADS_PATH)
+        uploads_real = os.path.realpath(self._CONFIG.UPLOADS_PATH)
         if not abs_path.startswith(uploads_real):
             _v_logger.warning("Path traversal attempt", path=path)
             raise ValidationError(
@@ -170,14 +174,13 @@ class InputValidator:
         if not os.path.isfile(abs_path):
             raise ValidationError(f"File not found: '{abs_path}'")
         size_mb = os.path.getsize(abs_path) / (1024 * 1024)
-        if size_mb > CONFIG.MAX_PDF_SIZE_MB:
+        if size_mb > self._CONFIG.MAX_PDF_SIZE_MB:
             raise ValidationError(
-                f"PDF too large ({size_mb:.1f} MB). Max allowed: {CONFIG.MAX_PDF_SIZE_MB} MB."
+                f"PDF too large ({size_mb:.1f} MB). Max allowed: {self._CONFIG.MAX_PDF_SIZE_MB} MB."
             )
         return abs_path
 
-    @staticmethod
-    def validate_chunk_count(count: int, context: str = "") -> None:
+    def validate_chunk_count(self, count: int, context: str = "") -> None:
         """
         Warn if chunk count is outside the expected range.
 
@@ -189,18 +192,18 @@ class InputValidator:
             Description of what was chunked (for log messages).
         """
         _v_logger = get_logger("validator")
-        if count < CONFIG.CHUNK_COUNT_MIN:
+        if count < self._CONFIG.CHUNK_COUNT_MIN:
             _v_logger.warning(
                 "Chunk count below expected minimum",
                 count=count,
-                min=CONFIG.CHUNK_COUNT_MIN,
+                min=self._CONFIG.CHUNK_COUNT_MIN,
                 context=context,
             )
-        elif count > CONFIG.CHUNK_COUNT_MAX:
+        elif count > self._CONFIG.CHUNK_COUNT_MAX:
             _v_logger.warning(
                 "Chunk count above expected maximum",
                 count=count,
-                max=CONFIG.CHUNK_COUNT_MAX,
+                max=self._CONFIG.CHUNK_COUNT_MAX,
                 context=context,
             )
 

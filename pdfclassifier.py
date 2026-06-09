@@ -139,22 +139,7 @@ def classify_and_extract(pdf_path: str) -> Tuple[PDFType, List[PageContent]]:
     )
     return pdf_type, pages
 
-# pc = PageContent(page_number = 1,text = "", char_count  = 0, is_scanned  = False, has_images  = False)
 # path = os.path.join(os.path.dirname(os.path.abspath(__file__)),"uploads")
-# pdf_type, pages = classify_and_extract(os.path.join(path,"KALYANKJIL_ANNUAL_2025.pdf"))
-# output_dir  = os.path.join(os.path.dirname(os.path.abspath(__file__)), "raw_file")
-# os.makedirs(output_dir, exist_ok=True)
-
-# output_file = os.path.join(output_dir, "KALYANKJIL_ANNUAL_2025.txt")
-
-# with open(output_file, "w", encoding="utf-8") as f:
-#     for page in pages:
-#         f.write(f"Page {page.page_number}\n")
-#         f.write(f"{'-'*50}\n")
-#         f.write(page.text)
-#         f.write("\n\n")
-
-# print(f"✅ Saved to: {output_file}")
 # ----------------------------------------------------------------------------
 # Cell 9: PDF Classifier
 # Purpose: Classify PDFs as NATIVE/SCANNED/MIXED and extract page content.
