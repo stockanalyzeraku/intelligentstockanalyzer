@@ -126,7 +126,7 @@ class Config:
 
 
 # Singleton instance used by all modules
-#CONFIG = Config.get_instance()
+CONFIG = Config.get_instance()
 #print(CONFIG)
 # ----------------------------------------------------------------------------
 # File Name: Config
