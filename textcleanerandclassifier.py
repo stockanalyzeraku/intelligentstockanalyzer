@@ -122,7 +122,7 @@ _RE_TABLE_BLOCK  = re.compile(
 
 
 
-class TextCleaner:
+class TextCleanerandClassifier:
     """
     Cleans a single annual report's OCR text.
 
@@ -244,20 +244,20 @@ class TextCleaner:
             if _RE_TABLE_ROW.match(line.strip()) or _RE_TABLE_SEP.match(line.strip())
         ).lower()
 
-    # Score against both keyword sets
-    financial_score  = sum(1 for kw in _FINANCIAL_KEYWORDS  if kw in table_text)
-    qualitative_score = sum(1 for kw in _QUALITATIVE_KEYWORDS if kw in table_text)
+        # Score against both keyword sets
+        financial_score  = sum(1 for kw in _FINANCIAL_KEYWORDS  if kw in table_text)
+        qualitative_score = sum(1 for kw in _QUALITATIVE_KEYWORDS if kw in table_text)
 
-    # Tie-break: financial wins (stricter classification)
-    if financial_score >= qualitative_score:
-        return "financial"
-    return "qualitative"
-
-
-# ─────────────────────────────────────────────────────────────────────────────
-#  Function 3 — Word count check and optional clean
-# ─────────────────────────────────────────────────────────────────────────────
-
+        # Tie-break: financial wins (stricter classification)
+        if financial_score >= qualitative_score:
+            return "financial"
+        return "qualitative"
+    
+    def _normalise_whitespace(self, text: str) -> str:
+        """Collapse 3+ consecutive blank lines to 2."""
+        text = re.sub(r'\n{3,}', '\n\n', text)
+        return text.strip()
+    
     _RE_IMAGE     = re.compile(r'!\[.*?\]\(.*?\)', re.IGNORECASE)   # ![img](url)
     _RE_MD_HEADER = re.compile(r'^#{1,3} ', re.MULTILINE)           # # ## ###
     _RE_PIPE_ROW  = re.compile(r'^\|.*\|$',  re.MULTILINE)          # table rows
@@ -304,7 +304,44 @@ class TextCleaner:
         }
 
 
-    # def _extract_tables(self, text: str) -> tuple[list[RawTable], str]:
+    
+    # ------------------------------------------------------------------
+    # Public API
+    # ------------------------------------------------------------------
+
+def clean(self, raw_text: str) -> CleanResult:
+    """
+    Full cleaning pipeline.
+
+    Steps
+    -----
+    1. Normalise line endings.
+    2. Remove images, footers, ToC, horizontal rules (line-by-line).
+    3. Extract pipe-tables with their surrounding context.
+    4. Remove extracted tables from the narrative text.
+    5. Final whitespace normalisation.
+
+    Returns CleanResult with clean_text and raw_tables list.
+    """
+    logger.info(f"[{self.company} {self.year}] Starting clean — "f"{len(raw_text):,} chars input")
+
+    text = self._normalise_endings(raw_text)
+    text = self._remove_line_artifacts(text)
+    raw_tables, text = self._extract_tables(text)
+    text = self._normalise_whitespace(text)
+
+    logger.info(f"[{self.company} {self.year}] Cleaning done — "
+                f"{len(text):,} chars output, "
+                f"{len(raw_tables)} tables extracted")
+    return CleanResult(
+            clean_text=text,
+            raw_tables=raw_tables,
+            company=self.company,
+            year=self.year,
+        )
+
+
+# def _extract_tables(self, text: str) -> tuple[list[RawTable], str]:
     #     """
     #     Find all markdown pipe-tables in text.
     #     For each table:
@@ -377,44 +414,4 @@ class TextCleaner:
 
     #     return raw_tables, '\n'.join(lines)
 
-    def _normalise_whitespace(self, text: str) -> str:
-        """Collapse 3+ consecutive blank lines to 2."""
-        text = re.sub(r'\n{3,}', '\n\n', text)
-        return text.strip()
     
-    # ------------------------------------------------------------------
-    # Public API
-    # ------------------------------------------------------------------
-
-    def clean(self, raw_text: str) -> CleanResult:
-        """
-        Full cleaning pipeline.
-
-        Steps
-        -----
-        1. Normalise line endings.
-        2. Remove images, footers, ToC, horizontal rules (line-by-line).
-        3. Extract pipe-tables with their surrounding context.
-        4. Remove extracted tables from the narrative text.
-        5. Final whitespace normalisation.
-
-        Returns CleanResult with clean_text and raw_tables list.
-        """
-        logger.info(f"[{self.company} {self.year}] Starting clean — "
-                    f"{len(raw_text):,} chars input")
-
-        text = self._normalise_endings(raw_text)
-        text = self._remove_line_artifacts(text)
-        raw_tables, text = self._extract_tables(text)
-        text = self._normalise_whitespace(text)
-
-        logger.info(f"[{self.company} {self.year}] Cleaning done — "
-                    f"{len(text):,} chars output, "
-                    f"{len(raw_tables)} tables extracted")
-
-        return CleanResult(
-            clean_text=text,
-            raw_tables=raw_tables,
-            company=self.company,
-            year=self.year,
-        )
