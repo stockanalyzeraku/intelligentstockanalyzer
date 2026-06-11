@@ -12,7 +12,7 @@ import os
 import sys
 from datetime import datetime, timedelta, timezone
 from typing import Any, Dict, Optional
-import config
+from config import CONFIG
 
 class StructuredLogger:
     """
@@ -30,10 +30,11 @@ class StructuredLogger:
         Project config instance for resolving log paths.
     """
 
+    
     def __init__(self, component: str, config=None):
         """Initialise logger for the given component."""
         self._component = component
-        self._config = config
+        self._config = config or CONFIG
         self._ist = timezone(timedelta(hours = 5, minutes = 30))
         self._log_file = self._resolve_log_path()
         os.makedirs(os.path.dirname(self._log_file), exist_ok=True)
@@ -100,6 +101,7 @@ class StructuredLogger:
         if echo:
             print(f"[{level}] {self._component}: {message}", file=sys.stderr)
 
+_cache_logger : dict = {} #For caching all loggers to save space
 
 def get_logger(component: str) -> StructuredLogger:
     """
@@ -114,13 +116,14 @@ def get_logger(component: str) -> StructuredLogger:
     -------
     StructuredLogger
     """
-    
-    return StructuredLogger(component, config.Config())
+    if component not in _cache_logger:
+        _cache_logger[component]  = StructuredLogger(component, CONFIG)
+    return _cache_logger[component]
 
 
 # Module-level logger for Cell 4 itself
-_logger = get_logger("logger")
-_logger.info("Logger initialised.")
+#_logger = get_logger("logger")
+#_logger.info("Logger initialised.")
 
 # ----------------------------------------------------------------------------
 # Cell 4: Logger

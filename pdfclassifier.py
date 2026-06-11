@@ -15,9 +15,9 @@ from logger import get_logger
 
 class PDFType(Enum):
     """Enumeration of PDF content types."""
-    NATIVE = "native"    # Selectable text throughout
-    SCANNED = "scanned"  # Image-only pages (OCR needed)
-    MIXED = "mixed"      # Combination of native and scanned pages
+    NATIVE = "native"    # PDF is only Text
+    SCANNED = "scanned"  # PDF is only Images (OCR needed)
+    MIXED = "mixed"      # PDF is mix of Text Pages and Images Pages
 
 
 @dataclass

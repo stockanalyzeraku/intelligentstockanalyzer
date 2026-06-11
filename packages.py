@@ -27,6 +27,8 @@ def install_dependencies():
         "numpy>=1.26.0",
         "tqdm>=4.66.0",
         "tenacity>=8.3.0",
+        "reportlab",
+        "mistralai"
     ]
 
     for pkg_spec in packages:

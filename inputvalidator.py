@@ -10,7 +10,7 @@ import os
 import re
 from typing import Optional
 from logger import get_logger
-import config
+from config import CONFIG
 
 class ValidationError(ValueError):
     """Raised when input validation fails."""
@@ -31,7 +31,7 @@ class InputValidator:
     )
 
     def __init__(self):
-        self._CONFIG = config.Config.get_instance()
+        self._CONFIG = CONFIG
 
     
     def validate_question(self, question: str) -> str:
@@ -208,8 +208,13 @@ class InputValidator:
             )
 
 
-_val_logger = get_logger("validator")
-_val_logger.info("InputValidator ready.")
+#_val_logger = get_logger("validator")
+#_val_logger.info("InputValidator ready.")
+
+path = os.path.join(os.path.dirname(os.path.abspath(__file__)),"uploads","KALYANKJIL_ANNUAL_2025.pdf")
+# vali = InputValidator()
+# result = vali.validate_pdf_path(path)
+# print(result)
 
 # ----------------------------------------------------------------------------
 # Cell 6: Input Validator

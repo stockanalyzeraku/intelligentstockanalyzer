@@ -21,6 +21,7 @@ from hierarchychunker import create_chunks
 from pdfclassifier import classify_and_extract
 from tableextractor import extract_tables
 from bm25 import BM25_INDEX
+from mistralaiprocessor import MistralAIProcessor
 
 
 def _detect_fy(filename: str) -> str:
@@ -104,7 +105,7 @@ def _clean_text(text: str) -> str:
     return text.strip()
 
 
-def process_single_pdf(pdf_path: str) -> Dict:
+def process_single_pdf(pdf_path: str, output_docling_path: str) -> Dict:
     """
     Run the full ingestion pipeline for one PDF file.
 
@@ -112,6 +113,7 @@ def process_single_pdf(pdf_path: str) -> Dict:
     -----
     1. Validate path
     2. Idempotency check
+    3.0 Get MistralAI Processed File
     3. Classify + extract text
     4. Extract tables
     5. Clean text
@@ -148,6 +150,18 @@ def process_single_pdf(pdf_path: str) -> Dict:
         return {"status": "skipped", "scrip": scrip, "fiscal_year": fiscal_year, "message": "Already processed."}
 
     _pipe_logger.info("Processing PDF.", path=os.path.basename(pdf_path), scrip=scrip, fy=fiscal_year)
+    
+    # Step 3.0: Create a Docling Processed file
+    try:
+        processor = MistralAIProcessor(
+        api_key=CONFIG.MISTRAL_API_KEY,
+        pdf_path=os.path.join(CONFIG.UPLOADS_PATH,"KALYANKJIL","ANNUAL_2025","KALYANKJIL_ANNUAL_2025.pdf"),
+        output_file=os.path.join(CONFIG.UPLOADS_PATH,"KALYANKJIL","ANNUAL_2025","KALYAN_ANNUAL_MI_2025.pdf"),
+        )
+        output_path = processor.run()
+    except:
+        _pipe_logger.error("Docling file of scrip not created")
+        return {"status":"skipped", "scrip":scrip, "fiscal_year":fiscal_year, "message": "Docling file not created"}
 
     # Step 3: Classify + extract
     try:
@@ -162,7 +176,7 @@ def process_single_pdf(pdf_path: str) -> Dict:
     # Step 5: Clean text
     for page in pages:
         page.text = _clean_text(page.text)
-
+    #** Read till here
     # Step 6: Create chunks
     chunks = create_chunks(pages, tables, scrip, fiscal_year)
     InputValidator.validate_chunk_count(len(chunks), context=os.path.basename(pdf_path))
@@ -234,6 +248,13 @@ def process_company_folder(company_name: str) -> List[Dict]:
         print(f"  [{result['status'].upper()}] {os.path.basename(pdf_path)} — {result.get('message', '')}")
 
     return results
+
+if __name__ == "__main__" :
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)),"uploads","KALYANKJIL_ANNUAL_2025.pdf")
+    fy = _detect_fy(path)
+    print(fy)
+    
+
 
 
 # ── Quick-start helper printed to Colab output ─────────────────────────────
