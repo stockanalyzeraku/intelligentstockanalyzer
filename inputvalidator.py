@@ -23,15 +23,13 @@ class InputValidator:
     All methods return the (possibly normalised) input on success
     and raise ValidationError on failure.
     """
+    
 
     _INJECTION_PATTERNS = re.compile(
         r"(ignore previous|ignore all|disregard|system prompt|"
         r"you are now|pretend you|act as|jailbreak)",
         re.IGNORECASE,
     )
-
-    def __init__(self):
-        self._CONFIG = CONFIG
 
     
     def validate_question(self, question: str) -> str:
@@ -59,13 +57,13 @@ class InputValidator:
             _v_logger.error("Question is not a string", type=type(question).__name__)
             raise ValidationError("Question must be a string.")
         question = question.strip()
-        if len(question) < self._CONFIG.MIN_QUESTION_LENGTH:
+        if len(question) < CONFIG.MIN_QUESTION_LENGTH:
             raise ValidationError(
-                f"Question too short (min {self._CONFIG.MIN_QUESTION_LENGTH} chars)."
+                f"Question too short (min {CONFIG.MIN_QUESTION_LENGTH} chars)."
             )
-        if len(question) > self._CONFIG.MAX_QUESTION_LENGTH:
+        if len(question) > CONFIG.MAX_QUESTION_LENGTH:
             raise ValidationError(
-                f"Question too long (max {self._CONFIG.MAX_QUESTION_LENGTH} chars)."
+                f"Question too long (max {CONFIG.MAX_QUESTION_LENGTH} chars)."
             )
         if InputValidator._INJECTION_PATTERNS.search(question):
             _v_logger.warning("Possible prompt injection detected", question=question[:80])
@@ -163,7 +161,7 @@ class InputValidator:
             raise ValidationError("PDF path must be a string.")
         abs_path = os.path.realpath(path)
         # Path traversal check
-        uploads_real = os.path.realpath(self._CONFIG.UPLOADS_PATH)
+        uploads_real = os.path.realpath(CONFIG.UPLOADS_PATH)
         if not abs_path.startswith(uploads_real):
             _v_logger.warning("Path traversal attempt", path=path)
             raise ValidationError(
@@ -174,13 +172,14 @@ class InputValidator:
         if not os.path.isfile(abs_path):
             raise ValidationError(f"File not found: '{abs_path}'")
         size_mb = os.path.getsize(abs_path) / (1024 * 1024)
-        if size_mb > self._CONFIG.MAX_PDF_SIZE_MB:
+        if size_mb > CONFIG.MAX_PDF_SIZE_MB:
             raise ValidationError(
-                f"PDF too large ({size_mb:.1f} MB). Max allowed: {self._CONFIG.MAX_PDF_SIZE_MB} MB."
+                f"PDF too large ({size_mb:.1f} MB). Max allowed: {CONFIG.MAX_PDF_SIZE_MB} MB."
             )
         return abs_path
 
     def validate_chunk_count(self, count: int, context: str = "") -> None:
+
         """
         Warn if chunk count is outside the expected range.
 
@@ -192,20 +191,21 @@ class InputValidator:
             Description of what was chunked (for log messages).
         """
         _v_logger = get_logger("validator")
-        if count < self._CONFIG.CHUNK_COUNT_MIN:
+        if count < CONFIG.CHUNK_COUNT_MIN:
             _v_logger.warning(
                 "Chunk count below expected minimum",
                 count=count,
-                min=self._CONFIG.CHUNK_COUNT_MIN,
+                min=CONFIG.CHUNK_COUNT_MIN,
                 context=context,
             )
-        elif count > self._CONFIG.CHUNK_COUNT_MAX:
+        elif count > CONFIG.CHUNK_COUNT_MAX:
             _v_logger.warning(
                 "Chunk count above expected maximum",
                 count=count,
-                max=self._CONFIG.CHUNK_COUNT_MAX,
+                max=CONFIG.CHUNK_COUNT_MAX,
                 context=context,
             )
+
 
 
 #_val_logger = get_logger("validator")

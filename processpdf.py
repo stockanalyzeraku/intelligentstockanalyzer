@@ -114,6 +114,7 @@ def process_single_pdf(pdf_path: str, output_docling_path: str) -> Dict:
     1. Validate path
     2. Idempotency check
     3.0 Get MistralAI Processed File
+    3.1 Clean Document(PdfCleaner)
     3. Classify + extract text
     4. Extract tables
     5. Clean text

@@ -1,0 +1,2 @@
+{"ts": "2026-06-10T11:00:36.016765+05:30", "level": "INFO", "component": "storage_manager", "message": "StorageManager ready.", "db": "/workspaces/intelligentstockanalyzer/database/brain.db"}
+{"ts": "2026-06-10T11:04:15.989300+05:30", "level": "INFO", "component": "storage_manager", "message": "StorageManager ready.", "db": "/workspaces/intelligentstockanalyzer/database/brain.db"}

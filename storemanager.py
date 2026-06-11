@@ -31,6 +31,7 @@ class StorageManager:
     """
 
     _instance: Optional["StorageManager"] = None
+    _conn = None
 
     def __init__(self):
         """Initialise SQLite connection and create tables."""

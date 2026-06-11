@@ -10,10 +10,22 @@ from reportlab.platypus import (
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib import colors
 from reportlab.lib.units import mm
+import json
+from dataclasses import asdict, dataclass
+from typing import List
 
 from logger import get_logger
 from inputvalidator import InputValidator
 from config import CONFIG
+
+import fitz
+@dataclass
+class PageContent:
+    """
+    Content extracted from one page of PDF
+    """
+    page_num: int
+    text: str
 
 class MistralAIProcessor:
     """
@@ -22,12 +34,6 @@ class MistralAIProcessor:
       2. Saves the raw markdown output as a backup.
       3. Converts the markdown into a styled ReportLab PDF.
     """
-
-    MODEL_OCR = "mistral-ocr-latest"
-
-    # ------------------------------------------------------------------ #
-    #  Construction                                                        #
-    # ------------------------------------------------------------------ #
 
     def __init__(self, api_key: str, pdf_path: str, output_file: str):
         """
@@ -42,11 +48,11 @@ class MistralAIProcessor:
         self.log.info("Initialising MistralAIProcessor")
 
         # Validate inputs before storing them
-        self._api_key     = api_key or CONFIG.MISTRAL_API_KEY
+        self._api_key = api_key or CONFIG.MISTRAL_API_KEY
         validate = InputValidator()
         self._pdf_path    = validate.validate_pdf_path(pdf_path)
         self._output_file = output_file
-#        self._output_file = validate.validate_pdf_path(output_file, must_exist=False, extension=".pdf")
+        self._pages: list[PageContent] = []
 
         self._client        : Mistral | None = None
         self._markdown_text : str            = ""
@@ -56,11 +62,8 @@ class MistralAIProcessor:
             f"Config — source: '{self._pdf_path}' | output: '{self._output_file}'"
         )
 
-    # ------------------------------------------------------------------ #
-    #  Public API                                                          #
-    # ------------------------------------------------------------------ #
 
-    def run(self) -> str:
+    def run(self) -> str:           #Function to run Process
         """
         Full pipeline: OCR  →  markdown backup  →  styled PDF.
 
@@ -70,48 +73,27 @@ class MistralAIProcessor:
         """
         self.log.info("Pipeline started")
         self._init_client()
-        self._run_ocr()
-        self._save_markdown_backup()
-        self._build_pdf()
+        self._upload_pdf_and_process_ocr()
+    #    self._save_markdown_backup()
+    #    self._build_pdf()
         self.log.info(f"Pipeline complete — output: '{self._output_file}'")
         return self._output_file
 
-    # ------------------------------------------------------------------ #
-    #  Step 0 – Client initialisation                                      #
-    # ------------------------------------------------------------------ #
+    def save_pages_to_json(self, pages: list[PageContent], output_path: str) -> None:       #Save pages to JSON
+        """
+        Saves a list of PageContent objects to a JSON file.
+        """
 
-    def _init_client(self) -> None:
+        data = [asdict(pc) for pc in pages]
+        with open(output_path, "w", encoding="utf-8") as fh:
+            json.dump(data, fh, indent=2, ensure_ascii=False)
+
+    def _init_client(self) -> None:         #Initalize Client
         """Creates and stores the authenticated Mistral client."""
+    
         self.log.info("Creating Mistral client")
-        self._client = Mistral(api_key=self._api_key)
+        self._client = Mistral(api_key=self._api_key) 
         self.log.info("Mistral client ready")
-
-    # ------------------------------------------------------------------ #
-    #  Step 1 – OCR                                                        #
-    # ------------------------------------------------------------------ #
-
-    def _run_ocr(self) -> None:
-        """Uploads the PDF, obtains a signed URL, runs OCR, combines pages."""
-        file_id  = self._upload_pdf()
-        sign_url = self._get_signed_url(file_id)
-        self._process_ocr(sign_url)
-
-    def _upload_pdf(self) -> str:
-        """
-        Uploads the source PDF to Mistral.
-
-        Returns
-        -------
-        str : The uploaded file's ID.
-        """
-        self.log.info(f"Uploading '{Path(self._pdf_path).name}' to Mistral")
-        with open(self._pdf_path, "rb") as fh:
-            uploaded = self._client.files.upload(
-                file={"file_name": os.path.basename(self._pdf_path), "content": fh},
-                purpose="ocr",
-            )
-        self.log.info(f"Upload complete — file_id: {uploaded.id}")
-        return uploaded.id
 
     def _get_signed_url(self, file_id: str) -> str:
         """
@@ -129,8 +111,37 @@ class MistralAIProcessor:
         signed = self._client.files.get_signed_url(file_id=file_id)
         self.log.info("Signed URL obtained")
         return signed.url
+    
+    def _upload_pdf_and_process_ocr(self) -> str:
+        """
+        Uploads the source PDF to Mistral, obtain signed URL and get page by page output from OCR.
 
-    def _process_ocr(self, document_url: str) -> None:
+        Returns
+        -------
+        str : The uploaded file's ID.
+        """
+        self.log.info(f"Uploading '{Path(self._pdf_path).name}' to Mistral")
+        doc = fitz.open(self._pdf_path)
+        
+        for page_num in range(len(doc)):
+            page = doc[page_num]
+            pix       = page.get_pixmap(dpi=200)
+            img_bytes = pix.tobytes("png")
+            uploaded = self._client.files.upload(
+                file={"file_name": os.path.basename(self._pdf_path), "content": img_bytes},
+                purpose="ocr")
+            self.log.info(f"Upload complete — file_id: {uploaded.id}")
+            sign_url = self._get_signed_url(uploaded.id)
+            self.log.info(f"Processing file — file_id: {uploaded.id} page_number: {page_num}")
+            self._process_ocr(sign_url,page_num)    
+        self.log.info(f"Processed file — file_id: {uploaded.id}")
+       
+        self.log.info(f"JSON Dumping file — file_id: {uploaded.id}")
+        self.save_pages_to_json(self._pages, os.path.join(CONFIG.UPLOADS_PATH,"KALYANKJIL","ANNUAL_2025","Kalyan.json"))
+
+        return uploaded.id
+    
+    def _process_ocr(self, document_url: str, page_num: int) -> None:
         """
         Calls the Mistral OCR endpoint and stores combined markdown.
 
@@ -138,12 +149,18 @@ class MistralAIProcessor:
         ----------
         document_url : Signed URL of the uploaded PDF.
         """
-        self.log.info(f"Running OCR with model '{self.MODEL_OCR}'")
+        self.log.info(f"Running OCR with model '{CONFIG.MISTRAL_MODEL_OCR}'")
         ocr_response = self._client.ocr.process(
-            model=self.MODEL_OCR,
+            model=CONFIG.MISTRAL_MODEL_OCR,
             document={"type": "document_url", "document_url": document_url},
             include_image_base64=False,
         )
+        self._pages.append(
+            PageContent(
+                page_num=page_num + 1,
+                text=ocr_response.pages[0].markdown
+        ))
+
         self._markdown_text = "\n\n---\n\n".join(
             page.markdown for page in ocr_response.pages
         )
@@ -359,7 +376,7 @@ class MistralAIProcessor:
 # ────────────────────────────────────────────────────────────────────────────
 if __name__ == "__main__":
     processor = MistralAIProcessor(
-        api_key=CONFIG.MISTRAL_API_KEY,
+        api_key="XLmWO4UBEzyVEbYxCMsVKKCEf7jw55mD",
         pdf_path=os.path.join(CONFIG.UPLOADS_PATH,"KALYANKJIL","ANNUAL_2025","KALYANKJIL_ANNUAL_2025.pdf"),
         output_file=os.path.join(CONFIG.UPLOADS_PATH,"KALYANKJIL","ANNUAL_2025","KALYAN_ANNUAL_MI_2025.pdf"),
     )

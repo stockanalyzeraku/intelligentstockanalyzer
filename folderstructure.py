@@ -23,7 +23,7 @@ def mount_drive():
     except ImportError:
         print("[Cell 2] Not running in Colab — skipping Drive mount.")
 
-def create_folder_structure(base_path: str = "/content/drive/MyDrive/brain") -> None:
+def create_folder_structure(base_path: str) -> None:
     """
     Create the full folder hierarchy under base_path.
 
@@ -38,6 +38,7 @@ def create_folder_structure(base_path: str = "/content/drive/MyDrive/brain") -> 
         os.path.join(base_path, "chroma_db"),
         os.path.join(base_path, "database"),
         os.path.join(base_path, "logs"),
+        os.path.join(base_path, "docling")
     ]
     for folder in folders:
         try:
@@ -52,7 +53,6 @@ def create_folder_structure(base_path: str = "/content/drive/MyDrive/brain") -> 
     print(f"📁 Folder structure verified under: {base_path}")
 
 #mount_drive()
-
 #create_folder_structure(BRAIN_BASE)
 
 # ----------------------------------------------------------------------------

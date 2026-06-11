@@ -1,0 +1,598 @@
+{"ts": "2026-06-11T11:42:58.402493+05:30", "level": "INFO", "component": "__main__", "message": "[KALYANKJIL 2025] Starting clean \u2014 818,402 chars input"}
+{"ts": "2026-06-11T11:42:58.424119+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop toc]    We are Kalyan Jewellers ... 04"}
+{"ts": "2026-06-11T11:42:58.426414+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop toc]    Our Strengths ... 08"}
+{"ts": "2026-06-11T11:42:58.427197+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop toc]    Our Presence ... 10"}
+{"ts": "2026-06-11T11:42:58.429484+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop toc]    Product Offerings ... 14"}
+{"ts": "2026-06-11T11:42:58.429613+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop toc]    Candere ... 18"}
+{"ts": "2026-06-11T11:42:58.429706+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop toc]    Performance Highlights ... 24"}
+{"ts": "2026-06-11T11:42:58.429790+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop toc]    MD's Message ... 28"}
+{"ts": "2026-06-11T11:42:58.429885+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop toc]    Strategic Initiatives ... 32"}
+{"ts": "2026-06-11T11:42:58.429979+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop toc]    Marketing and Promotions ... 38"}
+{"ts": "2026-06-11T11:42:58.430116+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop toc]    Environment and Social Initiatives ... 44"}
+{"ts": "2026-06-11T11:42:58.430238+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop toc]    Governance ... 48"}
+{"ts": "2026-06-11T11:42:58.430446+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop toc]    Statutory Reports ... 56"}
+{"ts": "2026-06-11T11:42:58.432263+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop toc]    Financial Statements ... 126"}
+{"ts": "2026-06-11T11:42:58.432386+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop toc]    Notice ... 266"}
+{"ts": "2026-06-11T11:42:58.432568+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.432749+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop toc]    We are Kalyan Jewellers ... 04"}
+{"ts": "2026-06-11T11:42:58.432897+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop toc]    Our Strengths ... 08"}
+{"ts": "2026-06-11T11:42:58.432993+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop toc]    Our Presence ... 10"}
+{"ts": "2026-06-11T11:42:58.434249+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop toc]    Product Offerings ... 14"}
+{"ts": "2026-06-11T11:42:58.434422+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop toc]    Candere ... 18"}
+{"ts": "2026-06-11T11:42:58.434577+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.434780+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.434960+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] 6"}
+{"ts": "2026-06-11T11:42:58.435127+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] 23"}
+{"ts": "2026-06-11T11:42:58.435419+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] 388"}
+{"ts": "2026-06-11T11:42:58.435808+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.435999+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.436290+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.436481+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.437565+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.438311+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.438883+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] 278"}
+{"ts": "2026-06-11T11:42:58.439056+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] 73"}
+{"ts": "2026-06-11T11:42:58.439231+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] 36"}
+{"ts": "2026-06-11T11:42:58.439378+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] 1"}
+{"ts": "2026-06-11T11:42:58.444409+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] \u00a9 High-Perioders India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.444552+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.444681+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] 4"}
+{"ts": "2026-06-11T11:42:58.444769+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] 8"}
+{"ts": "2026-06-11T11:42:58.444874+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] 234. Business Media Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.444972+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.445264+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] KalyanJewellers India Limited // Annual Report 2014"}
+{"ts": "2026-06-11T11:42:58.447192+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.447497+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.447664+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.447890+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.447996+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.448298+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] 80"}
+{"ts": "2026-06-11T11:42:58.449272+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.449405+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.449512+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop toc]    Performance Highlights ... 24"}
+{"ts": "2026-06-11T11:42:58.449591+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop toc]    MD's Message ... 28"}
+{"ts": "2026-06-11T11:42:58.449713+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.449933+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.451453+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.451558+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.451711+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.451793+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] 26"}
+{"ts": "2026-06-11T11:42:58.451850+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] 27"}
+{"ts": "2026-06-11T11:42:58.451904+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.452089+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.452204+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.452285+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop toc]    Strategic Initiatives ... 32"}
+{"ts": "2026-06-11T11:42:58.452339+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop toc]    Marketing and Promotions ... 38"}
+{"ts": "2026-06-11T11:42:58.452391+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.454027+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.454653+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.455198+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.456415+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.456839+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.457752+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.457943+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.458678+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.459230+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.462841+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.462976+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.463097+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.463239+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.463337+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] 44"}
+{"ts": "2026-06-11T11:42:58.463500+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.463604+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] 45"}
+{"ts": "2026-06-11T11:42:58.463698+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.463869+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.464030+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.464571+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] 20"}
+{"ts": "2026-06-11T11:42:58.465087+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.467380+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.467781+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.468206+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.468476+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.468561+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.468712+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.470353+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.471351+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.471767+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.474643+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.475893+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.477624+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.477964+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.478595+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.479559+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.479733+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.480533+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.480998+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.481471+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.481664+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.481965+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.482173+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.482479+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.482852+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.483273+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.483457+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.483739+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.483945+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.484429+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.484639+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.485007+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.485300+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.485562+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.485658+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.486243+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.486429+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.486815+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.486981+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.487426+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.487889+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.488559+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.490400+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.490593+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.491025+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.492813+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.494267+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.494737+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.495581+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.497416+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.497868+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.498807+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.499131+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.499908+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.500000+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.502187+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.502856+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.503152+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.504043+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.504285+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.504367+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.504592+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.504776+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.510263+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.510788+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.511291+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.511471+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.511861+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.512081+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.512517+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.513251+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.514203+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.515611+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.516542+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.517308+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.518276+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.519495+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.521266+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.521616+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.521711+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.522040+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.522129+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.523392+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.524316+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.525070+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.525981+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.526492+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.527613+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.532508+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.532631+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.532974+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.533056+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.533354+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.533652+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.533939+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.542371+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.542807+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.545711+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.546115+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.546394+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.546668+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.547380+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.548411+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.549113+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.550551+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.551789+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.553436+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.554000+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.555588+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.555957+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.556049+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.556422+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.556840+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.557673+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.557859+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.558308+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.558479+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.558993+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.559283+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.559695+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.559862+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.560364+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.560828+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.561499+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.561682+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.562107+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.562338+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.562779+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.562951+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.563494+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.563753+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.564336+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.564755+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-11T11:42:58.565431+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.566454+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.566783+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.567347+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.567690+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.568035+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.568397+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.568740+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.569064+05:30", "level": "DEBUG", "component": "__main__", "message": "  [drop footer] Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-11T11:42:58.590027+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='DETAILS OF DIRECTORS SEEKING APPOINTMENT, RE-APPOINTMENT AND FIXATION OF REMUNERATION AT THE 17TH ANNUAL GENERAL MEETING PURSUANT TO REGULATION 36(3) OF THE SECURITIES AND EXCHANGE BOARD OF INDIA (LISTING OBLIGATIONS AND DISCLOSURE REQUIREMENTS) REGULATIONS, 2015 AND SECRETARIAL STANDARD ON GENERAL MEETINGS (SS-2) ISSUED BY THE INSTITUTE OF COMPANY SECRETARIES OF INDIA.' rows=9"}
+{"ts": "2026-06-11T11:42:58.590397+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='DETAILS OF DIRECTORS SEEKING APPOINTMENT, RE-APPOINTMENT AND FIXATION OF REMUNERATION AT THE 17TH ANNUAL GENERAL MEETING PURSUANT TO REGULATION 36(3) OF THE SECURITIES AND EXCHANGE BOARD OF INDIA (LISTING OBLIGATIONS AND DISCLOSURE REQUIREMENTS) REGULATIONS, 2015 AND SECRETARIAL STANDARD ON GENERAL MEETINGS (SS-2) ISSUED BY THE INSTITUTE OF COMPANY SECRETARIES OF INDIA.' rows=9"}
+{"ts": "2026-06-11T11:42:58.590597+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='DETAILS OF DIRECTORS SEEKING APPOINTMENT, RE-APPOINTMENT AND FIXATION OF REMUNERATION AT THE 17TH ANNUAL GENERAL MEETING PURSUANT TO REGULATION 36(3) OF THE SECURITIES AND EXCHANGE BOARD OF INDIA (LISTING OBLIGATIONS AND DISCLOSURE REQUIREMENTS) REGULATIONS, 2015 AND SECRETARIAL STANDARD ON GENERAL MEETINGS (SS-2) ISSUED BY THE INSTITUTE OF COMPANY SECRETARIES OF INDIA.' rows=7"}
+{"ts": "2026-06-11T11:42:58.590775+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='DETAILS OF DIRECTORS SEEKING APPOINTMENT, RE-APPOINTMENT AND FIXATION OF REMUNERATION AT THE 17TH ANNUAL GENERAL MEETING PURSUANT TO REGULATION 36(3) OF THE SECURITIES AND EXCHANGE BOARD OF INDIA (LISTING OBLIGATIONS AND DISCLOSURE REQUIREMENTS) REGULATIONS, 2015 AND SECRETARIAL STANDARD ON GENERAL MEETINGS (SS-2) ISSUED BY THE INSTITUTE OF COMPANY SECRETARIES OF INDIA.' rows=11"}
+{"ts": "2026-06-11T11:42:58.590933+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='DETAILS OF DIRECTORS SEEKING APPOINTMENT, RE-APPOINTMENT AND FIXATION OF REMUNERATION AT THE 17TH ANNUAL GENERAL MEETING PURSUANT TO REGULATION 36(3) OF THE SECURITIES AND EXCHANGE BOARD OF INDIA (LISTING OBLIGATIONS AND DISCLOSURE REQUIREMENTS) REGULATIONS, 2015 AND SECRETARIAL STANDARD ON GENERAL MEETINGS (SS-2) ISSUED BY THE INSTITUTE OF COMPANY SECRETARIES OF INDIA.' rows=16"}
+{"ts": "2026-06-11T11:42:58.591174+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='How to Log-in to NSDL e-Voting website?' rows=5"}
+{"ts": "2026-06-11T11:42:58.591572+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='NSDL Mobile App is available on' rows=4"}
+{"ts": "2026-06-11T11:42:58.591728+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='NSDL Mobile App is available on' rows=7"}
+{"ts": "2026-06-11T11:42:58.591900+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='A) Login method for e-Voting and joining virtual meeting for individual shareholders holding securities in demat mode' rows=7"}
+{"ts": "2026-06-11T11:42:58.592403+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='NOTES:' rows=5"}
+{"ts": "2026-06-11T11:42:58.592679+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='NOTES:' rows=16"}
+{"ts": "2026-06-11T11:42:58.592937+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='NOTES' rows=6"}
+{"ts": "2026-06-11T11:42:58.593338+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Option activity under the Plan is as given below' rows=5"}
+{"ts": "2026-06-11T11:42:58.593882+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Option activity under the Plan is as given below' rows=16"}
+{"ts": "2026-06-11T11:42:58.594334+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='NOTES' rows=6"}
+{"ts": "2026-06-11T11:42:58.594801+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='NOTES' rows=9"}
+{"ts": "2026-06-11T11:42:58.595216+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='39 LEASES' rows=7"}
+{"ts": "2026-06-11T11:42:58.595567+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='NOTES' rows=19"}
+{"ts": "2026-06-11T11:42:58.595873+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='38 ADDITIONAL INFORMATION AS REQUIRED BY PARAGRAPH 2 OF THE GENERAL INSTRUCTIONS FOR PREPARATION OF CONSOLIDATED IND AS FINANCIAL STATEMENTS TO SCHEDULE III TO THE COMPANIES ACT, 2013' rows=20"}
+{"ts": "2026-06-11T11:42:58.595993+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='(d) Capital management' rows=16"}
+{"ts": "2026-06-11T11:42:58.596170+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='NOTES' rows=10"}
+{"ts": "2026-06-11T11:42:58.596311+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='NOTES' rows=12"}
+{"ts": "2026-06-11T11:42:58.596375+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='NOTES' rows=8"}
+{"ts": "2026-06-11T11:42:58.596434+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Interest rate sensitivity analysis:' rows=9"}
+{"ts": "2026-06-11T11:42:58.596487+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='(i) Liabilities' rows=6"}
+{"ts": "2026-06-11T11:42:58.596535+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='NOTES' rows=9"}
+{"ts": "2026-06-11T11:42:58.596586+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Market risk - Foreign exchange' rows=5"}
+{"ts": "2026-06-11T11:42:58.596637+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='NOTES' rows=5"}
+{"ts": "2026-06-11T11:42:58.596686+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='NOTES' rows=5"}
+{"ts": "2026-06-11T11:42:58.596733+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='NOTES' rows=5"}
+{"ts": "2026-06-11T11:42:58.596781+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='The risk management process aims to:' rows=7"}
+{"ts": "2026-06-11T11:42:58.596831+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='(a) Financial assets and liabilities' rows=27"}
+{"ts": "2026-06-11T11:42:58.596890+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Notes:' rows=5"}
+{"ts": "2026-06-11T11:42:58.596943+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Notes:' rows=6"}
+{"ts": "2026-06-11T11:42:58.597007+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='C Balance as on the balance sheet date' rows=31"}
+{"ts": "2026-06-11T11:42:58.597071+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='NOTES' rows=11"}
+{"ts": "2026-06-11T11:42:58.597133+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='NOTES' rows=46"}
+{"ts": "2026-06-11T11:42:58.597404+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='B Transactions with related parties' rows=44"}
+{"ts": "2026-06-11T11:42:58.597569+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='A List of related parties where control exists and also related parties with whom transactions have taken place and relationships' rows=21"}
+{"ts": "2026-06-11T11:42:58.597744+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='(d) Other long-term benefits - compensated absences' rows=7"}
+{"ts": "2026-06-11T11:42:58.597908+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Maturity profile of defined benefit obligation' rows=10"}
+{"ts": "2026-06-11T11:42:58.598626+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Sensitivity analysis' rows=12"}
+{"ts": "2026-06-11T11:42:58.598835+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='NOTES' rows=10"}
+{"ts": "2026-06-11T11:42:58.599538+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='NOTES' rows=8"}
+{"ts": "2026-06-11T11:42:58.599683+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='NOTES' rows=10"}
+{"ts": "2026-06-11T11:42:58.599854+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='NOTES' rows=13"}
+{"ts": "2026-06-11T11:42:58.600019+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='(b) Defined benefit plans' rows=7"}
+{"ts": "2026-06-11T11:42:58.600178+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='(b) Defined benefit plans' rows=7"}
+{"ts": "2026-06-11T11:42:58.600265+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='(a) Defined contribution plans' rows=6"}
+{"ts": "2026-06-11T11:42:58.600352+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='34 CONTINGENT LIABILITIES AND COMMITMENTS' rows=10"}
+{"ts": "2026-06-11T11:42:58.600431+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='33 EARNINGS PER SHARE (EPS)' rows=10"}
+{"ts": "2026-06-11T11:42:58.600502+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='NOTES' rows=10"}
+{"ts": "2026-06-11T11:42:58.600566+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='(v) Movement of deferred tax (asset)/ liability' rows=19"}
+{"ts": "2026-06-11T11:42:58.600624+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='(iv) Breakup of closing deferred tax (asset)/ liability' rows=15"}
+{"ts": "2026-06-11T11:42:58.600694+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='31 INCOME TAX AND DEFERRED TAX' rows=12"}
+{"ts": "2026-06-11T11:42:58.600771+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='31 INCOME TAX AND DEFERRED TAX' rows=7"}
+{"ts": "2026-06-11T11:42:58.600844+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='31 INCOME TAX AND DEFERRED TAX' rows=8"}
+{"ts": "2026-06-11T11:42:58.600909+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='NOTES' rows=10"}
+{"ts": "2026-06-11T11:42:58.600975+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='NOTES' rows=34"}
+{"ts": "2026-06-11T11:42:58.601043+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='NOTES' rows=12"}
+{"ts": "2026-06-11T11:42:58.601109+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='NOTES' rows=10"}
+{"ts": "2026-06-11T11:42:58.601370+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='NOTES' rows=24"}
+{"ts": "2026-06-11T11:42:58.601532+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='c) Transaction price allocated to remaining performance obligations' rows=18"}
+{"ts": "2026-06-11T11:42:58.601694+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='c) Transaction price allocated to remaining performance obligations' rows=11"}
+{"ts": "2026-06-11T11:42:58.601855+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='b) Contract balances' rows=8"}
+{"ts": "2026-06-11T11:42:58.602001+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='NOTES' rows=11"}
+{"ts": "2026-06-11T11:42:58.602170+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='NOTES' rows=9"}
+{"ts": "2026-06-11T11:42:58.602340+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='NOTES' rows=6"}
+{"ts": "2026-06-11T11:42:58.602552+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='NOTES' rows=6"}
+{"ts": "2026-06-11T11:42:58.602714+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='NOTES' rows=5"}
+{"ts": "2026-06-11T11:42:58.602984+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='NOTES' rows=5"}
+{"ts": "2026-06-11T11:42:58.603097+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='NOTES' rows=9"}
+{"ts": "2026-06-11T11:42:58.603338+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='NOTES' rows=10"}
+{"ts": "2026-06-11T11:42:58.603487+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='22 TRADE PAYABLES' rows=10"}
+{"ts": "2026-06-11T11:42:58.603658+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='22 TRADE PAYABLES' rows=9"}
+{"ts": "2026-06-11T11:42:58.603803+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='22 TRADE PAYABLES' rows=5"}
+{"ts": "2026-06-11T11:42:58.603988+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='21 METAL GOLD LOAN' rows=6"}
+{"ts": "2026-06-11T11:42:58.604172+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='20 PROVISIONS' rows=6"}
+{"ts": "2026-06-11T11:42:58.604329+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='20 PROVISIONS' rows=11"}
+{"ts": "2026-06-11T11:42:58.604501+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='19 OTHER NON-CURRENT LIABILITIES' rows=4"}
+{"ts": "2026-06-11T11:42:58.604652+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='18 OTHER FINANCIAL LIABILITIES' rows=15"}
+{"ts": "2026-06-11T11:42:58.604825+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='17 LEASE LIABILITIES' rows=15"}
+{"ts": "2026-06-11T11:42:58.605032+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='16 BORROWINGS' rows=4"}
+{"ts": "2026-06-11T11:42:58.605204+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='16 BORROWINGS' rows=11"}
+{"ts": "2026-06-11T11:42:58.605409+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='15 NON-CONTROLLING INTERESTS' rows=6"}
+{"ts": "2026-06-11T11:42:58.605568+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='NOTES' rows=22"}
+{"ts": "2026-06-11T11:42:58.605746+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='14 OTHER EQUITY' rows=11"}
+{"ts": "2026-06-11T11:42:58.605907+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='14 OTHER EQUITY' rows=9"}
+{"ts": "2026-06-11T11:42:58.606050+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='(vi)' rows=5"}
+{"ts": "2026-06-11T11:42:58.606274+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='NOTES' rows=7"}
+{"ts": "2026-06-11T11:42:58.606434+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='(i) Rights, preferences and restrictions attached to shares' rows=7"}
+{"ts": "2026-06-11T11:42:58.606603+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='(i) Rights, preferences and restrictions attached to shares' rows=10"}
+{"ts": "2026-06-11T11:42:58.606769+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='(i) Rights, preferences and restrictions attached to shares' rows=8"}
+{"ts": "2026-06-11T11:42:58.606904+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='NOTES' rows=10"}
+{"ts": "2026-06-11T11:42:58.607082+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='NOTES' rows=13"}
+{"ts": "2026-06-11T11:42:58.607272+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='NOTES' rows=12"}
+{"ts": "2026-06-11T11:42:58.607445+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='NOTES' rows=12"}
+{"ts": "2026-06-11T11:42:58.607591+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='11 TRADE RECEIVABLES' rows=8"}
+{"ts": "2026-06-11T11:42:58.607771+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='10 INVENTORIES' rows=7"}
+{"ts": "2026-06-11T11:42:58.607929+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='9 OTHER ASSETS' rows=14"}
+{"ts": "2026-06-11T11:42:58.608083+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='8 OTHER FINANCIAL ASSETS' rows=18"}
+{"ts": "2026-06-11T11:42:58.608299+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='7 INVESTMENTS' rows=11"}
+{"ts": "2026-06-11T11:42:58.608469+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='6 GOODWILL ON CONSOLIDATION' rows=6"}
+{"ts": "2026-06-11T11:42:58.608618+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='5 INVESTMENT PROPERTY' rows=6"}
+{"ts": "2026-06-11T11:42:58.608794+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='4 RIGHT-OF-USE (ROU) ASSETS - BUILDINGS' rows=12"}
+{"ts": "2026-06-11T11:42:58.608969+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='3E DEPRECIATION AND AMORTISATION EXPENSE' rows=7"}
+{"ts": "2026-06-11T11:42:58.609079+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Intangibles under development (overdue) completion schedule' rows=7"}
+{"ts": "2026-06-11T11:42:58.609324+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Ageing of intangibles under development' rows=11"}
+{"ts": "2026-06-11T11:42:58.609483+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='3D INTANGIBLES UNDER DEVELOPMENT' rows=11"}
+{"ts": "2026-06-11T11:42:58.609647+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='NOTES' rows=13"}
+{"ts": "2026-06-11T11:42:58.609787+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Notes:' rows=10"}
+{"ts": "2026-06-11T11:42:58.609967+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='NOTES' rows=11"}
+{"ts": "2026-06-11T11:42:58.610126+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='NOTES' rows=11"}
+{"ts": "2026-06-11T11:42:58.610301+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='NOTES' rows=25"}
+{"ts": "2026-06-11T11:42:58.610501+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='NOTES' rows=15"}
+{"ts": "2026-06-11T11:42:58.610669+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='CONSOLIDATED STATEMENT OF CHANGES IN EQUITY' rows=10"}
+{"ts": "2026-06-11T11:42:58.610814+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='B OTHER EQUITY' rows=18"}
+{"ts": "2026-06-11T11:42:58.610994+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='A EQUITY SHARES WITH VOTING RIGHTS (REFER NOTE 13)' rows=7"}
+{"ts": "2026-06-11T11:42:58.611191+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='CONSOLIDATED STATEMENT OF CASH FLOWS' rows=13"}
+{"ts": "2026-06-11T11:42:58.611384+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='CONSOLIDATED STATEMENT OF CASH FLOWS' rows=15"}
+{"ts": "2026-06-11T11:42:58.611540+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='CONSOLIDATED STATEMENT OF CASH FLOWS' rows=56"}
+{"ts": "2026-06-11T11:42:58.611649+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='CONSOLIDATED STATEMENT OF PROFIT AND LOSS' rows=44"}
+{"ts": "2026-06-11T11:42:58.611863+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='CONSOLIDATED BALANCE SHEET' rows=58"}
+{"ts": "2026-06-11T11:42:58.612009+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='REPORT ON OTHER LEGAL AND REGULATORY REQUIREMENTS' rows=3"}
+{"ts": "2026-06-11T11:42:58.612200+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='REPORT ON OTHER LEGAL AND REGULATORY REQUIREMENTS' rows=4"}
+{"ts": "2026-06-11T11:42:58.612366+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='KEY AUDIT MATTERS' rows=11"}
+{"ts": "2026-06-11T11:42:58.612530+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='KEY AUDIT MATTERS' rows=5"}
+{"ts": "2026-06-11T11:42:58.612714+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Notes' rows=5"}
+{"ts": "2026-06-11T11:42:58.612855+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Option activity under the Plan is as given below' rows=17"}
+{"ts": "2026-06-11T11:42:58.613019+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Notes' rows=5"}
+{"ts": "2026-06-11T11:42:58.613204+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='39 LEASES' rows=9"}
+{"ts": "2026-06-11T11:42:58.613364+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='39 LEASES' rows=7"}
+{"ts": "2026-06-11T11:42:58.613533+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Notes' rows=6"}
+{"ts": "2026-06-11T11:42:58.613690+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='(iii) Capital management' rows=9"}
+{"ts": "2026-06-11T11:42:58.613835+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='(iii) Capital management' rows=15"}
+{"ts": "2026-06-11T11:42:58.613985+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Liquidity risk' rows=10"}
+{"ts": "2026-06-11T11:42:58.614189+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Notes' rows=12"}
+{"ts": "2026-06-11T11:42:58.614343+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Credit Risk' rows=6"}
+{"ts": "2026-06-11T11:42:58.615242+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Notes' rows=9"}
+{"ts": "2026-06-11T11:42:58.615369+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='(i) Liabilities' rows=6"}
+{"ts": "2026-06-11T11:42:58.615540+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Notes' rows=24"}
+{"ts": "2026-06-11T11:42:58.615713+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Foreign currency exposure' rows=10"}
+{"ts": "2026-06-11T11:42:58.616209+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Notes' rows=5"}
+{"ts": "2026-06-11T11:42:58.616371+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Notes' rows=5"}
+{"ts": "2026-06-11T11:42:58.616508+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Notes' rows=5"}
+{"ts": "2026-06-11T11:42:58.616720+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='The risk management process aims to:' rows=7"}
+{"ts": "2026-06-11T11:42:58.617308+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Notes' rows=25"}
+{"ts": "2026-06-11T11:42:58.617542+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Notes' rows=5"}
+{"ts": "2026-06-11T11:42:58.617936+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Notes' rows=3"}
+{"ts": "2026-06-11T11:42:58.619578+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Notes' rows=44"}
+{"ts": "2026-06-11T11:42:58.619953+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='C Balance as on the balance sheet date' rows=13"}
+{"ts": "2026-06-11T11:42:58.620173+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Notes' rows=31"}
+{"ts": "2026-06-11T11:42:58.620345+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Notes' rows=46"}
+{"ts": "2026-06-11T11:42:58.620605+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Notes' rows=47"}
+{"ts": "2026-06-11T11:42:58.620772+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='B Transactions with related parties' rows=31"}
+{"ts": "2026-06-11T11:42:58.620937+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Notes' rows=16"}
+{"ts": "2026-06-11T11:42:58.621120+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='A List of related parties where control exists and also related parties with whom transactions have taken place and relationships' rows=19"}
+{"ts": "2026-06-11T11:42:58.621327+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='(d) Other long-term benefits - compensated absences' rows=7"}
+{"ts": "2026-06-11T11:42:58.621482+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Maturity profile of defined benefit obligation' rows=10"}
+{"ts": "2026-06-11T11:42:58.621664+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Sensitivity analysis' rows=12"}
+{"ts": "2026-06-11T11:42:58.621825+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Movements in the present value of the defined benefit obligation are as follows:' rows=11"}
+{"ts": "2026-06-11T11:42:58.622063+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Amount included in the Balance Sheet arising from the entity's obligation in respect of its defined benefit plans is as follows:' rows=8"}
+{"ts": "2026-06-11T11:42:58.622442+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Components of defined benefit costs recognised is as follows:' rows=11"}
+{"ts": "2026-06-11T11:42:58.623042+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='The principal assumptions used for the purposes of the actuarial valuations of gratuity were as follows' rows=7"}
+{"ts": "2026-06-11T11:42:58.623446+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='(a) Defined contribution plans' rows=6"}
+{"ts": "2026-06-11T11:42:58.624320+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='33 CONTINGENT LIABILITIES AND COMMITMENTS' rows=12"}
+{"ts": "2026-06-11T11:42:58.624462+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='32 EARNINGS PER SHARE (EPS)' rows=10"}
+{"ts": "2026-06-11T11:42:58.624625+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Notes' rows=18"}
+{"ts": "2026-06-11T11:42:58.624837+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='30 INCOME TAX AND DEFERRED TAX' rows=14"}
+{"ts": "2026-06-11T11:42:58.625214+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='30 INCOME TAX AND DEFERRED TAX' rows=11"}
+{"ts": "2026-06-11T11:42:58.625448+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='30 INCOME TAX AND DEFERRED TAX' rows=7"}
+{"ts": "2026-06-11T11:42:58.626401+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='30 INCOME TAX AND DEFERRED TAX' rows=8"}
+{"ts": "2026-06-11T11:42:58.626635+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Notes:' rows=10"}
+{"ts": "2026-06-11T11:42:58.626740+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Notes:' rows=9"}
+{"ts": "2026-06-11T11:42:58.626932+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Notes' rows=7"}
+{"ts": "2026-06-11T11:42:58.627421+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='(i) Expenditure towards Corporate Social Responsibility (\"CSR\")' rows=13"}
+{"ts": "2026-06-11T11:42:58.628353+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Notes' rows=20"}
+{"ts": "2026-06-11T11:42:58.628553+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='29 OTHER EXPENSES' rows=14"}
+{"ts": "2026-06-11T11:42:58.628723+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='28 FINANCE COSTS' rows=11"}
+{"ts": "2026-06-11T11:42:58.628888+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='27 EMPLOYEE BENEFITS EXPENSE' rows=10"}
+{"ts": "2026-06-11T11:42:58.629229+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Notes' rows=19"}
+{"ts": "2026-06-11T11:42:58.630208+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Notes' rows=15"}
+{"ts": "2026-06-11T11:42:58.630890+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Notes' rows=11"}
+{"ts": "2026-06-11T11:42:58.631013+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='c) Contract balances' rows=8"}
+{"ts": "2026-06-11T11:42:58.631097+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='a) Disaggregation of revenue information' rows=11"}
+{"ts": "2026-06-11T11:42:58.631237+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Notes' rows=8"}
+{"ts": "2026-06-11T11:42:58.631358+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='(i) Reconciliation of revenue recognised in the statement of profit and loss with the contracted price:' rows=6"}
+{"ts": "2026-06-11T11:42:58.631506+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='24 REVENUE FROM OPERATIONS' rows=6"}
+{"ts": "2026-06-11T11:42:58.631658+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='23B NON-CURRENT TAX ASSETS (NET)' rows=5"}
+{"ts": "2026-06-11T11:42:58.632994+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='23A CURRENT TAX LIABILITIES (NET)' rows=5"}
+{"ts": "2026-06-11T11:42:58.633242+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='22 OTHER CURRENT LIABILITIES' rows=9"}
+{"ts": "2026-06-11T11:42:58.633456+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Notes' rows=10"}
+{"ts": "2026-06-11T11:42:58.633661+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Notes' rows=10"}
+{"ts": "2026-06-11T11:42:58.633887+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Notes' rows=9"}
+{"ts": "2026-06-11T11:42:58.634156+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='21 TRADE PAYABLES' rows=5"}
+{"ts": "2026-06-11T11:42:58.634568+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='20 METAL GOLD LOAN' rows=5"}
+{"ts": "2026-06-11T11:42:58.634826+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='19 PROVISIONS' rows=6"}
+{"ts": "2026-06-11T11:42:58.635215+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='19 PROVISIONS' rows=11"}
+{"ts": "2026-06-11T11:42:58.635382+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='18 OTHER NON-CURRENT LIABILITIES' rows=4"}
+{"ts": "2026-06-11T11:42:58.638846+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='17 OTHER FINANCIAL LIABILITIES' rows=13"}
+{"ts": "2026-06-11T11:42:58.639088+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='16 LEASE LIABILITIES' rows=14"}
+{"ts": "2026-06-11T11:42:58.639283+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Notes' rows=7"}
+{"ts": "2026-06-11T11:42:58.639828+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Notes' rows=17"}
+{"ts": "2026-06-11T11:42:58.639928+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Notes' rows=6"}
+{"ts": "2026-06-11T11:42:58.640045+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Notes' rows=7"}
+{"ts": "2026-06-11T11:42:58.642853+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Notes' rows=5"}
+{"ts": "2026-06-11T11:42:58.642973+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Notes' rows=7"}
+{"ts": "2026-06-11T11:42:58.644569+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Notes' rows=7"}
+{"ts": "2026-06-11T11:42:58.645067+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='(iii) Shareholders holding more than 5% shares in the Company' rows=10"}
+{"ts": "2026-06-11T11:42:58.645229+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='(ii) Reconciliation of the shares outstanding at the beginning and at the end of the year' rows=8"}
+{"ts": "2026-06-11T11:42:58.645318+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Notes' rows=10"}
+{"ts": "2026-06-11T11:42:58.645397+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Notes' rows=13"}
+{"ts": "2026-06-11T11:42:58.645466+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Notes' rows=12"}
+{"ts": "2026-06-11T11:42:58.647323+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Notes' rows=12"}
+{"ts": "2026-06-11T11:42:58.647759+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='11 TRADE RECEIVABLES' rows=8"}
+{"ts": "2026-06-11T11:42:58.648506+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='10 INVENTORIES' rows=6"}
+{"ts": "2026-06-11T11:42:58.648660+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='9 OTHER ASSETS' rows=14"}
+{"ts": "2026-06-11T11:42:58.648768+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='8 OTHER FINANCIAL ASSETS' rows=19"}
+{"ts": "2026-06-11T11:42:58.649289+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Notes' rows=4"}
+{"ts": "2026-06-11T11:42:58.649373+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Notes' rows=4"}
+{"ts": "2026-06-11T11:42:58.649436+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='7 LOANS' rows=18"}
+{"ts": "2026-06-11T11:42:58.649496+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Notes' rows=17"}
+{"ts": "2026-06-11T11:42:58.649566+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='6 INVESTMENTS' rows=7"}
+{"ts": "2026-06-11T11:42:58.649641+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='5 INVESTMENT PROPERTY' rows=6"}
+{"ts": "2026-06-11T11:42:58.649708+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='4 RIGHT-OF-USE (ROU) ASSETS - BUILDINGS' rows=11"}
+{"ts": "2026-06-11T11:42:58.649777+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='3E DEPRECIATION AND AMORTISATION EXPENSE' rows=7"}
+{"ts": "2026-06-11T11:42:58.649849+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Intangibles under development (overdue) completion schedule' rows=7"}
+{"ts": "2026-06-11T11:42:58.649915+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Ageing of intangibles under development' rows=11"}
+{"ts": "2026-06-11T11:42:58.649984+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='3D INTANGIBLES UNDER DEVELOPMENT' rows=11"}
+{"ts": "2026-06-11T11:42:58.653478+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Notes' rows=9"}
+{"ts": "2026-06-11T11:42:58.653627+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='3C INTANGIBLE ASSETS' rows=5"}
+{"ts": "2026-06-11T11:42:58.654128+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='3C INTANGIBLE ASSETS' rows=10"}
+{"ts": "2026-06-11T11:42:58.654276+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Ageing of Capital work-in-progress' rows=11"}
+{"ts": "2026-06-11T11:42:58.654661+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='3B CAPITAL WORK-IN-PROGRESS' rows=11"}
+{"ts": "2026-06-11T11:42:58.654778+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='(csviii) Recent Accounting Pronouncements' rows=21"}
+{"ts": "2026-06-11T11:42:58.654917+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='B OTHER EQUITY' rows=20"}
+{"ts": "2026-06-11T11:42:58.655333+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='A EQUITY SHARES WITH VOTING RIGHTS (REFER NOTE 13)' rows=7"}
+{"ts": "2026-06-11T11:42:58.655493+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Changes in liabilities arising from financing activities:' rows=11"}
+{"ts": "2026-06-11T11:42:58.655590+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Standalone Statement of Cash flows' rows=13"}
+{"ts": "2026-06-11T11:42:58.656013+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Standalone Statement of Cash flows' rows=55"}
+{"ts": "2026-06-11T11:42:58.656197+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='OPINION' rows=33"}
+{"ts": "2026-06-11T11:42:58.656645+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='OPINION' rows=56"}
+{"ts": "2026-06-11T11:42:58.656768+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='ANNEXURE I REFERRED TO IN PARAGRAPH 17 OF THE INDEPENDENT AUDITOR'S REPORT OF EVEN DATE TO THE MEMBERS OF KALYAN JEWELLERS INDIA LIMITED ON THE STANDALONE FINANCIAL STATEMENTS FOR THE YEAR ENDED 31 MARCH 2025' rows=6"}
+{"ts": "2026-06-11T11:42:58.656877+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='ANNEXURE I REFERRED TO IN PARAGRAPH 17 OF THE INDEPENDENT AUDITOR'S REPORT OF EVEN DATE TO THE MEMBERS OF KALYAN JEWELLERS INDIA LIMITED ON THE STANDALONE FINANCIAL STATEMENTS FOR THE YEAR ENDED 31 MARCH 2025' rows=5"}
+{"ts": "2026-06-11T11:42:58.657345+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='ANNEXURE I REFERRED TO IN PARAGRAPH 17 OF THE INDEPENDENT AUDITOR'S REPORT OF EVEN DATE TO THE MEMBERS OF KALYAN JEWELLERS INDIA LIMITED ON THE STANDALONE FINANCIAL STATEMENTS FOR THE YEAR ENDED 31 MARCH 2025' rows=7"}
+{"ts": "2026-06-11T11:42:58.657477+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='REPORT ON OTHER LEGAL AND REGULATORY REQUIREMENTS' rows=3"}
+{"ts": "2026-06-11T11:42:58.657581+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='KEY AUDIT MATTERS' rows=5"}
+{"ts": "2026-06-11T11:42:58.657699+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='KEY AUDIT MATTERS' rows=4"}
+{"ts": "2026-06-11T11:42:58.658329+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='INFORMATION REQUIRED UNDER SECTION 197 OF THE ACT READ WITH RULE 5(1) OF THE COMPANIES (APPOINTMENT AND REMUNERATION OF MANAGERIAL PERSONNEL) RULES, 2014.' rows=15"}
+{"ts": "2026-06-11T11:42:58.658437+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Appendix I' rows=9"}
+{"ts": "2026-06-11T11:42:58.658517+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Essential Indicators' rows=4"}
+{"ts": "2026-06-11T11:42:58.658878+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Essential Indicators' rows=10"}
+{"ts": "2026-06-11T11:42:58.659342+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Essential Indicators' rows=5"}
+{"ts": "2026-06-11T11:42:58.659485+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Leadership Indicators' rows=7"}
+{"ts": "2026-06-11T11:42:58.659633+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Essential Indicators' rows=6"}
+{"ts": "2026-06-11T11:42:58.660095+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Essential Indicators' rows=4"}
+{"ts": "2026-06-11T11:42:58.660568+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Essential Indicators' rows=3"}
+{"ts": "2026-06-11T11:42:58.660688+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Essential Indicators' rows=3"}
+{"ts": "2026-06-11T11:42:58.660797+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Essential Indicators' rows=3"}
+{"ts": "2026-06-11T11:42:58.661249+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Essential Indicators' rows=4"}
+{"ts": "2026-06-11T11:42:58.661338+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Essential Indicators' rows=3"}
+{"ts": "2026-06-11T11:42:58.661478+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Essential Indicators' rows=3"}
+{"ts": "2026-06-11T11:42:58.661587+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Essential Indicators' rows=3"}
+{"ts": "2026-06-11T11:42:58.662021+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Essential Indicators' rows=6"}
+{"ts": "2026-06-11T11:42:58.662109+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Essential Indicators' rows=6"}
+{"ts": "2026-06-11T11:42:58.662252+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Essential Indicators' rows=17"}
+{"ts": "2026-06-11T11:42:58.662710+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Essential Indicators' rows=8"}
+{"ts": "2026-06-11T11:42:58.662828+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Essential Indicators' rows=9"}
+{"ts": "2026-06-11T11:42:58.662940+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Essential Indicators' rows=19"}
+{"ts": "2026-06-11T11:42:58.663382+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Essential Indicators' rows=14"}
+{"ts": "2026-06-11T11:42:58.663540+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Essential Indicators' rows=6"}
+{"ts": "2026-06-11T11:42:58.663653+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Essential Indicators' rows=13"}
+{"ts": "2026-06-11T11:42:58.664204+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Essential Indicators' rows=8"}
+{"ts": "2026-06-11T11:42:58.664370+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Essential Indicators' rows=5"}
+{"ts": "2026-06-11T11:42:58.664473+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Essential Indicators' rows=9"}
+{"ts": "2026-06-11T11:42:58.664581+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Essential Indicators' rows=3"}
+{"ts": "2026-06-11T11:42:58.665069+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Essential Indicators' rows=7"}
+{"ts": "2026-06-11T11:42:58.665557+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Essential Indicators' rows=22"}
+{"ts": "2026-06-11T11:42:58.665682+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Essential Indicators' rows=11"}
+{"ts": "2026-06-11T11:42:58.665792+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Essential Indicators' rows=8"}
+{"ts": "2026-06-11T11:42:58.665908+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Leadership Indicators' rows=5"}
+{"ts": "2026-06-11T11:42:58.666013+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Essential Indicators' rows=4"}
+{"ts": "2026-06-11T11:42:58.666112+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Essential Indicators' rows=5"}
+{"ts": "2026-06-11T11:42:58.666271+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Essential Indicators' rows=10"}
+{"ts": "2026-06-11T11:42:58.666355+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Essential Indicators' rows=11"}
+{"ts": "2026-06-11T11:42:58.666431+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Essential Indicators' rows=12"}
+{"ts": "2026-06-11T11:42:58.666503+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Essential Indicators' rows=9"}
+{"ts": "2026-06-11T11:42:58.666577+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Essential Indicators' rows=6"}
+{"ts": "2026-06-11T11:42:58.667007+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Essential Indicators' rows=6"}
+{"ts": "2026-06-11T11:42:58.667118+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Essential Indicators' rows=7"}
+{"ts": "2026-06-11T11:42:58.667592+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Essential Indicators' rows=3"}
+{"ts": "2026-06-11T11:42:58.667721+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Essential Indicators' rows=12"}
+{"ts": "2026-06-11T11:42:58.667813+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Essential Indicators' rows=12"}
+{"ts": "2026-06-11T11:42:58.668282+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Essential Indicator' rows=4"}
+{"ts": "2026-06-11T11:42:58.668413+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Leadership Indicators' rows=3"}
+{"ts": "2026-06-11T11:42:58.668503+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Essential Indicators' rows=12"}
+{"ts": "2026-06-11T11:42:58.669254+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Essential Indicators' rows=3"}
+{"ts": "2026-06-11T11:42:58.669505+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Essential Indicators' rows=5"}
+{"ts": "2026-06-11T11:42:58.670794+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Essential Indicators' rows=6"}
+{"ts": "2026-06-11T11:42:58.670923+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Essential Indicators' rows=10"}
+{"ts": "2026-06-11T11:42:58.671019+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Essential Indicators' rows=6"}
+{"ts": "2026-06-11T11:42:58.673217+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Governance, leadership and oversight' rows=17"}
+{"ts": "2026-06-11T11:42:58.673331+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='SECTION B: MANAGEMENT AND PROCESS DISCLOSURES' rows=11"}
+{"ts": "2026-06-11T11:42:58.673402+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='SECTION A: GENERAL DISCLOSURES' rows=5"}
+{"ts": "2026-06-11T11:42:58.673471+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='SECTION A: GENERAL DISCLOSURES' rows=4"}
+{"ts": "2026-06-11T11:42:58.673531+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='SECTION A: GENERAL DISCLOSURES' rows=9"}
+{"ts": "2026-06-11T11:42:58.673587+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='SECTION A: GENERAL DISCLOSURES' rows=11"}
+{"ts": "2026-06-11T11:42:58.673649+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='SECTION A: GENERAL DISCLOSURES' rows=4"}
+{"ts": "2026-06-11T11:42:58.673711+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='SECTION A: GENERAL DISCLOSURES' rows=14"}
+{"ts": "2026-06-11T11:42:58.673766+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='SECTION A: GENERAL DISCLOSURES' rows=6"}
+{"ts": "2026-06-11T11:42:58.673825+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='SECTION A: GENERAL DISCLOSURES' rows=5"}
+{"ts": "2026-06-11T11:42:58.673882+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='SECTION A: GENERAL DISCLOSURES' rows=11"}
+{"ts": "2026-06-11T11:42:58.673933+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='SECTION A: GENERAL DISCLOSURES' rows=11"}
+{"ts": "2026-06-11T11:42:58.673985+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='SECTION A: GENERAL DISCLOSURES' rows=4"}
+{"ts": "2026-06-11T11:42:58.674037+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='SECTION A: GENERAL DISCLOSURES' rows=4"}
+{"ts": "2026-06-11T11:42:58.674089+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='SECTION A: GENERAL DISCLOSURES' rows=3"}
+{"ts": "2026-06-11T11:42:58.676192+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='SECTION A: GENERAL DISCLOSURES' rows=3"}
+{"ts": "2026-06-11T11:42:58.676649+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='SECTION A: GENERAL DISCLOSURES' rows=17"}
+{"ts": "2026-06-11T11:42:58.676735+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='ISSUE OF SHARES UNDER KALYAN JEWELLERS INDIA LIMITED - EMPLOYEES STOCK OPTION PLAN 2020:' rows=6"}
+{"ts": "2026-06-11T11:42:58.676797+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='9. SPECIFY THE REASON(S), IF THE COMPANY HAS FAILED TO SPEND TWO PER CENT OF THE AVERAGE NET PROFIT AS PER SECTION 135(5):' rows=12"}
+{"ts": "2026-06-11T11:42:58.676855+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='9. SPECIFY THE REASON(S), IF THE COMPANY HAS FAILED TO SPEND TWO PER CENT OF THE AVERAGE NET PROFIT AS PER SECTION 135(5):' rows=14"}
+{"ts": "2026-06-11T11:42:58.676930+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='7. DETAILS OF UNSPENT CSR AMOUNT FOR THE PRECEDING THREE FINANCIAL YEARS:' rows=7"}
+{"ts": "2026-06-11T11:42:58.677009+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='6F. EXCESS AMOUNT FOR SET OFF, IF ANY' rows=7"}
+{"ts": "2026-06-11T11:42:58.677064+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='6E. CSR AMOUNT SPENT OR UNSPENT FOR THE FINANCIAL YEAR' rows=5"}
+{"ts": "2026-06-11T11:42:58.677119+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='2. COMPOSITION OF THE CSR COMMITTEE' rows=5"}
+{"ts": "2026-06-11T11:42:58.677828+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Distribution of shareholding as on March 31, 2025:' rows=12"}
+{"ts": "2026-06-11T11:42:58.677944+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Details of the Annual General Meeting' rows=5"}
+{"ts": "2026-06-11T11:42:58.678444+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Details of the Annual General Meeting' rows=5"}
+{"ts": "2026-06-11T11:42:58.678680+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Senior Management' rows=5"}
+{"ts": "2026-06-11T11:42:58.678866+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Corporate Social Responsibility (CSR) Committee' rows=5"}
+{"ts": "2026-06-11T11:42:58.679039+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Risk Management Committee' rows=5"}
+{"ts": "2026-06-11T11:42:58.679221+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Stakeholders' Relationship Committee' rows=5"}
+{"ts": "2026-06-11T11:42:58.679473+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Details of remuneration paid to the Executive Directors for the FY25 are as follows:' rows=9"}
+{"ts": "2026-06-11T11:42:58.679715+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Remuneration to Non-Executive Directors for the FY25' rows=9"}
+{"ts": "2026-06-11T11:42:58.679979+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Nomination and Remuneration Committee' rows=5"}
+{"ts": "2026-06-11T11:42:58.680116+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Audit Committee' rows=5"}
+{"ts": "2026-06-11T11:42:58.680575+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Board qualifications, expertise and attributes' rows=12"}
+{"ts": "2026-06-11T11:42:58.680711+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='The profiles of the directors are given below:' rows=12"}
+{"ts": "2026-06-11T11:42:58.680839+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='\u20b97,142 Mn' rows=8"}
+{"ts": "2026-06-11T11:42:58.680931+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='\u20b97,142 Mn' rows=6"}
+{"ts": "2026-06-11T11:42:58.681034+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='\u20b97,142 Mn' rows=8"}
+{"ts": "2026-06-11T11:42:58.681110+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='FINANCIAL PERFORMANCE' rows=19"}
+{"ts": "2026-06-11T11:42:58.681201+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Global Economy' rows=3"}
+{"ts": "2026-06-11T11:42:58.681267+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='KEY MANAGERIAL PERSONNEL' rows=7"}
+{"ts": "2026-06-11T11:42:58.681319+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='DIRECTORS' rows=12"}
+{"ts": "2026-06-11T11:42:58.681372+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='SUBSIDIARIES/ JOINT VENTURE/ ASSOCIATE COMPANY' rows=14"}
+{"ts": "2026-06-11T11:42:58.681424+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='DIRECTOR'S REPORT' rows=8"}
+{"ts": "2026-06-11T11:42:58.681475+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Board Demographics' rows=8"}
+{"ts": "2026-06-11T11:42:58.681539+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Kalyan's Asset Light Journey Continues' rows=8"}
+{"ts": "2026-06-11T11:42:58.681597+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Kalyan's Asset Light Journey Continues' rows=8"}
+{"ts": "2026-06-11T11:42:58.681650+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Growth with Purpose, Performance with Discipline' rows=6"}
+{"ts": "2026-06-11T11:42:58.681701+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Growth with Purpose, Performance with Discipline' rows=6"}
+{"ts": "2026-06-11T11:42:58.681757+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Growth with Purpose, Performance with Discipline' rows=6"}
+{"ts": "2026-06-11T11:42:58.681808+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Growth with Purpose, Performance with Discipline' rows=6"}
+{"ts": "2026-06-11T11:42:58.681858+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Growth with Purpose, Performance with Discipline' rows=7"}
+{"ts": "2026-06-11T11:42:58.681907+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Growth with Purpose, Performance with Discipline' rows=6"}
+{"ts": "2026-06-11T11:42:58.681959+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Growth with Purpose, Performance with Discipline' rows=6"}
+{"ts": "2026-06-11T11:42:58.682011+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Growth with Purpose, Performance with Discipline' rows=6"}
+{"ts": "2026-06-11T11:42:58.682063+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Growth with Purpose, Performance with Discipline' rows=6"}
+{"ts": "2026-06-11T11:42:58.682117+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Growth with Purpose, Performance with Discipline' rows=7"}
+{"ts": "2026-06-11T11:42:58.683356+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Growth with Purpose, Performance with Discipline' rows=7"}
+{"ts": "2026-06-11T11:42:58.683503+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Growth with Purpose, Performance with Discipline' rows=7"}
+{"ts": "2026-06-11T11:42:58.683621+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Growth with Purpose, Performance with Discipline' rows=6"}
+{"ts": "2026-06-11T11:42:58.684188+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Growth with Purpose, Performance with Discipline' rows=6"}
+{"ts": "2026-06-11T11:42:58.684677+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='Growth with Purpose, Performance with Discipline' rows=6"}
+{"ts": "2026-06-11T11:42:58.684801+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='USING TECHNOLOGY WITH PURPOSE' rows=9"}
+{"ts": "2026-06-11T11:42:58.684912+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='BUILDING DEEPER CUSTOMER CONNECTIONS AS THE HYPERLOCAL JEWELLER' rows=7"}
+{"ts": "2026-06-11T11:42:58.685046+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='FROM A FAMILY LEGACY TO INDIA'S LEADING JEWELLERY BRAND' rows=5"}
+{"ts": "2026-06-11T11:42:58.685467+05:30", "level": "DEBUG", "component": "__main__", "message": "  [table] heading='FROM A FAMILY LEGACY TO INDIA'S LEADING JEWELLERY BRAND' rows=20"}
+{"ts": "2026-06-11T11:42:58.723397+05:30", "level": "INFO", "component": "__main__", "message": "[KALYANKJIL 2025] Cleaning done \u2014 550,431 chars output, 369 tables extracted"}
