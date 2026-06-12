@@ -22,7 +22,16 @@ Usage:
 import re
 from dataclasses import dataclass, field
 from typing import List, Optional
+from embeddingprepared import EmbeddingPrepared
 from logger import get_logger
+from enum import Enum
+import json
+from dataclasses import asdict, dataclass
+from config import CONFIG
+import os
+from pageintent import PageIntentTagger
+from cleanresult import CleanResult, TableType
+from tableinfo import TableExtractor
 
 logger = get_logger(__name__)
 
@@ -31,25 +40,6 @@ logger = get_logger(__name__)
 # Data containers
 # ---------------------------------------------------------------------------
 
-@dataclass
-class RawTable:
-    """
-    One markdown pipe-table extracted verbatim from the OCR output,
-    with enough context to classify it later.
-    """
-    raw_markdown: str          # The pipe-table text as-is
-    preceding_heading: str     # Nearest ## heading above this table
-    preceding_lines: str       # Up to 3 lines of prose immediately above
-    company: str
-    year: int
-    page_hint: Optional[int] = None   # Not always available from OCR
-
-@dataclass
-class CleanResult:
-    clean_text: str
-    raw_tables: List[RawTable]
-    company: str
-    year: int
 
 @dataclass
 class TextCleanPatterns:
@@ -122,7 +112,7 @@ _RE_TABLE_BLOCK  = re.compile(
 
 
 
-class TextCleanerandClassifier:
+class TextCleaner:
     """
     Cleans a single annual report's OCR text.
 
@@ -138,9 +128,10 @@ class TextCleanerandClassifier:
         Default 2 (header + at least one data row).
     """
 
-    def __init__(self, company: str, year: int, min_table_rows: int = 2):
+    def __init__(self, company: str, year: int, doc_type: str,min_table_rows: int = 2):
         self.company = company
         self.year = year
+        self.doc_type = doc_type
         self.min_table_rows = min_table_rows
 
     
@@ -192,7 +183,7 @@ class TextCleanerandClassifier:
             cleaned_lines.append(line_stripped)
         return '\n'.join(cleaned_lines)
     
-    def detect_table(text: str) -> bool:
+    def detect_table(self, text: str) -> bool:
         """
             Detects whether the text contains a markdown table.
             A valid table must have both a data row and a separator row.
@@ -221,7 +212,7 @@ class TextCleanerandClassifier:
 #  Function 2 — Classify table as financial or qualitative
 # ─────────────────────────────────────────────────────────────────────────────
 
-    def classify_table(text: str) -> str | None:
+    def classify_table(self, text: str) -> str | None:
         """
             If the text contains a table, classifies it as 'financial' or 'qualitative'.
             Financial  — contains revenue, profit, debt, ₹, FY figures, ratios etc.
@@ -234,9 +225,6 @@ class TextCleanerandClassifier:
             str  : "financial" | "qualitative"
             None : if no table detected in the text
         """
-        if not detect_table(text):
-            return None
-
         # Extract only the table rows for focused matching
         table_text = " ".join(
             line.strip()
@@ -250,29 +238,18 @@ class TextCleanerandClassifier:
 
         # Tie-break: financial wins (stricter classification)
         if financial_score >= qualitative_score:
-            return "financial"
-        return "qualitative"
+            return TableType.FINANCIAL
+        return TableType.QUALITATIVE
     
     def _normalise_whitespace(self, text: str) -> str:
         """Collapse 3+ consecutive blank lines to 2."""
         text = re.sub(r'\n{3,}', '\n\n', text)
         return text.strip()
     
-    _RE_IMAGE     = re.compile(r'!\[.*?\]\(.*?\)', re.IGNORECASE)   # ![img](url)
-    _RE_MD_HEADER = re.compile(r'^#{1,3} ', re.MULTILINE)           # # ## ###
-    _RE_PIPE_ROW  = re.compile(r'^\|.*\|$',  re.MULTILINE)          # table rows
-    _RE_EXTRA_NL  = re.compile(r'\n{3,}')                           # 3+ blank lines
 
-
-    def check_and_clean(text: str, min_words: int = 20) -> dict:
+    def check_count(self, text: str, min_words: int = 20) -> tuple[int, bool]:
         """
             Counts words in the text. If below min_words, cleans the text.
-            Cleaning removes:
-            - Image markdown tags  ![img](url)
-            - Leading # from headings
-            -         Table rows
-            - Extra blank lines
-            - Leading/trailing whitespace
             Parameters
             ----------
             text      : Raw markdown text of the page.
@@ -283,135 +260,88 @@ class TextCleanerandClassifier:
             dict with keys:
             word_count  : int   — number of words in original text
             is_short    : bool  — True if below min_words
-            clean_text  : str   — cleaned text (same as input if above threshold)
         """
         word_count = len(text.split())
-        is_short   = word_count < min_words
-        if is_short:
-            clean = text
-            clean = _RE_IMAGE.sub("", clean)          # remove ![img](url)
-            clean = _RE_MD_HEADER.sub("", clean)      # remove ### headings markers
-            clean = _RE_PIPE_ROW.sub("", clean)       # remove table rows
-            clean = _RE_EXTRA_NL.sub("\n\n", clean)   # collapse blank lines
-            clean = clean.strip()
-        else:
-            clean = text
-
-        return {
-            "word_count" : word_count,
-            "is_short"   : is_short,
-            "clean_text" : clean,
-        }
+        is_short = word_count < min_words
+        return word_count, is_short
 
 
     
     # ------------------------------------------------------------------
     # Public API
     # ------------------------------------------------------------------
+    # 
+    def clean(self, raw_text: str, page_num: int) -> CleanResult:
+        """
+        Full cleaning pipeline.
 
-def clean(self, raw_text: str) -> CleanResult:
-    """
-    Full cleaning pipeline.
+        Steps
+        -----
+        1. Normalise line endings.
+        2. Remove images, footers, ToC, horizontal rules (line-by-line).
+        3. Extract pipe-tables with their surrounding context.
+        4. Remove extracted tables from the narrative text.
+        5. Final whitespace normalisation.
 
-    Steps
-    -----
-    1. Normalise line endings.
-    2. Remove images, footers, ToC, horizontal rules (line-by-line).
-    3. Extract pipe-tables with their surrounding context.
-    4. Remove extracted tables from the narrative text.
-    5. Final whitespace normalisation.
+        Returns CleanResult with clean_text and raw_tables list.
+        """
+        logger.info(f"[{self.company} {self.year}] Starting clean — "f"{len(raw_text):,} chars input")
 
-    Returns CleanResult with clean_text and raw_tables list.
-    """
-    logger.info(f"[{self.company} {self.year}] Starting clean — "f"{len(raw_text):,} chars input")
+        text = self._normalise_endings(raw_text)
+        text = self._remove_line_artifacts(text)
+        text = self._normalise_whitespace(text)
 
-    text = self._normalise_endings(raw_text)
-    text = self._remove_line_artifacts(text)
-    raw_tables, text = self._extract_tables(text)
-    text = self._normalise_whitespace(text)
-
-    logger.info(f"[{self.company} {self.year}] Cleaning done — "
-                f"{len(text):,} chars output, "
-                f"{len(raw_tables)} tables extracted")
-    return CleanResult(
-            clean_text=text,
-            raw_tables=raw_tables,
-            company=self.company,
-            year=self.year,
+        has_table  = self.detect_table(text)
+        table_type = self.classify_table(text) if has_table else None
+        word_count , is_short = self.check_count(text)
+        
+#        logger.info(f"[{self.company} {self.year}] Cleaning done — "
+#                    f"{len(text):,} chars output, "
+#                    f"{len(raw_tables)} tables extracted")
+        return CleanResult(
+            page_number       = page_num,
+            clean_text     = text,
+            has_table      = has_table,
+            table_type     = table_type,
+            word_count     = word_count,
+            is_short       = is_short,
+            doc_type       = self.doc_type,
+            company        = self.company,
+            year           = self.year,
         )
 
-
-# def _extract_tables(self, text: str) -> tuple[list[RawTable], str]:
-    #     """
-    #     Find all markdown pipe-tables in text.
-    #     For each table:
-    #       - capture the nearest heading and 3 prose lines above it
-    #       - store as RawTable
-    #       - replace the table in text with a placeholder comment so the
-    #         narrative remains coherent for section detection
-
-    #     Returns (list_of_raw_tables, text_with_tables_removed).
-    #     """
-    #     raw_tables: list[RawTable] = []
-    #     lines = text.split('\n')
-
-    #     # Build an index: line_number → heading that was most recently seen
-    #     current_heading = "unknown"
-    #     heading_at_line: dict[int, str] = {}
-    #     for i, line in enumerate(lines):
-    #         if line.startswith('#'):
-    #             current_heading = line.lstrip('#').strip()
-    #         heading_at_line[i] = current_heading
-
-    #     # Find table spans
-    #     table_spans: list[tuple[int, int]] = []   # (start_line, end_line) inclusive
-    #     i = 0
-    #     while i < len(lines):
-    #         if lines[i].strip().startswith('|'):
-    #             start = i
-    #             while i < len(lines) and lines[i].strip().startswith('|'):
-    #                 i += 1
-    #             end = i - 1
-    #             row_count = end - start + 1
-    #             if row_count >= self.min_table_rows:
-    #                 table_spans.append((start, end))
-    #         else:
-    #             i += 1
-
-    #     # Process spans in reverse so replacements don't shift indices
-    #     for (start, end) in reversed(table_spans):
-    #         table_lines = lines[start:end + 1]
-    #         raw_md = '\n'.join(table_lines)
-
-    #         # Gather context: up to 3 non-empty prose lines immediately above
-    #         context_lines = []
-    #         scan = start - 1
-    #         while scan >= 0 and len(context_lines) < 3:
-    #             l = lines[scan].strip()
-    #             if l and not l.startswith('|') and not l.startswith('#'):
-    #                 context_lines.insert(0, l)
-    #             scan -= 1
-    #         preceding_prose = ' '.join(context_lines)
-
-    #         heading = heading_at_line.get(start, "unknown")
-
-    #         rt = RawTable(
-    #             raw_markdown=raw_md,
-    #             preceding_heading=heading,
-    #             preceding_lines=preceding_prose,
-    #             company=self.company,
-    #             year=self.year,
-    #         )
-    #         raw_tables.append(rt)
-    #         logger.debug(f"  [table] heading='{heading}' rows={end-start+1}")
-
-    #         # Replace table in text with a lightweight placeholder
-    #         placeholder = f"[TABLE_EXTRACTED: {heading[:60]}]"
-    #         lines[start:end + 1] = [placeholder]
-
-    #     # Raw tables were collected in reverse; restore document order
-    #     raw_tables.reverse()
-
-    #     return raw_tables, '\n'.join(lines)
-
+if __name__ == "__main__":
     
+    cleanresult_book: List[CleanResult] =[]
+    input_file=os.path.join(CONFIG.UPLOADS_PATH,"KALYANKJIL","ANNUAL_2025","KALYANKJIL_ANNUAL_2025.json")
+    output_file=os.path.join(CONFIG.UPLOADS_PATH,"KALYANKJIL","ANNUAL_2025","KALYAN_ANNUAL_PAGEINTENT_2025.json")
+    
+    with open(input_file, "r", encoding="utf-8") as fh:
+        pages = json.load(fh)
+
+    cleaner = TextCleaner("KALYANKJIL", 2025, "ANNUAL_REPORT")
+    intent_page = PageIntentTagger()
+    table_extractor = TableExtractor()
+    for page in pages:
+        result = cleaner.clean(page["text"], page["page_num"])
+        if not result.is_short:
+            result.page_intent = intent_page._tag_page(result)
+            result.clean_text, result.raw_tables = table_extractor.strip_tables(result.clean_text)
+            result.word_count, result.is_short = cleaner.check_count(result.clean_text)
+            cleanresult_book.append(result)
+
+    with open(output_file, "w", encoding="utf-8") as fh:
+        json.dump([asdict(r) for r in cleanresult_book], fh, indent=2, ensure_ascii=False)
+    
+    input_file=os.path.join(CONFIG.UPLOADS_PATH,"KALYANKJIL","ANNUAL_2025","KALYAN_ANNUAL_PAGEINTENT_2025.json")
+    output_file=os.path.join(CONFIG.UPLOADS_PATH,"KALYANKJIL","ANNUAL_2025","KALYAN_ANNUAL_EMBEDDINGREADY_2025.json")
+    embedding_preparer = EmbeddingPrepared()
+    embedding_preparer.prepare_for_embedding(input_file, output_file)
+
+    # with open(output_file, "r", encoding="utf-8") as fh:
+    #     pages = json.load(fh)
+    # useful_pages = [page for page in pages if page["is_short"] != True]
+    # useful_count = len(useful_pages)
+    # print(f"{useful_count}/{len(pages)}")
+    # has_tables = [page for page in pages if page["has_table"] == True]
+    # print(f"{len(has_tables)}/{len(pages)}")
