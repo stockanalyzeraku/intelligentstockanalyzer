@@ -57,10 +57,7 @@ if _ROOT not in sys.path:
 
 from config import CONFIG                       # noqa: E402  (root module)
 from logger import get_logger                   # noqa: E402  (root module)
-from cleaning.cleanresult import CleanResult, TableType
-from codebase.cleaning.embeddingprepared import EmbeddingPrepared
-from cleaning.pageintent import PageIntentTagger
-from cleaning.tableinfo import TableExtractor
+from codebase.cleaning.cleanresult import CleanResult, TableType
 
 logger = get_logger(__name__)
 
@@ -392,62 +389,62 @@ class TextCleaner:
 # Entry point — end-to-end cleaning run for KALYANKJIL ANNUAL 2025
 # ---------------------------------------------------------------------------
 
-if __name__ == "__main__":
-    import os
+# if __name__ == "__main__":
+#     import os
 
-    # ── Input / output paths follow uploads/Company/DocType+Year/File ──
-    COMPANY   = "KALYANKJIL"
-    YEAR      = 2025
-    DOC_TYPE  = "ANNUAL"
+#     # ── Input / output paths follow uploads/Company/DocType+Year/File ──
+#     COMPANY   = "KALYANKJIL"
+#     YEAR      = 2025
+#     DOC_TYPE  = "ANNUAL"
 
-    base_dir    = os.path.join(CONFIG.UPLOADS_PATH, COMPANY, f"{DOC_TYPE}_{YEAR}")
-    input_file  = os.path.join(base_dir, f"{COMPANY}_{DOC_TYPE}_{YEAR}.json")
-    intent_file = os.path.join(base_dir, f"{COMPANY}_{DOC_TYPE}_PAGEINTENT_{YEAR}.json")
-    embed_file  = os.path.join(base_dir, f"{COMPANY}_{DOC_TYPE}_EMBEDDINGREADY_{YEAR}.json")
+#     base_dir    = os.path.join(CONFIG.UPLOADS_PATH, COMPANY, f"{DOC_TYPE}_{YEAR}")
+#     input_file  = os.path.join(base_dir, f"{COMPANY}_{DOC_TYPE}_{YEAR}.json")
+#     intent_file = os.path.join(base_dir, f"{COMPANY}_{DOC_TYPE}_PAGEINTENT_{YEAR}.json")
+#     embed_file  = os.path.join(base_dir, f"{COMPANY}_{DOC_TYPE}_EMBEDDINGREADY_{YEAR}.json")
 
-    logger.info(f"Loading pages from: {input_file}")
-    with open(input_file, "r", encoding="utf-8") as fh:
-        pages = json.load(fh)
-    logger.info(f"Loaded {len(pages)} pages")
+#     logger.info(f"Loading pages from: {input_file}")
+#     with open(input_file, "r", encoding="utf-8") as fh:
+#         pages = json.load(fh)
+#     logger.info(f"Loaded {len(pages)} pages")
 
-    # ── Initialise pipeline components ─────────────────────────────────
-    cleaner         = TextCleaner(COMPANY, YEAR, "ANNUAL_REPORT")
-    intent_tagger   = PageIntentTagger()
-    table_extractor = TableExtractor()
+#     # ── Initialise pipeline components ─────────────────────────────────
+#     cleaner         = TextCleaner(COMPANY, YEAR, "ANNUAL_REPORT")
+#     intent_tagger   = PageIntentTagger()
+#     table_extractor = TableExtractor()
 
-    cleanresult_book: List[CleanResult] = []
-    skipped = 0
+#     cleanresult_book: List[CleanResult] = []
+#     skipped = 0
 
-    for page in pages:
-        result = cleaner.clean(page["text"], page["page_num"])
+#     for page in pages:
+#         result = cleaner.clean(page["text"], page["page_num"])
 
-        if result.is_short:
-            logger.debug(f"Skipping short page {result.page_number} ({result.word_count} words)")
-            skipped += 1
-            continue
+#         if result.is_short:
+#             logger.debug(f"Skipping short page {result.page_number} ({result.word_count} words)")
+#             skipped += 1
+#             continue
 
-        # Intent tagging operates on text that still contains tables
-        result.page_intent = intent_tagger._tag_page(result)
+#         # Intent tagging operates on text that still contains tables
+#         result.page_intent = intent_tagger._tag_page(result)
 
-        # Strip tables from prose after intent tagging
-        result.clean_text, result.raw_tables = table_extractor.strip_tables(result.clean_text)
+#         # Strip tables from prose after intent tagging
+#         result.clean_text, result.raw_tables = table_extractor.strip_tables(result.clean_text)
 
-        # Re-count words now that tables are removed
-        result.word_count, result.is_short = cleaner.check_count(result.clean_text)
+#         # Re-count words now that tables are removed
+#         result.word_count, result.is_short = cleaner.check_count(result.clean_text)
 
-        cleanresult_book.append(result)
+#         cleanresult_book.append(result)
 
-    logger.info(
-        f"Cleaning complete — {len(cleanresult_book)} pages kept, "
-        f"{skipped} short pages skipped"
-    )
+#     logger.info(
+#         f"Cleaning complete — {len(cleanresult_book)} pages kept, "
+#         f"{skipped} short pages skipped"
+#     )
 
-    # ── Serialise page-intent results ───────────────────────────────────
-    with open(intent_file, "w", encoding="utf-8") as fh:
-        json.dump([asdict(r) for r in cleanresult_book], fh, indent=2, ensure_ascii=False)
-    logger.info(f"Page-intent JSON written → {intent_file}")
+#     # ── Serialise page-intent results ───────────────────────────────────
+#     with open(intent_file, "w", encoding="utf-8") as fh:
+#         json.dump([asdict(r) for r in cleanresult_book], fh, indent=2, ensure_ascii=False)
+#     logger.info(f"Page-intent JSON written → {intent_file}")
 
-    # ── Prepare chunks for embedding ────────────────────────────────────
-    embedding_preparer = EmbeddingPrepared()
-    embedding_preparer.prepare_for_embedding(intent_file, embed_file)
-    logger.info(f"Embedding-ready JSON written → {embed_file}")
+#     # ── Prepare chunks for embedding ────────────────────────────────────
+#     embedding_preparer = EmbeddingPrepared()
+#     embedding_preparer.prepare_for_embedding(intent_file, embed_file)
+#     logger.info(f"Embedding-ready JSON written → {embed_file}")

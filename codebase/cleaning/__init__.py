@@ -19,6 +19,7 @@ from codebase.cleaning.tableinfo import TableExtractor
 from codebase.cleaning.textcleaner import TextCleaner
 from codebase.cleaning.pageintent import PageIntentTagger, IntentResult
 from codebase.cleaning.embeddingprepared import EmbeddingPrepared
+from codebase.cleaning.pipelinerunner import PipelineRunner
 
 __all__ = [
     "CleanResult",
@@ -28,4 +29,5 @@ __all__ = [
     "PageIntentTagger",
     "IntentResult",
     "EmbeddingPrepared",
+    "PipelineRunner"
 ]
