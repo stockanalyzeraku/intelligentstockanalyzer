@@ -1,8 +1,0 @@
-{"ts": "2026-06-10T11:00:35.962996+05:30", "level": "INFO", "component": "chroma_store", "message": "Collection ready.", "collection": "child_chunks", "count": 0}
-{"ts": "2026-06-10T11:00:35.966495+05:30", "level": "INFO", "component": "chroma_store", "message": "Collection ready.", "collection": "parent_sections", "count": 0}
-{"ts": "2026-06-10T11:00:35.969820+05:30", "level": "INFO", "component": "chroma_store", "message": "Collection ready.", "collection": "financial_facts", "count": 0}
-{"ts": "2026-06-10T11:00:35.972555+05:30", "level": "INFO", "component": "chroma_store", "message": "Collection ready.", "collection": "mgmt_statements", "count": 0}
-{"ts": "2026-06-10T11:04:15.966299+05:30", "level": "INFO", "component": "chroma_store", "message": "Collection ready.", "collection": "child_chunks", "count": 0}
-{"ts": "2026-06-10T11:04:15.969219+05:30", "level": "INFO", "component": "chroma_store", "message": "Collection ready.", "collection": "parent_sections", "count": 0}
-{"ts": "2026-06-10T11:04:15.971575+05:30", "level": "INFO", "component": "chroma_store", "message": "Collection ready.", "collection": "financial_facts", "count": 0}
-{"ts": "2026-06-10T11:04:15.973895+05:30", "level": "INFO", "component": "chroma_store", "message": "Collection ready.", "collection": "mgmt_statements", "count": 0}

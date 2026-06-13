@@ -1,1 +1,0 @@
-{"ts": "2026-06-07T18:18:54.982088+05:30", "level": "INFO", "component": "error_handler", "message": "Error handler initialised.", "gemini_cb": "gemini", "chroma_cb": "chromadb"}

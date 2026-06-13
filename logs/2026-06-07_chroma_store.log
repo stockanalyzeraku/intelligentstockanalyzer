@@ -1,4 +1,0 @@
-{"ts": "2026-06-07T19:39:56.813762+05:30", "level": "INFO", "component": "chroma_store", "message": "Collection ready.", "collection": "child_chunks", "count": 0}
-{"ts": "2026-06-07T19:39:56.830430+05:30", "level": "INFO", "component": "chroma_store", "message": "Collection ready.", "collection": "parent_sections", "count": 0}
-{"ts": "2026-06-07T19:39:56.841598+05:30", "level": "INFO", "component": "chroma_store", "message": "Collection ready.", "collection": "financial_facts", "count": 0}
-{"ts": "2026-06-07T19:39:56.852116+05:30", "level": "INFO", "component": "chroma_store", "message": "Collection ready.", "collection": "mgmt_statements", "count": 0}

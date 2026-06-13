@@ -1,2 +1,0 @@
-{"ts": "2026-06-10T11:00:33.684710+05:30", "level": "INFO", "component": "embedder", "message": "Embedding model loaded.", "model": "all-MiniLM-L6-v2", "dim": 384}
-{"ts": "2026-06-10T11:04:15.864297+05:30", "level": "INFO", "component": "embedder", "message": "Embedding model loaded.", "model": "all-MiniLM-L6-v2", "dim": 384}

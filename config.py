@@ -41,7 +41,7 @@ class Config:
     LLM_TIMEOUT_SECONDS: int = 60
 
     # ── Embeddings ────────────────────────────────────────────────────────
-    EMBEDDING_MODEL: str = "bge-base-en-v1.5" #"all-MiniLM-L6-v2"
+    EMBEDDING_MODEL: str =  "all-MiniLM-L6-v2"
     EMBEDDING_DIM: int = 384
 
     # ── ChromaDB Collections ──────────────────────────────────────────────

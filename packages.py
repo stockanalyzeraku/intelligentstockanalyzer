@@ -20,17 +20,16 @@ def install_dependencies():
     packages = [
         "google-generativeai>=0.7.0",
         "sentence-transformers>=2.7.0",
-        "chromadb>=0.5.0",
-        "pymupdf>=1.24.0",          # fitz — PDF extraction
-        "pdfplumber>=0.11.0",       # table extraction
+        "chromadb==0.4.24",
+        "pymupdf>=1.24.0",
+        "pdfplumber>=0.11.0",
         "rank_bm25>=0.2.2",
-        "numpy>=1.26.0",
+        "numpy<2.0",
         "tqdm>=4.66.0",
         "tenacity>=8.3.0",
         "reportlab",
         "mistralai"
     ]
-
     for pkg_spec in packages:
         # Extract the base package name (e.g., 'google-generativeai' from 'google-generativeai>=0.7.0')
         pkg_name = re.split(r'[<=>~]', pkg_spec)[0].strip()
