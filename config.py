@@ -34,8 +34,8 @@ class Config:
     # ── LLM ───────────────────────────────────────────────────────────────
     GEMINI_MODEL: str = "gemini-2.5-flash"
     MISTRAL_MODEL_OCR = "mistral-ocr-latest"
-    GEMINI_API_KEY: Optional[str] = os.getenv("GEMINI_API_KEY")
-    MISTRAL_API_KEY : Optional[str] = os.getenv("MISTRAL_API_KEY")
+    GEMINI_API_KEY: Optional[str] = "AIzaSyBwviG_blKY-ec_WZ9VvKETxarsyelCWLM"
+    MISTRAL_API_KEY : Optional[str] = "JUtavgCRQvS9p96wPLi9Nw8z2IIHgYCS"
     LLM_TEMPERATURE: float = 0.1
     LLM_MAX_OUTPUT_TOKENS: int = 4096
     LLM_TIMEOUT_SECONDS: int = 60

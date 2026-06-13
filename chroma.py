@@ -10,7 +10,7 @@ Singleton pattern.
 from typing import Dict, List, Optional, Any
 import chromadb
 from logger import get_logger
-from embedder import LocalEmbedder
+from codebase.vectordb.embedder import LocalEmbedder
 from config import Config
 
 class ChromaStore:

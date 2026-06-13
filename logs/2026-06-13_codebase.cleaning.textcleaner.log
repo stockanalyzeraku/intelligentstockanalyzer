@@ -649,3 +649,494 @@
 {"ts": "2026-06-13T14:55:40.961101+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
 {"ts": "2026-06-13T14:55:40.961405+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
 {"ts": "2026-06-13T14:55:40.961911+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 49 done \u2014 5,686 chars, 1111 words, has_table=True, table_type=TableType.QUALITATIVE, is_short=False"}
+{"ts": "2026-06-13T18:06:02.881837+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[TextCleaner] Initialised \u2014 company=KALYANKJIL, year=2025, doc_type=ANNUAL_REPORT"}
+{"ts": "2026-06-13T18:06:02.890774+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 1 \u2014 113 chars input"}
+{"ts": "2026-06-13T18:06:02.891029+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 1 done \u2014 86 chars, 12 words, has_table=False, table_type=None, is_short=True"}
+{"ts": "2026-06-13T18:06:02.891253+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 2 \u2014 2,512 chars input"}
+{"ts": "2026-06-13T18:06:02.891374+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     We are Kalyan Jewellers ... 04"}
+{"ts": "2026-06-13T18:06:02.891477+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Our Strengths ... 08"}
+{"ts": "2026-06-13T18:06:02.891650+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Our Presence ... 10"}
+{"ts": "2026-06-13T18:06:02.891786+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Product Offerings ... 14"}
+{"ts": "2026-06-13T18:06:02.891882+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Candere ... 18"}
+{"ts": "2026-06-13T18:06:02.891988+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Performance Highlights ... 24"}
+{"ts": "2026-06-13T18:06:02.892086+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     MD's Message ... 28"}
+{"ts": "2026-06-13T18:06:02.892191+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Strategic Initiatives ... 32"}
+{"ts": "2026-06-13T18:06:02.892281+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Marketing and Promotions ... 38"}
+{"ts": "2026-06-13T18:06:02.892374+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Environment and Social Initiatives ... 44"}
+{"ts": "2026-06-13T18:06:02.892458+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Governance ... 48"}
+{"ts": "2026-06-13T18:06:02.892553+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Statutory Reports ... 56"}
+{"ts": "2026-06-13T18:06:02.892668+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Financial Statements ... 126"}
+{"ts": "2026-06-13T18:06:02.892754+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Notice ... 266"}
+{"ts": "2026-06-13T18:06:02.893036+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 2 done \u2014 2,128 chars, 350 words, has_table=False, table_type=None, is_short=False"}
+{"ts": "2026-06-13T18:06:02.901778+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 3 \u2014 314 chars input"}
+{"ts": "2026-06-13T18:06:02.901885+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:06:02.902018+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:06:02.902135+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 3 done \u2014 111 chars, 19 words, has_table=False, table_type=None, is_short=True"}
+{"ts": "2026-06-13T18:06:02.902336+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 4 \u2014 2,658 chars input"}
+{"ts": "2026-06-13T18:06:02.902448+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:06:02.902589+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  6"}
+{"ts": "2026-06-13T18:06:02.902701+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  388"}
+{"ts": "2026-06-13T18:06:02.902801+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  23"}
+{"ts": "2026-06-13T18:06:02.902992+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:06:02.903223+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 4 done \u2014 2,470 chars, 358 words, has_table=False, table_type=None, is_short=False"}
+{"ts": "2026-06-13T18:06:02.905943+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 5 \u2014 3,607 chars input"}
+{"ts": "2026-06-13T18:06:02.906065+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:06:02.906284+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:06:02.906738+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 5 done \u2014 3,269 chars, 538 words, has_table=True, table_type=TableType.QUALITATIVE, is_short=False"}
+{"ts": "2026-06-13T18:06:02.910846+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 6 \u2014 2,797 chars input"}
+{"ts": "2026-06-13T18:06:02.910991+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:06:02.911236+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:06:02.911487+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 6 done \u2014 2,633 chars, 388 words, has_table=False, table_type=None, is_short=False"}
+{"ts": "2026-06-13T18:06:02.913549+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 7 \u2014 1,565 chars input"}
+{"ts": "2026-06-13T18:06:02.913691+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:06:02.913817+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  278"}
+{"ts": "2026-06-13T18:06:02.913909+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  73"}
+{"ts": "2026-06-13T18:06:02.914008+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  36"}
+{"ts": "2026-06-13T18:06:02.914114+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  1"}
+{"ts": "2026-06-13T18:06:02.914282+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:06:02.914461+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 7 done \u2014 1,431 chars, 202 words, has_table=False, table_type=None, is_short=False"}
+{"ts": "2026-06-13T18:06:02.916059+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 8 \u2014 1,869 chars input"}
+{"ts": "2026-06-13T18:06:02.916167+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:06:02.916404+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 8 done \u2014 1,777 chars, 262 words, has_table=False, table_type=None, is_short=False"}
+{"ts": "2026-06-13T18:06:02.917910+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 9 \u2014 3,143 chars input"}
+{"ts": "2026-06-13T18:06:02.918041+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:06:02.918425+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 9 done \u2014 2,997 chars, 403 words, has_table=False, table_type=None, is_short=False"}
+{"ts": "2026-06-13T18:06:02.920821+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 10 \u2014 1,967 chars input"}
+{"ts": "2026-06-13T18:06:02.920945+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:06:02.921096+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:06:02.921365+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 10 done \u2014 1,818 chars, 270 words, has_table=True, table_type=TableType.QUALITATIVE, is_short=False"}
+{"ts": "2026-06-13T18:06:02.923323+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 11 \u2014 1,417 chars input"}
+{"ts": "2026-06-13T18:06:02.923434+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:06:02.923640+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:06:02.923821+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 11 done \u2014 1,134 chars, 170 words, has_table=False, table_type=None, is_short=False"}
+{"ts": "2026-06-13T18:06:02.925055+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 12 \u2014 4,582 chars input"}
+{"ts": "2026-06-13T18:06:02.925161+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:06:02.925325+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  80"}
+{"ts": "2026-06-13T18:06:02.925491+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:06:02.925920+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 12 done \u2014 4,402 chars, 665 words, has_table=True, table_type=TableType.QUALITATIVE, is_short=False"}
+{"ts": "2026-06-13T18:06:02.931880+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 13 \u2014 297 chars input"}
+{"ts": "2026-06-13T18:06:02.931993+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:06:02.932108+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Performance Highlights ... 24"}
+{"ts": "2026-06-13T18:06:02.932209+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     MD's Message ... 28"}
+{"ts": "2026-06-13T18:06:02.932314+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:06:02.932420+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 13 done \u2014 16 chars, 4 words, has_table=False, table_type=None, is_short=True"}
+{"ts": "2026-06-13T18:06:02.932633+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 14 \u2014 2,615 chars input"}
+{"ts": "2026-06-13T18:06:02.932754+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:06:02.933112+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:06:02.933498+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 14 done \u2014 2,466 chars, 564 words, has_table=True, table_type=TableType.FINANCIAL, is_short=False"}
+{"ts": "2026-06-13T18:06:02.937080+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 15 \u2014 2,504 chars input"}
+{"ts": "2026-06-13T18:06:02.937200+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:06:02.937381+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:06:02.937469+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  26"}
+{"ts": "2026-06-13T18:06:02.937551+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  27"}
+{"ts": "2026-06-13T18:06:02.937937+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 15 done \u2014 2,374 chars, 446 words, has_table=True, table_type=TableType.FINANCIAL, is_short=False"}
+{"ts": "2026-06-13T18:06:02.940254+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 16 \u2014 5,576 chars input"}
+{"ts": "2026-06-13T18:06:02.940400+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:06:02.940654+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:06:02.940927+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 16 done \u2014 5,423 chars, 818 words, has_table=False, table_type=None, is_short=False"}
+{"ts": "2026-06-13T18:06:02.945303+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 17 \u2014 285 chars input"}
+{"ts": "2026-06-13T18:06:02.945398+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:06:02.945494+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Strategic Initiatives ... 32"}
+{"ts": "2026-06-13T18:06:02.945609+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Marketing and Promotions ... 38"}
+{"ts": "2026-06-13T18:06:02.945707+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:06:02.945806+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 17 done \u2014 20 chars, 3 words, has_table=False, table_type=None, is_short=True"}
+{"ts": "2026-06-13T18:06:02.945985+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 18 \u2014 2,653 chars input"}
+{"ts": "2026-06-13T18:06:02.946085+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:06:02.946321+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:06:02.946548+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 18 done \u2014 2,504 chars, 348 words, has_table=False, table_type=None, is_short=False"}
+{"ts": "2026-06-13T18:06:02.948338+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 19 \u2014 3,426 chars input"}
+{"ts": "2026-06-13T18:06:02.948455+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:06:02.948731+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:06:02.948981+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 19 done \u2014 3,304 chars, 456 words, has_table=False, table_type=None, is_short=False"}
+{"ts": "2026-06-13T18:06:02.951267+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 20 \u2014 2,094 chars input"}
+{"ts": "2026-06-13T18:06:02.951370+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:06:02.951594+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:06:02.951788+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 20 done \u2014 1,945 chars, 290 words, has_table=False, table_type=None, is_short=False"}
+{"ts": "2026-06-13T18:06:02.953278+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 21 \u2014 2,235 chars input"}
+{"ts": "2026-06-13T18:06:02.953390+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:06:02.953611+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:06:02.953812+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 21 done \u2014 1,952 chars, 284 words, has_table=False, table_type=None, is_short=False"}
+{"ts": "2026-06-13T18:06:02.955334+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 22 \u2014 1,689 chars input"}
+{"ts": "2026-06-13T18:06:02.955447+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:06:02.955657+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:06:02.955840+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 22 done \u2014 1,276 chars, 174 words, has_table=False, table_type=None, is_short=False"}
+{"ts": "2026-06-13T18:06:02.957118+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 23 \u2014 279 chars input"}
+{"ts": "2026-06-13T18:06:02.957214+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:06:02.957318+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:06:02.957419+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 23 done \u2014 76 chars, 10 words, has_table=False, table_type=None, is_short=True"}
+{"ts": "2026-06-13T18:06:02.957631+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 24 \u2014 2,887 chars input"}
+{"ts": "2026-06-13T18:06:02.957743+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:06:02.957932+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:06:02.958134+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 24 done \u2014 2,657 chars, 389 words, has_table=False, table_type=None, is_short=False"}
+{"ts": "2026-06-13T18:06:02.960138+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 25 \u2014 4,329 chars input"}
+{"ts": "2026-06-13T18:06:02.960266+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:06:02.960451+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:06:02.960710+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 25 done \u2014 4,060 chars, 624 words, has_table=False, table_type=None, is_short=False"}
+{"ts": "2026-06-13T18:06:02.963599+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 26 \u2014 2,151 chars input"}
+{"ts": "2026-06-13T18:06:02.963710+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:06:02.963833+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  20"}
+{"ts": "2026-06-13T18:06:02.964036+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:06:02.964300+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 26 done \u2014 1,998 chars, 318 words, has_table=True, table_type=TableType.QUALITATIVE, is_short=False"}
+{"ts": "2026-06-13T18:06:02.965993+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 27 \u2014 1,772 chars input"}
+{"ts": "2026-06-13T18:06:02.966105+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:06:02.966289+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:06:02.966461+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 27 done \u2014 1,592 chars, 217 words, has_table=False, table_type=None, is_short=False"}
+{"ts": "2026-06-13T18:06:02.967749+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 28 \u2014 2,332 chars input"}
+{"ts": "2026-06-13T18:06:02.967861+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:06:02.968101+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:06:02.968303+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 28 done \u2014 1,928 chars, 304 words, has_table=False, table_type=None, is_short=False"}
+{"ts": "2026-06-13T18:06:02.969811+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 29 \u2014 1,419 chars input"}
+{"ts": "2026-06-13T18:06:02.969918+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:06:02.970111+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:06:02.970276+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 29 done \u2014 1,141 chars, 171 words, has_table=False, table_type=None, is_short=False"}
+{"ts": "2026-06-13T18:06:02.971374+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 30 \u2014 8,761 chars input"}
+{"ts": "2026-06-13T18:06:02.971515+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:06:02.971801+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:06:02.972203+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 30 done \u2014 8,631 chars, 1331 words, has_table=True, table_type=TableType.FINANCIAL, is_short=False"}
+{"ts": "2026-06-13T18:06:02.977432+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 31 \u2014 8,151 chars input"}
+{"ts": "2026-06-13T18:06:02.977598+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:06:02.977896+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:06:02.978308+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 31 done \u2014 8,029 chars, 1238 words, has_table=True, table_type=TableType.QUALITATIVE, is_short=False"}
+{"ts": "2026-06-13T18:06:02.983763+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 32 \u2014 9,220 chars input"}
+{"ts": "2026-06-13T18:06:02.983901+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:06:02.984192+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:06:02.984610+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 32 done \u2014 9,082 chars, 1402 words, has_table=True, table_type=TableType.QUALITATIVE, is_short=False"}
+{"ts": "2026-06-13T18:06:02.989826+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 33 \u2014 9,195 chars input"}
+{"ts": "2026-06-13T18:06:02.989955+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:06:02.990204+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:06:02.990538+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 33 done \u2014 9,069 chars, 1357 words, has_table=False, table_type=None, is_short=False"}
+{"ts": "2026-06-13T18:06:02.994635+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 34 \u2014 9,237 chars input"}
+{"ts": "2026-06-13T18:06:02.994775+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:06:02.995236+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 34 done \u2014 9,168 chars, 1307 words, has_table=True, table_type=TableType.FINANCIAL, is_short=False"}
+{"ts": "2026-06-13T18:06:03.001768+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 35 \u2014 7,116 chars input"}
+{"ts": "2026-06-13T18:06:03.002173+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 35 done \u2014 7,038 chars, 991 words, has_table=False, table_type=None, is_short=False"}
+{"ts": "2026-06-13T18:06:03.006483+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 36 \u2014 8,236 chars input"}
+{"ts": "2026-06-13T18:06:03.006698+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:06:03.006994+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:06:03.007347+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 36 done \u2014 8,087 chars, 1144 words, has_table=False, table_type=None, is_short=False"}
+{"ts": "2026-06-13T18:06:03.012258+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 37 \u2014 4,950 chars input"}
+{"ts": "2026-06-13T18:06:03.012382+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:06:03.012716+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:06:03.013111+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 37 done \u2014 4,828 chars, 854 words, has_table=True, table_type=TableType.FINANCIAL, is_short=False"}
+{"ts": "2026-06-13T18:06:03.017028+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 38 \u2014 10,014 chars input"}
+{"ts": "2026-06-13T18:06:03.017159+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:06:03.017371+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:06:03.017716+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 38 done \u2014 9,880 chars, 1590 words, has_table=False, table_type=None, is_short=False"}
+{"ts": "2026-06-13T18:06:03.022433+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 39 \u2014 6,201 chars input"}
+{"ts": "2026-06-13T18:06:03.022580+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:06:03.022798+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:06:03.023184+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 39 done \u2014 6,075 chars, 1101 words, has_table=True, table_type=TableType.QUALITATIVE, is_short=False"}
+{"ts": "2026-06-13T18:06:03.027895+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 40 \u2014 8,100 chars input"}
+{"ts": "2026-06-13T18:06:03.028032+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:06:03.028285+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:06:03.028754+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 40 done \u2014 7,970 chars, 1293 words, has_table=True, table_type=TableType.QUALITATIVE, is_short=False"}
+{"ts": "2026-06-13T18:06:03.034154+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 41 \u2014 6,212 chars input"}
+{"ts": "2026-06-13T18:06:03.034285+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:06:03.034537+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:06:03.035050+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 41 done \u2014 6,086 chars, 1043 words, has_table=True, table_type=TableType.QUALITATIVE, is_short=False"}
+{"ts": "2026-06-13T18:06:03.039020+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 42 \u2014 7,256 chars input"}
+{"ts": "2026-06-13T18:06:03.039149+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:06:03.039458+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:06:03.039869+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 42 done \u2014 7,134 chars, 1177 words, has_table=True, table_type=TableType.FINANCIAL, is_short=False"}
+{"ts": "2026-06-13T18:06:03.044235+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 43 \u2014 5,332 chars input"}
+{"ts": "2026-06-13T18:06:03.044351+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:06:03.044602+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:06:03.044907+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 43 done \u2014 5,202 chars, 743 words, has_table=False, table_type=None, is_short=False"}
+{"ts": "2026-06-13T18:06:03.047520+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 44 \u2014 5,035 chars input"}
+{"ts": "2026-06-13T18:06:03.047673+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:06:03.047922+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:06:03.048238+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 44 done \u2014 4,913 chars, 723 words, has_table=True, table_type=TableType.QUALITATIVE, is_short=False"}
+{"ts": "2026-06-13T18:06:03.051760+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 45 \u2014 4,349 chars input"}
+{"ts": "2026-06-13T18:06:03.051879+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:06:03.052112+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:06:03.052473+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 45 done \u2014 4,223 chars, 773 words, has_table=True, table_type=TableType.FINANCIAL, is_short=False"}
+{"ts": "2026-06-13T18:06:03.055535+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 46 \u2014 5,899 chars input"}
+{"ts": "2026-06-13T18:06:03.055687+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:06:03.055954+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:06:03.056383+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 46 done \u2014 5,773 chars, 973 words, has_table=True, table_type=TableType.FINANCIAL, is_short=False"}
+{"ts": "2026-06-13T18:06:03.059545+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 47 \u2014 8,300 chars input"}
+{"ts": "2026-06-13T18:06:03.059710+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:06:03.060009+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:06:03.060421+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 47 done \u2014 8,178 chars, 1277 words, has_table=True, table_type=TableType.FINANCIAL, is_short=False"}
+{"ts": "2026-06-13T18:06:03.065819+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 48 \u2014 5,501 chars input"}
+{"ts": "2026-06-13T18:06:03.065940+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:06:03.066174+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:06:03.066438+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 48 done \u2014 5,355 chars, 836 words, has_table=False, table_type=None, is_short=False"}
+{"ts": "2026-06-13T18:06:03.069172+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 49 \u2014 5,808 chars input"}
+{"ts": "2026-06-13T18:06:03.069330+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:06:03.069678+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:06:03.070205+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 49 done \u2014 5,686 chars, 1111 words, has_table=True, table_type=TableType.QUALITATIVE, is_short=False"}
+{"ts": "2026-06-13T18:13:09.006110+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[TextCleaner] Initialised \u2014 company=KALYANKJIL, year=2025, doc_type=ANNUAL_REPORT"}
+{"ts": "2026-06-13T18:13:09.008070+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 1 \u2014 113 chars input"}
+{"ts": "2026-06-13T18:13:09.008790+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 1 done \u2014 86 chars, 12 words, has_table=False, table_type=None, is_short=True"}
+{"ts": "2026-06-13T18:13:09.009002+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 2 \u2014 2,512 chars input"}
+{"ts": "2026-06-13T18:13:09.009129+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     We are Kalyan Jewellers ... 04"}
+{"ts": "2026-06-13T18:13:09.009238+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Our Strengths ... 08"}
+{"ts": "2026-06-13T18:13:09.009341+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Our Presence ... 10"}
+{"ts": "2026-06-13T18:13:09.009434+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Product Offerings ... 14"}
+{"ts": "2026-06-13T18:13:09.009530+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Candere ... 18"}
+{"ts": "2026-06-13T18:13:09.009666+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Performance Highlights ... 24"}
+{"ts": "2026-06-13T18:13:09.009771+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     MD's Message ... 28"}
+{"ts": "2026-06-13T18:13:09.009876+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Strategic Initiatives ... 32"}
+{"ts": "2026-06-13T18:13:09.009989+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Marketing and Promotions ... 38"}
+{"ts": "2026-06-13T18:13:09.010091+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Environment and Social Initiatives ... 44"}
+{"ts": "2026-06-13T18:13:09.010186+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Governance ... 48"}
+{"ts": "2026-06-13T18:13:09.010278+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Statutory Reports ... 56"}
+{"ts": "2026-06-13T18:13:09.010368+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Financial Statements ... 126"}
+{"ts": "2026-06-13T18:13:09.010459+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Notice ... 266"}
+{"ts": "2026-06-13T18:13:09.010749+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 2 done \u2014 2,128 chars, 350 words, has_table=False, table_type=None, is_short=False"}
+{"ts": "2026-06-13T18:13:47.484309+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[TextCleaner] Initialised \u2014 company=KALYANKJIL, year=2025, doc_type=ANNUAL_REPORT"}
+{"ts": "2026-06-13T18:13:47.486193+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 1 \u2014 113 chars input"}
+{"ts": "2026-06-13T18:13:47.486412+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 1 done \u2014 86 chars, 12 words, has_table=False, table_type=None, is_short=True"}
+{"ts": "2026-06-13T18:13:47.486647+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 2 \u2014 2,512 chars input"}
+{"ts": "2026-06-13T18:13:47.486779+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     We are Kalyan Jewellers ... 04"}
+{"ts": "2026-06-13T18:13:47.486870+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Our Strengths ... 08"}
+{"ts": "2026-06-13T18:13:47.486967+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Our Presence ... 10"}
+{"ts": "2026-06-13T18:13:47.487064+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Product Offerings ... 14"}
+{"ts": "2026-06-13T18:13:47.487159+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Candere ... 18"}
+{"ts": "2026-06-13T18:13:47.487254+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Performance Highlights ... 24"}
+{"ts": "2026-06-13T18:13:47.487349+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     MD's Message ... 28"}
+{"ts": "2026-06-13T18:13:47.487452+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Strategic Initiatives ... 32"}
+{"ts": "2026-06-13T18:13:47.487546+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Marketing and Promotions ... 38"}
+{"ts": "2026-06-13T18:13:47.487684+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Environment and Social Initiatives ... 44"}
+{"ts": "2026-06-13T18:13:47.487779+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Governance ... 48"}
+{"ts": "2026-06-13T18:13:47.487873+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Statutory Reports ... 56"}
+{"ts": "2026-06-13T18:13:47.487967+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Financial Statements ... 126"}
+{"ts": "2026-06-13T18:13:47.488073+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Notice ... 266"}
+{"ts": "2026-06-13T18:13:47.488329+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 2 done \u2014 2,128 chars, 350 words, has_table=False, table_type=None, is_short=False"}
+{"ts": "2026-06-13T18:15:47.401092+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[TextCleaner] Initialised \u2014 company=KALYANKJIL, year=2025, doc_type=ANNUAL_REPORT"}
+{"ts": "2026-06-13T18:15:47.403212+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 1 \u2014 113 chars input"}
+{"ts": "2026-06-13T18:15:47.403444+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 1 done \u2014 86 chars, 12 words, has_table=False, table_type=None, is_short=True"}
+{"ts": "2026-06-13T18:15:47.403712+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 2 \u2014 2,512 chars input"}
+{"ts": "2026-06-13T18:15:47.403862+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     We are Kalyan Jewellers ... 04"}
+{"ts": "2026-06-13T18:15:47.403993+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Our Strengths ... 08"}
+{"ts": "2026-06-13T18:15:47.404101+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Our Presence ... 10"}
+{"ts": "2026-06-13T18:15:47.404207+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Product Offerings ... 14"}
+{"ts": "2026-06-13T18:15:47.404324+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Candere ... 18"}
+{"ts": "2026-06-13T18:15:47.404449+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Performance Highlights ... 24"}
+{"ts": "2026-06-13T18:15:47.404587+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     MD's Message ... 28"}
+{"ts": "2026-06-13T18:15:47.404721+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Strategic Initiatives ... 32"}
+{"ts": "2026-06-13T18:15:47.404842+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Marketing and Promotions ... 38"}
+{"ts": "2026-06-13T18:15:47.404971+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Environment and Social Initiatives ... 44"}
+{"ts": "2026-06-13T18:15:47.405091+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Governance ... 48"}
+{"ts": "2026-06-13T18:15:47.405199+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Statutory Reports ... 56"}
+{"ts": "2026-06-13T18:15:47.405305+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Financial Statements ... 126"}
+{"ts": "2026-06-13T18:15:47.405411+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Notice ... 266"}
+{"ts": "2026-06-13T18:15:47.405715+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 2 done \u2014 2,128 chars, 350 words, has_table=False, table_type=None, is_short=False"}
+{"ts": "2026-06-13T18:16:34.808275+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[TextCleaner] Initialised \u2014 company=KALYANKJIL, year=2025, doc_type=ANNUAL_REPORT"}
+{"ts": "2026-06-13T18:16:34.810261+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 1 \u2014 113 chars input"}
+{"ts": "2026-06-13T18:16:34.810491+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 1 done \u2014 86 chars, 12 words, has_table=False, table_type=None, is_short=True"}
+{"ts": "2026-06-13T18:16:34.810723+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 2 \u2014 2,512 chars input"}
+{"ts": "2026-06-13T18:16:34.810849+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     We are Kalyan Jewellers ... 04"}
+{"ts": "2026-06-13T18:16:34.810944+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Our Strengths ... 08"}
+{"ts": "2026-06-13T18:16:34.811037+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Our Presence ... 10"}
+{"ts": "2026-06-13T18:16:34.811126+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Product Offerings ... 14"}
+{"ts": "2026-06-13T18:16:34.811221+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Candere ... 18"}
+{"ts": "2026-06-13T18:16:34.811325+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Performance Highlights ... 24"}
+{"ts": "2026-06-13T18:16:34.811419+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     MD's Message ... 28"}
+{"ts": "2026-06-13T18:16:34.811515+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Strategic Initiatives ... 32"}
+{"ts": "2026-06-13T18:16:34.811638+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Marketing and Promotions ... 38"}
+{"ts": "2026-06-13T18:16:34.811738+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Environment and Social Initiatives ... 44"}
+{"ts": "2026-06-13T18:16:34.811833+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Governance ... 48"}
+{"ts": "2026-06-13T18:16:34.811926+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Statutory Reports ... 56"}
+{"ts": "2026-06-13T18:16:34.812021+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Financial Statements ... 126"}
+{"ts": "2026-06-13T18:16:34.812117+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Notice ... 266"}
+{"ts": "2026-06-13T18:16:34.812392+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 2 done \u2014 2,128 chars, 350 words, has_table=False, table_type=None, is_short=False"}
+{"ts": "2026-06-13T18:16:34.821270+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 3 \u2014 314 chars input"}
+{"ts": "2026-06-13T18:16:34.821376+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:16:34.821501+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:16:34.821655+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 3 done \u2014 111 chars, 19 words, has_table=False, table_type=None, is_short=True"}
+{"ts": "2026-06-13T18:16:34.821853+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 4 \u2014 2,658 chars input"}
+{"ts": "2026-06-13T18:16:34.821964+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:16:34.822087+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  6"}
+{"ts": "2026-06-13T18:16:34.822193+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  388"}
+{"ts": "2026-06-13T18:16:34.822292+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  23"}
+{"ts": "2026-06-13T18:16:34.822466+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:16:34.822713+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 4 done \u2014 2,470 chars, 358 words, has_table=False, table_type=None, is_short=False"}
+{"ts": "2026-06-13T18:16:34.825420+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 5 \u2014 3,607 chars input"}
+{"ts": "2026-06-13T18:16:34.825545+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:16:34.825793+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:16:34.826229+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 5 done \u2014 3,269 chars, 538 words, has_table=True, table_type=TableType.QUALITATIVE, is_short=False"}
+{"ts": "2026-06-13T18:16:34.830296+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 6 \u2014 2,797 chars input"}
+{"ts": "2026-06-13T18:16:34.830419+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:16:34.830667+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:16:34.830903+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 6 done \u2014 2,633 chars, 388 words, has_table=False, table_type=None, is_short=False"}
+{"ts": "2026-06-13T18:16:34.834675+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 7 \u2014 1,565 chars input"}
+{"ts": "2026-06-13T18:16:34.834798+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:16:34.834916+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  278"}
+{"ts": "2026-06-13T18:16:34.835019+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  73"}
+{"ts": "2026-06-13T18:16:34.835116+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  36"}
+{"ts": "2026-06-13T18:16:34.835212+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  1"}
+{"ts": "2026-06-13T18:16:34.835370+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:16:34.835550+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 7 done \u2014 1,431 chars, 202 words, has_table=False, table_type=None, is_short=False"}
+{"ts": "2026-06-13T18:16:34.837504+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 8 \u2014 1,869 chars input"}
+{"ts": "2026-06-13T18:16:34.837643+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:16:34.837915+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 8 done \u2014 1,777 chars, 262 words, has_table=False, table_type=None, is_short=False"}
+{"ts": "2026-06-13T18:16:34.840084+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 9 \u2014 3,143 chars input"}
+{"ts": "2026-06-13T18:16:34.840226+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:16:34.840874+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 9 done \u2014 2,997 chars, 403 words, has_table=False, table_type=None, is_short=False"}
+{"ts": "2026-06-13T18:16:34.845006+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 10 \u2014 1,967 chars input"}
+{"ts": "2026-06-13T18:16:34.845111+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:16:34.845251+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:16:34.845534+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 10 done \u2014 1,818 chars, 270 words, has_table=True, table_type=TableType.QUALITATIVE, is_short=False"}
+{"ts": "2026-06-13T18:16:34.849026+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 11 \u2014 1,417 chars input"}
+{"ts": "2026-06-13T18:16:34.849182+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:16:34.849384+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:16:34.849606+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 11 done \u2014 1,134 chars, 170 words, has_table=False, table_type=None, is_short=False"}
+{"ts": "2026-06-13T18:16:34.851515+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 12 \u2014 4,582 chars input"}
+{"ts": "2026-06-13T18:16:34.851689+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:16:34.851887+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  80"}
+{"ts": "2026-06-13T18:16:34.852072+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:16:34.852499+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 12 done \u2014 4,402 chars, 665 words, has_table=True, table_type=TableType.QUALITATIVE, is_short=False"}
+{"ts": "2026-06-13T18:16:34.858748+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 13 \u2014 297 chars input"}
+{"ts": "2026-06-13T18:16:34.858840+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:16:34.859279+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Performance Highlights ... 24"}
+{"ts": "2026-06-13T18:16:34.859505+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     MD's Message ... 28"}
+{"ts": "2026-06-13T18:16:34.859755+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:16:34.859874+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 13 done \u2014 16 chars, 4 words, has_table=False, table_type=None, is_short=True"}
+{"ts": "2026-06-13T18:16:34.860069+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 14 \u2014 2,615 chars input"}
+{"ts": "2026-06-13T18:16:34.860190+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:16:34.860725+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:16:34.861206+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 14 done \u2014 2,466 chars, 564 words, has_table=True, table_type=TableType.FINANCIAL, is_short=False"}
+{"ts": "2026-06-13T18:16:34.866138+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 15 \u2014 2,504 chars input"}
+{"ts": "2026-06-13T18:16:34.866408+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:16:34.866843+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:16:34.866947+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  26"}
+{"ts": "2026-06-13T18:16:34.867020+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  27"}
+{"ts": "2026-06-13T18:16:34.867352+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 15 done \u2014 2,374 chars, 446 words, has_table=True, table_type=TableType.FINANCIAL, is_short=False"}
+{"ts": "2026-06-13T18:16:34.871807+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 16 \u2014 5,576 chars input"}
+{"ts": "2026-06-13T18:16:34.872059+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:16:34.872388+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:16:34.872757+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 16 done \u2014 5,423 chars, 818 words, has_table=False, table_type=None, is_short=False"}
+{"ts": "2026-06-13T18:16:34.880650+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 17 \u2014 285 chars input"}
+{"ts": "2026-06-13T18:16:34.881126+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:16:34.881627+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Strategic Initiatives ... 32"}
+{"ts": "2026-06-13T18:16:34.881734+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop toc]     Marketing and Promotions ... 38"}
+{"ts": "2026-06-13T18:16:34.881819+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:16:34.881929+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 17 done \u2014 20 chars, 3 words, has_table=False, table_type=None, is_short=True"}
+{"ts": "2026-06-13T18:16:34.882119+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 18 \u2014 2,653 chars input"}
+{"ts": "2026-06-13T18:16:34.882227+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:16:34.882747+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:16:34.883272+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 18 done \u2014 2,504 chars, 348 words, has_table=False, table_type=None, is_short=False"}
+{"ts": "2026-06-13T18:16:34.888438+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 19 \u2014 3,426 chars input"}
+{"ts": "2026-06-13T18:16:34.888547+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:16:34.888834+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:16:34.889073+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 19 done \u2014 3,304 chars, 456 words, has_table=False, table_type=None, is_short=False"}
+{"ts": "2026-06-13T18:16:34.892992+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 20 \u2014 2,094 chars input"}
+{"ts": "2026-06-13T18:16:34.893235+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:16:34.893769+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:16:34.895177+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 20 done \u2014 1,945 chars, 290 words, has_table=False, table_type=None, is_short=False"}
+{"ts": "2026-06-13T18:16:34.897990+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 21 \u2014 2,235 chars input"}
+{"ts": "2026-06-13T18:16:34.898229+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:16:34.898505+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:16:34.898812+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 21 done \u2014 1,952 chars, 284 words, has_table=False, table_type=None, is_short=False"}
+{"ts": "2026-06-13T18:16:34.905267+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 22 \u2014 1,689 chars input"}
+{"ts": "2026-06-13T18:16:34.905996+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:16:34.906773+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:16:34.907122+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 22 done \u2014 1,276 chars, 174 words, has_table=False, table_type=None, is_short=False"}
+{"ts": "2026-06-13T18:16:34.909812+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 23 \u2014 279 chars input"}
+{"ts": "2026-06-13T18:16:34.909934+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:16:34.910064+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:16:34.910193+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 23 done \u2014 76 chars, 10 words, has_table=False, table_type=None, is_short=True"}
+{"ts": "2026-06-13T18:16:34.910425+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 24 \u2014 2,887 chars input"}
+{"ts": "2026-06-13T18:16:34.910549+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:16:34.910787+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:16:34.910998+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 24 done \u2014 2,657 chars, 389 words, has_table=False, table_type=None, is_short=False"}
+{"ts": "2026-06-13T18:16:34.913167+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 25 \u2014 4,329 chars input"}
+{"ts": "2026-06-13T18:16:34.913330+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:16:34.913537+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:16:34.913822+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 25 done \u2014 4,060 chars, 624 words, has_table=False, table_type=None, is_short=False"}
+{"ts": "2026-06-13T18:16:34.916678+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 26 \u2014 2,151 chars input"}
+{"ts": "2026-06-13T18:16:34.916800+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:16:34.916930+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  20"}
+{"ts": "2026-06-13T18:16:34.917143+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:16:34.917413+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 26 done \u2014 1,998 chars, 318 words, has_table=True, table_type=TableType.QUALITATIVE, is_short=False"}
+{"ts": "2026-06-13T18:16:34.919165+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 27 \u2014 1,772 chars input"}
+{"ts": "2026-06-13T18:16:34.919280+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:16:34.919458+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:16:34.919669+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 27 done \u2014 1,592 chars, 217 words, has_table=False, table_type=None, is_short=False"}
+{"ts": "2026-06-13T18:16:34.920999+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 28 \u2014 2,332 chars input"}
+{"ts": "2026-06-13T18:16:34.921117+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:16:34.921379+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:16:34.921625+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 28 done \u2014 1,928 chars, 304 words, has_table=False, table_type=None, is_short=False"}
+{"ts": "2026-06-13T18:16:34.923165+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 29 \u2014 1,419 chars input"}
+{"ts": "2026-06-13T18:16:34.923288+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:16:34.923485+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:16:34.923683+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 29 done \u2014 1,141 chars, 171 words, has_table=False, table_type=None, is_short=False"}
+{"ts": "2026-06-13T18:16:34.924811+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 30 \u2014 8,761 chars input"}
+{"ts": "2026-06-13T18:16:34.924967+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:16:34.925235+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:16:34.925639+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 30 done \u2014 8,631 chars, 1331 words, has_table=True, table_type=TableType.FINANCIAL, is_short=False"}
+{"ts": "2026-06-13T18:16:34.930812+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 31 \u2014 8,151 chars input"}
+{"ts": "2026-06-13T18:16:34.930967+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:16:34.931261+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:16:34.931689+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 31 done \u2014 8,029 chars, 1238 words, has_table=True, table_type=TableType.QUALITATIVE, is_short=False"}
+{"ts": "2026-06-13T18:16:34.937174+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 32 \u2014 9,220 chars input"}
+{"ts": "2026-06-13T18:16:34.937329+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:16:34.937635+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:16:34.938041+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 32 done \u2014 9,082 chars, 1402 words, has_table=True, table_type=TableType.QUALITATIVE, is_short=False"}
+{"ts": "2026-06-13T18:16:34.943297+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 33 \u2014 9,195 chars input"}
+{"ts": "2026-06-13T18:16:34.943434+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:16:34.943717+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:16:34.944052+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 33 done \u2014 9,069 chars, 1357 words, has_table=False, table_type=None, is_short=False"}
+{"ts": "2026-06-13T18:16:34.948142+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 34 \u2014 9,237 chars input"}
+{"ts": "2026-06-13T18:16:34.948299+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:16:34.948802+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 34 done \u2014 9,168 chars, 1307 words, has_table=True, table_type=TableType.FINANCIAL, is_short=False"}
+{"ts": "2026-06-13T18:16:34.955617+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 35 \u2014 7,116 chars input"}
+{"ts": "2026-06-13T18:16:34.956021+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 35 done \u2014 7,038 chars, 991 words, has_table=False, table_type=None, is_short=False"}
+{"ts": "2026-06-13T18:16:34.960380+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 36 \u2014 8,236 chars input"}
+{"ts": "2026-06-13T18:16:34.960519+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:16:34.960840+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:16:34.961245+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 36 done \u2014 8,087 chars, 1144 words, has_table=False, table_type=None, is_short=False"}
+{"ts": "2026-06-13T18:16:34.966246+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 37 \u2014 4,950 chars input"}
+{"ts": "2026-06-13T18:16:34.966388+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:16:34.966699+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:16:34.967096+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 37 done \u2014 4,828 chars, 854 words, has_table=True, table_type=TableType.FINANCIAL, is_short=False"}
+{"ts": "2026-06-13T18:16:34.973547+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 38 \u2014 10,014 chars input"}
+{"ts": "2026-06-13T18:16:34.973710+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:16:34.973922+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:16:34.974370+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 38 done \u2014 9,880 chars, 1590 words, has_table=False, table_type=None, is_short=False"}
+{"ts": "2026-06-13T18:16:34.979871+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 39 \u2014 6,201 chars input"}
+{"ts": "2026-06-13T18:16:34.980033+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:16:34.980297+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:16:34.980759+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 39 done \u2014 6,075 chars, 1101 words, has_table=True, table_type=TableType.QUALITATIVE, is_short=False"}
+{"ts": "2026-06-13T18:16:34.985043+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 40 \u2014 8,100 chars input"}
+{"ts": "2026-06-13T18:16:34.985178+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:16:34.985451+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:16:34.985911+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 40 done \u2014 7,970 chars, 1293 words, has_table=True, table_type=TableType.QUALITATIVE, is_short=False"}
+{"ts": "2026-06-13T18:16:34.991574+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 41 \u2014 6,212 chars input"}
+{"ts": "2026-06-13T18:16:34.991707+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:16:34.991982+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:16:34.992488+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 41 done \u2014 6,086 chars, 1043 words, has_table=True, table_type=TableType.QUALITATIVE, is_short=False"}
+{"ts": "2026-06-13T18:16:34.996605+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 42 \u2014 7,256 chars input"}
+{"ts": "2026-06-13T18:16:34.996732+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:16:34.997022+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:16:34.997407+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 42 done \u2014 7,134 chars, 1177 words, has_table=True, table_type=TableType.FINANCIAL, is_short=False"}
+{"ts": "2026-06-13T18:16:35.001671+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 43 \u2014 5,332 chars input"}
+{"ts": "2026-06-13T18:16:35.001791+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:16:35.002029+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:16:35.002294+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 43 done \u2014 5,202 chars, 743 words, has_table=False, table_type=None, is_short=False"}
+{"ts": "2026-06-13T18:16:35.004884+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 44 \u2014 5,035 chars input"}
+{"ts": "2026-06-13T18:16:35.005010+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:16:35.005249+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:16:35.005578+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 44 done \u2014 4,913 chars, 723 words, has_table=True, table_type=TableType.QUALITATIVE, is_short=False"}
+{"ts": "2026-06-13T18:16:35.009124+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 45 \u2014 4,349 chars input"}
+{"ts": "2026-06-13T18:16:35.009249+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:16:35.009480+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:16:35.009966+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 45 done \u2014 4,223 chars, 773 words, has_table=True, table_type=TableType.FINANCIAL, is_short=False"}
+{"ts": "2026-06-13T18:16:35.014522+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 46 \u2014 5,899 chars input"}
+{"ts": "2026-06-13T18:16:35.014697+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:16:35.014962+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:16:35.015386+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 46 done \u2014 5,773 chars, 973 words, has_table=True, table_type=TableType.FINANCIAL, is_short=False"}
+{"ts": "2026-06-13T18:16:35.018838+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 47 \u2014 8,300 chars input"}
+{"ts": "2026-06-13T18:16:35.018980+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:16:35.019266+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:16:35.019704+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 47 done \u2014 8,178 chars, 1277 words, has_table=True, table_type=TableType.FINANCIAL, is_short=False"}
+{"ts": "2026-06-13T18:16:35.025102+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 48 \u2014 5,501 chars input"}
+{"ts": "2026-06-13T18:16:35.025218+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:16:35.025458+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:16:35.025763+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 48 done \u2014 5,355 chars, 836 words, has_table=False, table_type=None, is_short=False"}
+{"ts": "2026-06-13T18:16:35.028453+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Cleaning page 49 \u2014 5,808 chars input"}
+{"ts": "2026-06-13T18:16:35.028599+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Corporate Overview // Statutory Reports // Financial Statements"}
+{"ts": "2026-06-13T18:16:35.028915+05:30", "level": "DEBUG", "component": "codebase.cleaning.textcleaner", "message": "[drop footer]  Kalyan Jewellers India Limited // Annual Report 2024-25"}
+{"ts": "2026-06-13T18:16:35.029411+05:30", "level": "INFO", "component": "codebase.cleaning.textcleaner", "message": "[KALYANKJIL 2025] Page 49 done \u2014 5,686 chars, 1111 words, has_table=True, table_type=TableType.QUALITATIVE, is_short=False"}

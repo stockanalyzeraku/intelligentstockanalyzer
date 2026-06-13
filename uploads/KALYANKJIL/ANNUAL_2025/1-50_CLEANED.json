@@ -9,30 +9,12 @@
     "doc_type": "ANNUAL_REPORT",
     "raw_tables": "",
     "page_intent": [
-      {
-        "section_name": "table_of_contents",
-        "section_confidence": 0.95
-      },
-      {
-        "section_name": "company_overview",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "performance_highlights",
-        "section_confidence": 0.9
-      },
-      {
-        "section_name": "strategic_overview",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "esg_csr",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "general_narrative",
-        "section_confidence": 0.4
-      }
+      "table_of_contents",
+      "company_overview",
+      "performance_highlights",
+      "strategic_overview",
+      "esg_csr",
+      "general_narrative"
     ],
     "company": "KALYANKJIL",
     "year": 2025
@@ -47,26 +29,11 @@
     "doc_type": "ANNUAL_REPORT",
     "raw_tables": "",
     "page_intent": [
-      {
-        "section_name": "vision_mission_values",
-        "section_confidence": 0.92
-      },
-      {
-        "section_name": "company_overview",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "retail_footprint_expansion",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "human_resources_employees",
-        "section_confidence": 0.85
-      },
-      {
-        "section_name": "general_narrative",
-        "section_confidence": 0.4
-      }
+      "vision_mission_values",
+      "company_overview",
+      "retail_footprint_expansion",
+      "human_resources_employees",
+      "general_narrative"
     ],
     "company": "KALYANKJIL",
     "year": 2025
@@ -81,26 +48,11 @@
     "doc_type": "ANNUAL_REPORT",
     "raw_tables": "|  Year | Milestone | Phases of Growth  |\n| --- | --- | --- |\n|  KALYAN'S FIRST GENERATION T.S. Kalyanarama Iyer  |   |   |\n|  1908 | Established Kerala's first textile mill | Phase I: Strengthening Our Roots (Pre-2004)  |\n|  1913 | Opening the first textile retail showroom in Thrissur, Kerala | • Focus on brand building • Focused on building local supplier network and ecosystem  |\n|  KALYAN'S SECOND GENERATION T.K. Seetharama Iyer  |   |   |\n|  1972 | Expanded the business with multiple textile showrooms |   |\n|  KALYAN'S THIRD GENERATION T.S. Kalyanaraman  |   |   |\n|  1993 | Launched Kalyan Jewellers, opening the first jewellery showroom in Thrissur |   |\n|  2004 | First expansion outside Kerala — showroom launched in Coimbatore, Tamil Nadu | Phase II: Expanding across Southern India (2004-2011)  |\n|  2010 | Entered Telangana and Karnataka; launched the 'My Kalyan' customer outreach initiative | • Expansion of showroom network across southern states of India • Largely focused on selling plain gold jewellery in South India • Launched 'My Kalyan' customer outreach initiative  |\n|  2012 | Forayed beyond South India with a showroom in Ahmedabad, Gujarat | Phase III: Pan-India Presence, Product Diversification and Institutional Scale (2012-2021)  |\n|  2014 | Entered Delhi (North India); secured equity investment from Warburg Pincus | • Pan-India, hyperlocal jeweller and concurrent expansion of product mix and diversification of distribution channels  |\n|  2015 | Expanded to Chennai and Odisha (East India) | • Raised private equity investment from Warburg Pincus  |\n|  2016 | Entered West Bengal and Rajasthan; launched Kalyan Matrimony (formerly Sanskrit Matrimony) | • Built a professionally managed team and a diverse Board of Directors  |\n|  2017 | Received additional funding from Warburg Pincus; acquired a stake in Enovate Lifestyles (Candere.com) |   |\n|  2018 | Expanded into Assam, Jharkhand, and Chhattisgarh (Northeast and Central India) |   |\n|  2019 | Entered the Bihar market |   |\n|  KALYAN'S FOURTH GENERATION T.K. Seetharam and T.K. Ramesh  |   |   |\n|  2021 | Lead the company's IPO; listed on NSE and BSE as Kalyan Jewellers India Ltd. |   |\n\n|  Year | Milestone | Phases of Growth  |\n| --- | --- | --- |\n|  2022 | Launched first FOCO franchise showroom in Aurangabad; appointed Vinod Rai as Independent Chairman | Phase IV: Public Listing and Capital-light Acceleration (2021-Ongoing)  |\n|  2024 | Operating 253 showrooms across India and the Middle East as of March 31, 2024 | • Completed IPO in 2021 to capitalise the Company for the next leg of growth and have significantly expanded revenue and profits through the COVID period and brought on board an Independent Chairman  |\n|  2025 | 278 Kalyan showrooms (152 FOCO), 73 Candere showrooms (37 FOCO), 36 showrooms in the Middle East (4 FOCO) and opened 1st showroom in the USA | • Announced and implemented a new capital light expansion strategy (via franchised stores) to focus on Free Cash generation, deleveraging and rewarding shareholders via dividends • Continue focusing on expanding our presence, entering new segments, and leveraging existing investments to capitalise on favourable industry dynamics  |",
     "page_intent": [
-      {
-        "section_name": "company_timeline",
-        "section_confidence": 0.9
-      },
-      {
-        "section_name": "competitive_strengths",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "retail_footprint_expansion",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "subsidiary_information",
-        "section_confidence": 0.9
-      },
-      {
-        "section_name": "general_narrative",
-        "section_confidence": 0.4
-      }
+      "company_timeline",
+      "competitive_strengths",
+      "retail_footprint_expansion",
+      "subsidiary_information",
+      "general_narrative"
     ],
     "company": "KALYANKJIL",
     "year": 2025
@@ -115,18 +67,9 @@
     "doc_type": "ANNUAL_REPORT",
     "raw_tables": "",
     "page_intent": [
-      {
-        "section_name": "competitive_strengths",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "product_portfolio",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "general_narrative",
-        "section_confidence": 0.4
-      }
+      "competitive_strengths",
+      "product_portfolio",
+      "general_narrative"
     ],
     "company": "KALYANKJIL",
     "year": 2025
@@ -141,14 +84,8 @@
     "doc_type": "ANNUAL_REPORT",
     "raw_tables": "",
     "page_intent": [
-      {
-        "section_name": "retail_footprint_expansion",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "general_narrative",
-        "section_confidence": 0.4
-      }
+      "retail_footprint_expansion",
+      "general_narrative"
     ],
     "company": "KALYANKJIL",
     "year": 2025
@@ -163,18 +100,9 @@
     "doc_type": "ANNUAL_REPORT",
     "raw_tables": "",
     "page_intent": [
-      {
-        "section_name": "vision_mission_values",
-        "section_confidence": 0.92
-      },
-      {
-        "section_name": "retail_footprint_expansion",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "general_narrative",
-        "section_confidence": 0.4
-      }
+      "vision_mission_values",
+      "retail_footprint_expansion",
+      "general_narrative"
     ],
     "company": "KALYANKJIL",
     "year": 2025
@@ -189,14 +117,8 @@
     "doc_type": "ANNUAL_REPORT",
     "raw_tables": "",
     "page_intent": [
-      {
-        "section_name": "product_portfolio",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "general_narrative",
-        "section_confidence": 0.4
-      }
+      "product_portfolio",
+      "general_narrative"
     ],
     "company": "KALYANKJIL",
     "year": 2025
@@ -211,18 +133,9 @@
     "doc_type": "ANNUAL_REPORT",
     "raw_tables": "|  Extensive Understanding of Local Requirements and its Design Preferences | + Personalised shopping experience with locally recruited sales staff and sensitivities to micro-market populace  |\n| --- | --- |\n|  Unique Marketing Approach of Localising the Brand with Local Superstars | + Wide assortment of product SKUs with designs appealing to each target micro market  |\n|  Localisation in Brand Communication and Marketing | + State and city-specific brand campaigns + Local, regional, and national ambassadors + Communication in regional languages  |\n|  Localisation of our Product Portfolio | + Product portfolio as per local market preferences + Local artisans as contract manufacturers + 15 procurement centres across key jewellery manufacturing regions  |\n|  Localisation of our Showroom Experience for Customers | + Staff fluent in local languages and cultural practices + Store design aligned with regional aesthetics  |\n|  Localisation through our 'My Kalyan' Network | + Extensive grassroots outreach across urban, semi-urban, and rural areas + 1,037 My Kalyan centres supported by 3,926 outreach personnel  |",
     "page_intent": [
-      {
-        "section_name": "strategic_overview",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "supply_chain",
-        "section_confidence": 0.87
-      },
-      {
-        "section_name": "general_narrative",
-        "section_confidence": 0.4
-      }
+      "strategic_overview",
+      "supply_chain",
+      "general_narrative"
     ],
     "company": "KALYANKJIL",
     "year": 2025
@@ -237,18 +150,9 @@
     "doc_type": "ANNUAL_REPORT",
     "raw_tables": "",
     "page_intent": [
-      {
-        "section_name": "company_timeline",
-        "section_confidence": 0.9
-      },
-      {
-        "section_name": "retail_footprint_expansion",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "general_narrative",
-        "section_confidence": 0.4
-      }
+      "company_timeline",
+      "retail_footprint_expansion",
+      "general_narrative"
     ],
     "company": "KALYANKJIL",
     "year": 2025
@@ -263,26 +167,11 @@
     "doc_type": "ANNUAL_REPORT",
     "raw_tables": "|  Innovation | Curates product displays based on browsing behaviour, preferences, and purchase history to enhance personalisation.  |\n| --- | --- |\n|  AI-powered Product Recommendations | Automates customer follow-ups with cart recovery nudges, occasion-based messages, and price alerts.  |\n|  Retention Marketing Platforms | Delivers a unified customer view across all channels online, offline, and support—enabling contextual, timely engagement.  |\n|  Assisted Selling Tools (Video and Chat) | Recreates the trust of in-store consultations digitally, guiding decision-making in high-involvement categories like jewellery.  |\n|  ‘Store to Door’ Fulfilment | Leverages local inventory for fast delivery—often within 48 hours reshaping the timeline for customised jewellery.  |\n|  Omnichannel Enablement | Connects online and offline journeys with real-time inventory visibility and store appointment booking.  |\n|  Virtual Try-On and 3D View | Builds buyer confidence by enabling customers to visualise products digitally, reducing hesitation.  |\n|  Customer Journey Mapping and Analytics | Tracks site interactions to pinpoint drop-offs and optimise the user experience for higher conversions.  |",
     "page_intent": [
-      {
-        "section_name": "retail_footprint_expansion",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "strategic_overview",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "marketing_promotions",
-        "section_confidence": 0.87
-      },
-      {
-        "section_name": "technology_digitisation",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "general_narrative",
-        "section_confidence": 0.4
-      }
+      "retail_footprint_expansion",
+      "strategic_overview",
+      "marketing_promotions",
+      "technology_digitisation",
+      "general_narrative"
     ],
     "company": "KALYANKJIL",
     "year": 2025
@@ -297,14 +186,8 @@
     "doc_type": "ANNUAL_REPORT",
     "raw_tables": "|  FY25 | 2,50,451  |\n| --- | --- |\n|  FY24 | 1,85,156  |\n|  FY23 | 1,40,714  |\n|  FY22 | 1,08,179  |\n|  FY21 | 85,733  |\n\n|  FY25 | 32,577  |\n| --- | --- |\n|  FY24 | 26,364  |\n|  FY23 | 23,640  |\n|  FY22 | 16,404  |\n|  FY21 | 11,862  |\n\n|  FY25* | 10,836  |\n| --- | --- |\n|  FY25 | 9,596  |\n|  FY24 | 7,888  |\n|  FY23 | 5,715  |\n|  FY22 | 2,989  |\n|  FY21 | 394  |\n\n|  FY25* | 4.3  |\n| --- | --- |\n|  FY25 | 3.8  |\n|  FY24 | 4.3  |\n|  FY23 | 4.1  |\n|  FY22 | 2.8  |\n|  FY21 | 0.5  |\n\n|  FY25* | 3.2  |\n| --- | --- |\n|  FY25 | 2.9  |\n|  FY24 | 3.2  |\n|  FY23 | 3.1  |\n|  FY22 | 2.1  |\n|  FY21 | (0.1)  |\n\n|  FY25 | 48,036  |\n| --- | --- |\n|  FY24 | 41,878  |\n|  FY23 | 36,345  |\n|  FY22 | 31,380  |\n|  FY21 | 28,265  |\n\n|  FY25 | (0.02)  |\n| --- | --- |\n|  FY24 | 0.02  |\n|  FY23 | 0.2  |\n|  FY22 | 0.3  |\n|  FY21 | 0.3  |\n\n|  FY25 | 1.5  |\n| --- | --- |\n|  FY24 | 1.8  |\n|  FY23 | 2.3  |\n|  FY22 | 3.2  |\n|  FY21 | 3.8  |\n\n|  FY25 | 19.8  |\n| --- | --- |\n|  FY24 | 19.1  |\n|  FY23 | 17.4  |\n|  FY22 | 15.5  |\n|  FY21 | 10.6  |\n\n|  FY25* | 8,070  |\n| --- | --- |\n|  FY25 | 7,142  |\n|  FY24 | 5,963  |\n|  FY23 | 4,319  |\n|  FY22 | 2,240  |\n|  FY21 | (61)  |\n\n|  FY25 | 6.93  |\n| --- | --- |\n|  FY24 | 5.80  |\n|  FY23 | 4.20  |\n|  FY22 | 2.18  |\n|  FY21 | (0.07)  |\n\n|  FY25 | 1.5  |\n| --- | --- |\n|  FY24 | 1.8  |\n|  FY23 | 2.3  |\n|  FY22 | 3.2  |\n|  FY21 | 3.8  |\n\n|  FY25 | 15.9  |\n| --- | --- |\n|  FY24 | 15.2  |\n|  FY23 | 12.8  |\n|  FY22 | 7.5  |\n|  FY21 | 0.2  |",
     "page_intent": [
-      {
-        "section_name": "performance_highlights",
-        "section_confidence": 0.9
-      },
-      {
-        "section_name": "general_narrative",
-        "section_confidence": 0.4
-      }
+      "performance_highlights",
+      "general_narrative"
     ],
     "company": "KALYANKJIL",
     "year": 2025
@@ -319,14 +202,8 @@
     "doc_type": "ANNUAL_REPORT",
     "raw_tables": "|  Particulars | FY 2023 | FY 2024  |\n| --- | --- | --- |\n|  Total Showroom Network | • Kalyan India - 147 (15 FOCO showrooms) • Kalyan International - 33 (NIL FOCO showrooms) • Candere - 2 (NIL FOCO showrooms) | • Kalyan India - 204 (76 FOCO showrooms) • Kalyan International - 36 (1 FOCO showroom) • Candere - 13 (8 FOCO showrooms)  |\n|  Gross Debt (Standalone) | Total Debt: ₹24,152 Mn • GML: ₹10,911 Mn • Non-GML: ₹13,241 Mn | Total Debt: ₹21,563 Mn • GML: ₹12,620 Mn • Non-GML: ₹8,944 Mn  |\n|  Proceeds from sale of non-core assets | NIL | ₹1,103 Mn  |\n|  ROCE³ | 17.4% | 19.1%  |\n|  ROE | 12.8% | 15.2%  |\n|  Credit Rating | A+ (Stable) | A+ (Stable)  |\n\n|  FY 2025 | FY 2026 | FY 2027  |\n| --- | --- | --- |\n|  • Kalyan India - 278 (152 FOCO showrooms) • Kalyan International - 37 (4 FOCO showrooms) • Candere - 73 (37 FOCO showrooms) | • Kalyan India - 362 (236 FOCO showrooms) • Kalyan International - 43 (9 FOCO showrooms) • Candere - 153 (87 FOCO showrooms) • New Regional brand - 5 (NIL FOCO showrooms) | • Kalyan India - 446 (320 FOCO showrooms)¹ • Kalyan International - 49 (14 FOCO showrooms) • Candere - 233 (137 FOCO showrooms) • New Regional brand - 10 (10 FOCO showrooms)²  |\n|  Total Debt: ₹18,981 Mn • GML: ₹10,173 Mn • Non-GML: ₹8,808 Mn | Total Debt: ₹16,000 Mn • GML: ₹12,000 Mn • Non-GML: ₹4,000 Mn | Total Debt: ₹12,000 Mn • GML: ₹12,000 Mn • Non-GML: NIL  |\n|  ₹246 Mn | Expecting release of ₹2,000 Mn worth real estate collateral during the year; divestiture procedure to begin in FY 2026 | ₹200 Cr; Additional real estate collateral release worth ₹2,000 Mn expected during FY 2027 which can further be divested  |\n|  19.8% | Meaningful improvement to continue | Meaningful improvement to continue  |\n|  15.9% | Meaningful improvement to continue | Meaningful improvement to continue  |\n|  Enhanced from A+ (Stable) to A+ (Positive) | Enhanced from A+ (Positive) to AA- (Stable) | Further enhancement expected  |",
     "page_intent": [
-      {
-        "section_name": "retail_footprint_expansion",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "general_narrative",
-        "section_confidence": 0.4
-      }
+      "retail_footprint_expansion",
+      "general_narrative"
     ],
     "company": "KALYANKJIL",
     "year": 2025
@@ -341,26 +218,11 @@
     "doc_type": "ANNUAL_REPORT",
     "raw_tables": "",
     "page_intent": [
-      {
-        "section_name": "mds_message",
-        "section_confidence": 0.92
-      },
-      {
-        "section_name": "retail_footprint_expansion",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "marketing_promotions",
-        "section_confidence": 0.87
-      },
-      {
-        "section_name": "technology_digitisation",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "general_narrative",
-        "section_confidence": 0.4
-      }
+      "mds_message",
+      "retail_footprint_expansion",
+      "marketing_promotions",
+      "technology_digitisation",
+      "general_narrative"
     ],
     "company": "KALYANKJIL",
     "year": 2025
@@ -375,22 +237,10 @@
     "doc_type": "ANNUAL_REPORT",
     "raw_tables": "",
     "page_intent": [
-      {
-        "section_name": "retail_footprint_expansion",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "product_portfolio",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "strategic_overview",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "general_narrative",
-        "section_confidence": 0.4
-      }
+      "retail_footprint_expansion",
+      "product_portfolio",
+      "strategic_overview",
+      "general_narrative"
     ],
     "company": "KALYANKJIL",
     "year": 2025
@@ -405,30 +255,12 @@
     "doc_type": "ANNUAL_REPORT",
     "raw_tables": "",
     "page_intent": [
-      {
-        "section_name": "retail_footprint_expansion",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "strategic_overview",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "technology_digitisation",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "supply_chain",
-        "section_confidence": 0.87
-      },
-      {
-        "section_name": "shareholder_investor_info",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "general_narrative",
-        "section_confidence": 0.4
-      }
+      "retail_footprint_expansion",
+      "strategic_overview",
+      "technology_digitisation",
+      "supply_chain",
+      "shareholder_investor_info",
+      "general_narrative"
     ],
     "company": "KALYANKJIL",
     "year": 2025
@@ -443,18 +275,9 @@
     "doc_type": "ANNUAL_REPORT",
     "raw_tables": "",
     "page_intent": [
-      {
-        "section_name": "retail_footprint_expansion",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "technology_digitisation",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "general_narrative",
-        "section_confidence": 0.4
-      }
+      "retail_footprint_expansion",
+      "technology_digitisation",
+      "general_narrative"
     ],
     "company": "KALYANKJIL",
     "year": 2025
@@ -469,18 +292,9 @@
     "doc_type": "ANNUAL_REPORT",
     "raw_tables": "",
     "page_intent": [
-      {
-        "section_name": "retail_footprint_expansion",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "marketing_promotions",
-        "section_confidence": 0.87
-      },
-      {
-        "section_name": "general_narrative",
-        "section_confidence": 0.4
-      }
+      "retail_footprint_expansion",
+      "marketing_promotions",
+      "general_narrative"
     ],
     "company": "KALYANKJIL",
     "year": 2025
@@ -495,14 +309,8 @@
     "doc_type": "ANNUAL_REPORT",
     "raw_tables": "",
     "page_intent": [
-      {
-        "section_name": "marketing_promotions",
-        "section_confidence": 0.87
-      },
-      {
-        "section_name": "general_narrative",
-        "section_confidence": 0.4
-      }
+      "marketing_promotions",
+      "general_narrative"
     ],
     "company": "KALYANKJIL",
     "year": 2025
@@ -517,18 +325,9 @@
     "doc_type": "ANNUAL_REPORT",
     "raw_tables": "",
     "page_intent": [
-      {
-        "section_name": "vision_mission_values",
-        "section_confidence": 0.92
-      },
-      {
-        "section_name": "esg_csr",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "general_narrative",
-        "section_confidence": 0.4
-      }
+      "vision_mission_values",
+      "esg_csr",
+      "general_narrative"
     ],
     "company": "KALYANKJIL",
     "year": 2025
@@ -543,10 +342,7 @@
     "doc_type": "ANNUAL_REPORT",
     "raw_tables": "",
     "page_intent": [
-      {
-        "section_name": "general_narrative",
-        "section_confidence": 0.4
-      }
+      "general_narrative"
     ],
     "company": "KALYANKJIL",
     "year": 2025
@@ -561,22 +357,10 @@
     "doc_type": "ANNUAL_REPORT",
     "raw_tables": "|  Governance Body | Total Members | Executive | Non-Executive & Non-Independent | Independent  |\n| --- | --- | --- | --- | --- |\n|  Board of Directors | 10 | 3 | 2 | 5  |\n|  Audit Committee | 3 | - | 1 | 2  |\n|  Nomination and Remuneration Committee | 3 | - | 1 | 2  |\n|  CSR Committee | 3 | 2 | - | 2  |\n|  Risk Management Committee | 3 | 1 | 1 | 1  |\n|  Stakeholders' Relationship Committee | 3 | 2 | 0 | 1  |",
     "page_intent": [
-      {
-        "section_name": "esg_csr",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "corporate_governance",
-        "section_confidence": 0.92
-      },
-      {
-        "section_name": "risk_management",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "general_narrative",
-        "section_confidence": 0.4
-      }
+      "esg_csr",
+      "corporate_governance",
+      "risk_management",
+      "general_narrative"
     ],
     "company": "KALYANKJIL",
     "year": 2025
@@ -591,18 +375,9 @@
     "doc_type": "ANNUAL_REPORT",
     "raw_tables": "",
     "page_intent": [
-      {
-        "section_name": "retail_footprint_expansion",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "esg_csr",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "general_narrative",
-        "section_confidence": 0.4
-      }
+      "retail_footprint_expansion",
+      "esg_csr",
+      "general_narrative"
     ],
     "company": "KALYANKJIL",
     "year": 2025
@@ -617,18 +392,9 @@
     "doc_type": "ANNUAL_REPORT",
     "raw_tables": "",
     "page_intent": [
-      {
-        "section_name": "corporate_governance",
-        "section_confidence": 0.92
-      },
-      {
-        "section_name": "risk_management",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "general_narrative",
-        "section_confidence": 0.4
-      }
+      "corporate_governance",
+      "risk_management",
+      "general_narrative"
     ],
     "company": "KALYANKJIL",
     "year": 2025
@@ -643,14 +409,8 @@
     "doc_type": "ANNUAL_REPORT",
     "raw_tables": "",
     "page_intent": [
-      {
-        "section_name": "management_team",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "general_narrative",
-        "section_confidence": 0.4
-      }
+      "management_team",
+      "general_narrative"
     ],
     "company": "KALYANKJIL",
     "year": 2025
@@ -665,38 +425,14 @@
     "doc_type": "ANNUAL_REPORT",
     "raw_tables": "|  Particulars | Standalone |   | Consolidated  |   |\n| --- | --- | --- | --- | --- |\n|   |  2024-25 | 2023-24 | 2024-25 | 2023-24  |\n|  Total Income | 217,871.41 | 158,590.40 | 251,896.67 | 186,219.93  |\n|  Total Expenses | 208,548.76 | 151,149.19 | 242,300.66 | 178,331.68  |\n|  Profit before tax | 9,322.65 | 7,441.21 | 9,596.01 | 7,888.25  |\n|  Tax expense | 2,435.83 | 1,900.63 | 2,454.28 | 1,925.40  |\n|  Profit for the year | 6,886.82 | 5,540.58 | 7,141.73 | 5,962.85  |",
     "page_intent": [
-      {
-        "section_name": "mda",
-        "section_confidence": 0.93
-      },
-      {
-        "section_name": "esg_csr",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "directors_report",
-        "section_confidence": 0.92
-      },
-      {
-        "section_name": "corporate_governance",
-        "section_confidence": 0.92
-      },
-      {
-        "section_name": "shareholder_investor_info",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "risk_management",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "human_resources_employees",
-        "section_confidence": 0.85
-      },
-      {
-        "section_name": "general_narrative",
-        "section_confidence": 0.4
-      }
+      "mda",
+      "esg_csr",
+      "directors_report",
+      "corporate_governance",
+      "shareholder_investor_info",
+      "risk_management",
+      "human_resources_employees",
+      "general_narrative"
     ],
     "company": "KALYANKJIL",
     "year": 2025
@@ -711,22 +447,10 @@
     "doc_type": "ANNUAL_REPORT",
     "raw_tables": "|  Sl. No. | Name of the Subsidiaries/ Joint Venture/ Associate Company | Relationship  |\n| --- | --- | --- |\n|  1 | Enovate Lifestyles Private Limited | Direct Subsidiary  |\n|  2 | Kalyan Jewellers, INC., USA | Direct Subsidiary  |\n|  3 | Kalyan Jewellers FZE, UAE | Direct Subsidiary  |\n|  4 | Kalyan Gold & Diamond Jewellery Limited | Direct Subsidiary  |\n|  5 | Kalyan Jewellers LLC, UAE | Subsidiary  |\n|  6 | Kalyan Jewellers SPC, Oman | Subsidiary  |\n|  7 | Kalyan Jewellers for Golden Jewellery Company, W.L.L., Kuwait | Subsidiary  |\n|  8 | Kalyan Jewellers W.L.L, Qatar | Subsidiary  |\n|  9 | Kalyan Jewellers Procurement LLC, UAE | Subsidiary  |\n|  10 | Kalyan Jewellers Procurement SPC, Oman | Subsidiary  |\n|  11 | Kenouz Al Sharq Gold Ind. LLC, UAE | Subsidiary  |\n|  12 | Kalyan Al Sharq Jewellers Procurement WLL | Subsidiary  |",
     "page_intent": [
-      {
-        "section_name": "corporate_governance",
-        "section_confidence": 0.92
-      },
-      {
-        "section_name": "related_party_transactions",
-        "section_confidence": 0.92
-      },
-      {
-        "section_name": "subsidiary_information",
-        "section_confidence": 0.9
-      },
-      {
-        "section_name": "general_narrative",
-        "section_confidence": 0.4
-      }
+      "corporate_governance",
+      "related_party_transactions",
+      "subsidiary_information",
+      "general_narrative"
     ],
     "company": "KALYANKJIL",
     "year": 2025
@@ -741,26 +465,11 @@
     "doc_type": "ANNUAL_REPORT",
     "raw_tables": "|  SI No | Name of the Director | Designation  |\n| --- | --- | --- |\n|  1 | Vinod Rai | Chairman & Independent Director  |\n|  2 | T. S. Kalyanaraman | Managing Director  |\n|  3 | T. K. Seetharam | Whole-time Director  |\n|  4 | T. K. Ramesh | Whole-time Director  |\n|  5 | Anish Saraf | Non-Executive Director  |\n|  6 | A. D. M. Chavali | Independent Director  |\n|  7 | Kishori Udashi | Independent Director  |\n|  8 | T. S Anantharaman | Independent Director  |\n|  9 | Anil S. Nair | Independent Director  |\n|  10 | Salil Nair | Non-Executive Director  |\n\n|  1 | T. S. Kalyanaraman | Managing Director  |\n| --- | --- | --- |\n|  2 | T. K. Seetharam | Whole-time Director  |\n|  3 | T. K. Ramesh | Whole-time Director  |\n|  4 | Sanjay Raghuraman | Chief Executive Officer  |\n|  5 | Swaminathan V. | Chief Financial Officer  |\n|  6 | Jishnu R. G. | Company Secretary & Compliance Officer  |",
     "page_intent": [
-      {
-        "section_name": "management_team",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "corporate_governance",
-        "section_confidence": 0.92
-      },
-      {
-        "section_name": "auditors_report_standalone",
-        "section_confidence": 0.93
-      },
-      {
-        "section_name": "human_resources_employees",
-        "section_confidence": 0.85
-      },
-      {
-        "section_name": "general_narrative",
-        "section_confidence": 0.4
-      }
+      "management_team",
+      "corporate_governance",
+      "auditors_report_standalone",
+      "human_resources_employees",
+      "general_narrative"
     ],
     "company": "KALYANKJIL",
     "year": 2025
@@ -775,42 +484,15 @@
     "doc_type": "ANNUAL_REPORT",
     "raw_tables": "",
     "page_intent": [
-      {
-        "section_name": "back_cover",
-        "section_confidence": 0.9
-      },
-      {
-        "section_name": "management_team",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "esg_csr",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "corporate_governance",
-        "section_confidence": 0.92
-      },
-      {
-        "section_name": "accounting_policies",
-        "section_confidence": 0.92
-      },
-      {
-        "section_name": "shareholder_investor_info",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "human_resources_employees",
-        "section_confidence": 0.85
-      },
-      {
-        "section_name": "agm_notice",
-        "section_confidence": 0.9
-      },
-      {
-        "section_name": "general_narrative",
-        "section_confidence": 0.4
-      }
+      "back_cover",
+      "management_team",
+      "esg_csr",
+      "corporate_governance",
+      "accounting_policies",
+      "shareholder_investor_info",
+      "human_resources_employees",
+      "agm_notice",
+      "general_narrative"
     ],
     "company": "KALYANKJIL",
     "year": 2025
@@ -825,22 +507,10 @@
     "doc_type": "ANNUAL_REPORT",
     "raw_tables": "|  World Economic Outlook Projections (GDP Growth) | 2023 | 2024 | 2025(P)  |\n| --- | --- | --- | --- |\n|   |  3.2 | 3.2 | 2.8  |",
     "page_intent": [
-      {
-        "section_name": "competitive_strengths",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "mda",
-        "section_confidence": 0.93
-      },
-      {
-        "section_name": "segment_information",
-        "section_confidence": 0.9
-      },
-      {
-        "section_name": "general_narrative",
-        "section_confidence": 0.4
-      }
+      "competitive_strengths",
+      "mda",
+      "segment_information",
+      "general_narrative"
     ],
     "company": "KALYANKJIL",
     "year": 2025
@@ -855,22 +525,10 @@
     "doc_type": "ANNUAL_REPORT",
     "raw_tables": "",
     "page_intent": [
-      {
-        "section_name": "retail_footprint_expansion",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "product_portfolio",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "human_resources_employees",
-        "section_confidence": 0.85
-      },
-      {
-        "section_name": "general_narrative",
-        "section_confidence": 0.4
-      }
+      "retail_footprint_expansion",
+      "product_portfolio",
+      "human_resources_employees",
+      "general_narrative"
     ],
     "company": "KALYANKJIL",
     "year": 2025
@@ -885,22 +543,10 @@
     "doc_type": "ANNUAL_REPORT",
     "raw_tables": "",
     "page_intent": [
-      {
-        "section_name": "company_overview",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "retail_footprint_expansion",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "esg_csr",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "general_narrative",
-        "section_confidence": 0.4
-      }
+      "company_overview",
+      "retail_footprint_expansion",
+      "esg_csr",
+      "general_narrative"
     ],
     "company": "KALYANKJIL",
     "year": 2025
@@ -915,18 +561,9 @@
     "doc_type": "ANNUAL_REPORT",
     "raw_tables": "|  Particulars | FY25 | FY24 | Change (1 Mn) | Change (%)  |\n| --- | --- | --- | --- | --- |\n|  Revenue | 250,451 | 185,156 | 65,295 | 35.3%  |\n|  Gross Profit | 32,843 | 26,810 | 6,033 | 22.5%  |\n|  Gross Profit Margin (%) | 13.1% | 14.5% | (1.4%) |   |\n|  Total Operational Expenses | 17,671 | 14,010 | 3,660 | 26.1%  |\n|  Advertisement and Promotion Expenses | 4,734 | 3,553 | 1,181 | 33.2%  |\n|  Other Operational Expenses | 12,937 | 10,458 | 2,480 | 23.7%  |\n|  EBITDA | 15,172 | 12,799 | 2,373 | 18.5%  |\n|  EBITDA Margin (%) | 6.1% | 6.9% | (0.9%) |   |\n|  Depreciation | 3,427 | 2,743 | 684 | 24.9%  |\n|  EBIT | 11,745 | 10,056 | 1,688 | 16.8%  |\n|  EBIT Margin (%) | 4.7% | 5.4% | (0.7%) |   |\n|  Finance Costs | 3,595 | 3,232 | 362 | 11.2%  |\n|  Other Income | 1,446 | 1,064 | 382 | 35.8%  |\n|  PBT | 9,596 | 7,888 | 1,708 | 21.6%  |\n|  PBT Margin (%) | 3.8% | 4.3% | (0.4%) |   |\n|  Profit After Tax (PAT) | 7,142 | 5,963 | 1,179 | 19.8%  |\n|  PAT Margin (%) | 2.9% | 3.2% | (0.4%) |   |\n\n|  Particulars | FY25 | FY24  |\n| --- | --- | --- |\n|  Equity Share Capital | 10,314 | 10,301  |\n|  Other Equity | 37,721 | 31,590  |\n|  Non-controlling Interests | - | (13)  |\n|  Non-current Liabilities | 15,117 | 10,689  |\n|  Current Liabilities | 88,107 | 75,610  |\n|  Total | 1,51,259 | 128,177  |\n\n|  Particulars | FY25 | FY24  |\n| --- | --- | --- |\n|  Non-current assets | 37,266 | 28,687  |\n|  Current Assets | 1,13,993 | 98,151  |\n|  Assets held-for-sale | - | 1,339  |\n|  Total | 1,51,259 | 1,28,177  |\n\n|  Particulars | FY25 | FY24  |\n| --- | --- | --- |\n|  Inventory Turnover (Times) | 2.42 | 2.07  |\n|  Interest Coverage Ratio (Times) | 4.22 | 3.96  |\n|  Current Ratio (Times) | 1.29 | 1.30  |\n|  Net Debt to Equity Ratio (Times) | 0.47 | 0.56  |\n|  ROE (%) | 15.9 | 15.2  |\n|  ROCE (%) | 19.8 | 19.1  |",
     "page_intent": [
-      {
-        "section_name": "retail_footprint_expansion",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "standalone_profit_loss",
-        "section_confidence": 0.95
-      },
-      {
-        "section_name": "general_narrative",
-        "section_confidence": 0.4
-      }
+      "retail_footprint_expansion",
+      "standalone_profit_loss",
+      "general_narrative"
     ],
     "company": "KALYANKJIL",
     "year": 2025
@@ -941,18 +578,9 @@
     "doc_type": "ANNUAL_REPORT",
     "raw_tables": "",
     "page_intent": [
-      {
-        "section_name": "esg_csr",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "corporate_governance",
-        "section_confidence": 0.92
-      },
-      {
-        "section_name": "general_narrative",
-        "section_confidence": 0.4
-      }
+      "esg_csr",
+      "corporate_governance",
+      "general_narrative"
     ],
     "company": "KALYANKJIL",
     "year": 2025
@@ -967,18 +595,9 @@
     "doc_type": "ANNUAL_REPORT",
     "raw_tables": "|  Name | Composition and Category | Number of Directorships held in public limited Companies. | No. of Board Meetings attended during the financial year ended March 31, 2025 | Names of the other listed entities where the person is a director and the category of directorship | No. of Committee Memberships in Other Public Limited Companies | Attended last AGM held on August 17, 2024 | No. of Shares held  |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n|  Mr. Vinod Rai | Chairman, Non-Executive Independent Director | 5 | 6 | Apollo Tyres Limited - Non-Executive Independent Director | 2 | Yes | Nil  |\n|  Mr. T.S. Kalyanaraman | Promoter, Executive Director | 1 | 6 | Nil | Nil | Yes | 22,98,88,788  |\n|  Mr. T. K. Seetharam | Promoter, Executive Director | 1 | 6 | Nil | Nil | Yes | 18,60,64,242  |\n|  Mr. T. K. Ramesh | Promoter, Executive Director | 1 | 6 | Nil | Nil | Yes | 18,60,64,242  |\n|  Mr. Salil Nair | Non-Executive Director | 1 | 5 | Nil | Nil | Yes | 12,500  |\n|  Mr. Anish Saraf | Non-Executive Director | 4 | 6 | Nil | 4 | Yes | Nil  |\n|  Mr. A. D. M. Chavali | Non-Executive Independent Director | 4 | 6 | Pokarna Limited - Independent Director, Natco Pharma Limited - Independent Director | 5 | Yes | Nil  |\n|  Mr. T.S. Anantharaman | Non-Executive Independent Director | 4 | 6 | Nil | 2 | Yes | Nil  |\n|  Ms. Kishori Udeshi | Non-Executive Independent Director | 3 | 6 | Cartrade Tech Ltd, Non-Executive Independent Director | 2 | Yes | Nil  |\n|  Mr. Anil S. Nair | Non-Executive Independent Director | 1 | 6 | Nil | Nil | Yes | Nil  |\n\n|  Name of Director | Business Strategy | Sales and Marketing | Financial Expertise | Operations | Corporate Governance  |\n| --- | --- | --- | --- | --- | --- |\n|  Mr. Vinod Rai | ✓ |  | ✓ | ✓ | ✓  |\n|  Mr. T. S. Kalyanaraman | ✓ | ✓ |  | ✓ |   |\n|  Mr. T. K. Seetharam | ✓ | ✓ | ✓ | ✓ |   |\n|  Mr. T. K. Ramesh | ✓ | ✓ |  | ✓ |   |\n|  Mr. Salil Nair | ✓ | ✓ |  | ✓ | ✓  |\n|  Mr. Anish Saraf | ✓ |  | ✓ | ✓ | ✓  |\n|  Mr. A. D. M. Chavali | ✓ |  | ✓ | ✓ | ✓  |\n|  Mr. T. S. Anantharaman | ✓ |  | ✓ | ✓ | ✓  |\n|  Ms. Kishori Udeshi | ✓ |  | ✓ | ✓ | ✓  |\n|  Mr. Anil S. Nair | ✓ | ✓ |  | ✓ | ✓  |",
     "page_intent": [
-      {
-        "section_name": "corporate_governance",
-        "section_confidence": 0.92
-      },
-      {
-        "section_name": "risk_management",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "general_narrative",
-        "section_confidence": 0.4
-      }
+      "corporate_governance",
+      "risk_management",
+      "general_narrative"
     ],
     "company": "KALYANKJIL",
     "year": 2025
@@ -993,22 +612,10 @@
     "doc_type": "ANNUAL_REPORT",
     "raw_tables": "|  Sl. No. | Name of the Member | Category | No. of Committee Meetings Held | No. of Committee Meetings Attended  |\n| --- | --- | --- | --- | --- |\n|  1 | Mr. A. D. M. Chavali Non-Executive Independent Director | Chairman | 7 | 7  |\n|  2 | Mr. T. S. Anantharaman Non-Executive Independent Director | Member | 7 | 7  |\n|  3 | Mr. Anish Kumar Saraf Non-Executive Director | Member | 7 | 7  |\n\n|  Sl. No | Name of the Member | Category | No. of Committee Meetings Held | No. of Committee Meetings Attended  |\n| --- | --- | --- | --- | --- |\n|  1 | Mr. A. D. M. Chavalii Non-Executive Independent Director | Chairman | 1 | 1  |\n|  2 | Mr. Vinod Rai Non-Executive Independent Director | Member | 1 | 1  |\n|  3 | Mr. Anish Kumar Saraf Non-Executive Director | Member | 1 | 1  |\n\n|  Sl. No | Name | Designation | Total Sitting Fees FY 2024-25 In million  |\n| --- | --- | --- | --- |\n|  1 | Mr. Vinod Rai | Chairman & Non-Executive Independent Director | 0.6  |\n|  2 | Mr. A. D. M. Chavalii | Non-Executive Independent Director | 0.6  |\n|  3 | Ms. Kishon Udeshi | Non-Executive Independent Director | 0.6  |\n|  4 | Mr. Anil Nair | Non-Executive Independent Director | 0.6  |\n|  5 | Mr. T. S. Anantharaman | Non-Executive Independent Director | 0.6  |\n|  6 | Mr. Salil Nair | Non-Executive Director | 0.5  |\n|  7 | Mr. Anish Saraf | Non-Executive Director | Nil  |\n\n|  Particulars | Details of remuneration (In Million)*  |   |   |\n| --- | --- | --- | --- |\n|   |  Mr. T.S. Kalyanaraman Managing Director | Mr. T.K. Seetharam Whole-time Director | Mr. T.K. Ramesh Whole-time Director  |\n|  Basic Salary | 112.76 | 112.76 | 112.76  |\n|  Perquisites and others | Nil | Nil | Nil  |\n|  Commission | Nil | Nil | Nil  |\n|  ESOP | Nil | Nil | Nil  |\n|  Incentive | Nil | Nil | Nil  |\n|  Total | 112.76 | 112.76 | 112.76  |",
     "page_intent": [
-      {
-        "section_name": "corporate_governance",
-        "section_confidence": 0.92
-      },
-      {
-        "section_name": "subsidiary_information",
-        "section_confidence": 0.9
-      },
-      {
-        "section_name": "agm_notice",
-        "section_confidence": 0.9
-      },
-      {
-        "section_name": "general_narrative",
-        "section_confidence": 0.4
-      }
+      "corporate_governance",
+      "subsidiary_information",
+      "agm_notice",
+      "general_narrative"
     ],
     "company": "KALYANKJIL",
     "year": 2025
@@ -1023,30 +630,12 @@
     "doc_type": "ANNUAL_REPORT",
     "raw_tables": "|  SL No | Name of the Member | Category | No. of Committee Meetings Held | No. of Committee Meetings Attended  |\n| --- | --- | --- | --- | --- |\n|  1 | Mr. T.S Anantharaman Non-Executive Independent Director | Chairman | 1 | 1  |\n|  2 | Mr. T.K Seetharam Executive Director | Member | 1 | 1  |\n|  3 | Mr. T.K Ramesh Executive Director | Member | 1 | 1  |\n\n|  SL No | Name of the Member | Category | No. of Committee Meetings Held | No. of Committee Meetings Attended  |\n| --- | --- | --- | --- | --- |\n|  1 | Mr. Salil Nair Non-Executive Director | Chairman | 2 | 2  |\n|  2 | Mr. Anil S. Nair Non-Executive Independent Director | Member | 2 | 2  |\n|  3 | Mr. T.K. Seetharam Executive Director | Member | 2 | 2  |\n\n|  SL No | Name of the Member | Category | No. of Committee Meetings Held | No. of Committee Meetings Attended  |\n| --- | --- | --- | --- | --- |\n|  1 | Mr. T. S. Kalyanaraman Managing Director | Chairman | 2 | 2  |\n|  2 | Mr. A. D. M. Chavalii Non - Executive Independent Director | Member | 2 | 2  |\n|  3 | Mr. T.K Seetharam Executive Director | Member | 2 | 2  |\n\n|  SL No | Name of the Senior Management Personnel (SMP)  |\n| --- | --- |\n|  1. | Mr. Sanjay Mehrotra - Head - Strategy and Corporate Affairs  |\n|  2. | Mr. Abraham George - Head - Treasury and Investor Relations  |\n|  3. | Mr. Arun Sankar -Head - Technology  |\n\n|  Financial Year | Date | Time | Location  |\n| --- | --- | --- | --- |\n|  2021-22 | September 22, 2022 | 11.30 a. m | Meeting held through Video Conferencing (\"VC\")/other Audio-Visual Means (\"OAVM\")  |\n|  2022-23 | August 12, 2023 | 11.30 a. m | Meeting held through Video Conferencing (\"VC\")/other Audio-Visual Means (\"OAVM\")  |\n|  2023-24 | August 17, 2024 | 11.30 a. m | Meeting held through Video Conferencing (\"VC\")/other Audio-Visual Means (\"OAVM\")  |\n\n|  Date of Annual General Meeting | Details of Special Resolutions passed if any  |\n| --- | --- |\n|  August 17, 2024 | • Consider payment of Remuneration to Mr. Vinod Rai (DIN: 00041867), Chairman (Non - Executive) & Independent Director of the Company for the FY25, which may exceed 50% of the total annual remuneration payable to all the Non-Executive Directors of the Company  |\n|  August 12, 2023 | • Reappointment of Mr. T. S. Anantharaman (DIN: 00480136) as an Independent Director for a second term of three (3) years. • Payment of Remuneration to the Non - Executive Directors of the Company. • Consider payment of Remuneration to Mr. Vinod Rai (DIN -00041867), Chairman (Non - Executive) & Independent Director of the Company for the Financial Year 2023-24, which may exceed 50% of the total annual remuneration payable to all the Non-Executive Directors of the Company  |\n|  September 22, 2022 | • Appointment of Mr. Vinod Rai (DIN -00041867) as Chairman & Non-Executive Independent Director of the Company. • Continuation of Directorship of Mr. TS Anantharaman (DIN: 00480136), as Non-Executive Independent Director in terms of Regulation 17 (1A) of the Securities and Exchange Board of India (Listing Obligations and Disclosure Requirements) Regulations, 2015 • Reappointment of Ms. Kishori Udeshi (DIN -01344073) as an Independent Director for a second term of three (3) years. • Payment of Commission to the Non - Executive Directors of the Company  |",
     "page_intent": [
-      {
-        "section_name": "management_team",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "esg_csr",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "corporate_governance",
-        "section_confidence": 0.92
-      },
-      {
-        "section_name": "shareholder_investor_info",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "risk_management",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "general_narrative",
-        "section_confidence": 0.4
-      }
+      "management_team",
+      "esg_csr",
+      "corporate_governance",
+      "shareholder_investor_info",
+      "risk_management",
+      "general_narrative"
     ],
     "company": "KALYANKJIL",
     "year": 2025
@@ -1061,22 +650,10 @@
     "doc_type": "ANNUAL_REPORT",
     "raw_tables": "|  Sl. No. | Share - Range |   | Number of Shareholders | % of Total Shareholders | Total Shares For The Range | % of Issued Capital  |\n| --- | --- | --- | --- | --- | --- | --- |\n|   |  From | To  |   |   |   |   |\n|  1 | 1 | 500 | 780409 | 97.2481 | 40498204 | 3.93  |\n|  2 | 501 | 1000 | 13469 | 1.6784 | 9700897 | 0.94  |\n|  3 | 1001 | 2000 | 4944 | 0.6161 | 6980191 | 0.68  |\n|  4 | 2001 | 3000 | 1283 | 0.1599 | 3173967 | 0.31  |\n|  5 | 3001 | 4000 | 568 | 0.0708 | 1995686 | 0.19  |\n|  6 | 4001 | 5000 | 341 | 0.0425 | 1568504 | 0.15  |\n|  7 | 5001 | 10000 | 577 | 0.0719 | 4136913 | 0.40  |\n|  8 | Above 10001 |   | 902 | 0.1124 | 963381013 | 93.40  |\n|  Total: |   |   | 802493 | 100.0000 | 1031435375 | 100.00  |",
     "page_intent": [
-      {
-        "section_name": "back_cover",
-        "section_confidence": 0.9
-      },
-      {
-        "section_name": "corporate_governance",
-        "section_confidence": 0.92
-      },
-      {
-        "section_name": "risk_management",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "general_narrative",
-        "section_confidence": 0.4
-      }
+      "back_cover",
+      "corporate_governance",
+      "risk_management",
+      "general_narrative"
     ],
     "company": "KALYANKJIL",
     "year": 2025
@@ -1091,18 +668,9 @@
     "doc_type": "ANNUAL_REPORT",
     "raw_tables": "",
     "page_intent": [
-      {
-        "section_name": "shareholder_investor_info",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "agm_notice",
-        "section_confidence": 0.9
-      },
-      {
-        "section_name": "general_narrative",
-        "section_confidence": 0.4
-      }
+      "shareholder_investor_info",
+      "agm_notice",
+      "general_narrative"
     ],
     "company": "KALYANKJIL",
     "year": 2025
@@ -1117,18 +685,9 @@
     "doc_type": "ANNUAL_REPORT",
     "raw_tables": "|  Sl. No. | Name of the Director | Position in Committee | Category of Directors | No. of meetings of CSR committee held during the year | No. of meetings of CSR committee attended during the year  |\n| --- | --- | --- | --- | --- | --- |\n|  1 | T.S. Kalyanaraman | Chairman | Managing Director | 2 | 2  |\n|  2 | A. D. M. Chavali | Member | Independent Director | 2 | 2  |\n|  3 | T. K. Seetharam | Member | Whole-time Director | 2 | 2  |",
     "page_intent": [
-      {
-        "section_name": "esg_csr",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "corporate_governance",
-        "section_confidence": 0.92
-      },
-      {
-        "section_name": "general_narrative",
-        "section_confidence": 0.4
-      }
+      "esg_csr",
+      "corporate_governance",
+      "general_narrative"
     ],
     "company": "KALYANKJIL",
     "year": 2025
@@ -1143,14 +702,8 @@
     "doc_type": "ANNUAL_REPORT",
     "raw_tables": "|  Total Amount spent for the financial year in millions | Amount unspent in millions  |   |   |   |   |\n| --- | --- | --- | --- | --- | --- |\n|   |  Total Amount transferred to Unspent CSR Account as per Section 135(6) | Amount transferred to any fund specified under Schedule VII as per second proviso to Section 135(5)  |   |   |   |\n|   |  Amount | Date of Transfer | Name of the Fund | Amount | Date of Transfer  |\n|  ¥94.77 million | ¥11.50 million | 24.04.2025 | Nil | Nil | Nil  |\n\n|   |   | ¥ in million  |\n| --- | --- | --- |\n|  Sl. No. | Particulars | Amount  |\n|  i | Two percent of average net profit of the Company as per Section 135(5) | 106.15  |\n|  ii | Total amount spent for the Financial Year | 94.77  |\n|  iii | Excess amount spent for the financial year [(ii)-(i)] | Nil  |\n|  iv | Surplus arising out of the CSR projects or programmes or activities of the previous financial years, if any | Nil  |\n|  v | Amount available for set off in succeeding financial years | Nil  |\n\n|  Sl. No. | Preceding Financial year | Amount transferred to Unspent CSR Account under Section 135(6) of the Act | Balance Amount in Unspent CSR Account under Section 135(6) of the Act as on April 1, 2024 | Amount spent in the reporting financial year | Amount transferred to any fund specified under Schedule VII as per Section 135(5) of the Act, if any |   | Amount remaining as on March 31, 2025 to be spent in succeeding financial years | Deficiency, if any  |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- |\n|   |   |   |   |   |  Amount | Date of Transfer  |   |   |\n|   |   |   |   |   |  |   |   |   |\n|  1 | 2023-2024 | ¥47.30 | ¥47.30 | ¥47.30 | Nil | Nil | Nil | Nil  |\n|  2 | 2022-2023 | ¥18.70 | Nil | Nil | Nil | Nil | Nil | Nil  |\n|  3 | 2021-2022 | ¥18.00 | Nil | Nil | Nil | Nil | Nil | Nil  |",
     "page_intent": [
-      {
-        "section_name": "esg_csr",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "general_narrative",
-        "section_confidence": 0.4
-      }
+      "esg_csr",
+      "general_narrative"
     ],
     "company": "KALYANKJIL",
     "year": 2025
@@ -1165,18 +718,9 @@
     "doc_type": "ANNUAL_REPORT",
     "raw_tables": "|  Name of the Subsidiary | Kalyan Jewellers F25, UAE | Kalyan Jewellers L12, UAE | Nankau Al Sharq Gold W/LL | Kalyan Jewellers For Golden Jewellery Company, W.L.L., Kuwait | Kalyan Jewellers SPC, Oman | Kalyan Jewellers Pvt. Ltd., UAE | Kalyan Jewellers Procurement SPC, Oman | Kalyan Jewelers (UK) USA | Bansala Lifestyle Pvt. Ltd | Kalyan Gold & Financial Jewellery Limited, UK  |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n|  Reporting period | 01.04.2024 to 31.03.2025 | 01.04.2024 to 31.03.2025 | 01.04.2024 to 31.03.2025 | 01.04.2024 to 31.03.2025 | 01.04.2024 to 31.03.2025 | 01.04.2024 to 31.03.2025 | 01.04.2024 to 31.03.2025 | 01.04.2024 to 31.03.2025 | 01.04.2024 to 31.03.2025 | 01.04.2024 to 31.03.2025  |\n|  Reporting currency | AED | AED | AED | KWD | QAR | OMR | AED | OMR | USD | INR  |\n|  Share capital | 385,000,000 | 300,000 | 300,000 | 50,000 | 200,000 | 250,000 | 300,000 | 200,000 | 49,50,001 | 38,21,300  |\n|  Reserves and Surplus | (35,756,407) | 158,793,559 | 1,727,951 | 145,731 | (5,808,909) | (1,077,530) | (21,028) | 153,677 | (12,32,336.49) | (201,991,000)  |\n|  Total assets | 633,739,352 | 1,960,867,664 | 59,157,439 | 11,578,279 | 205,757,489 | 6,170,823 | 278,972 | 428,237 | 2,19,59,606.29 | 5,639,490,000  |\n|  Total Liabilities | 304,495,759 | 793,774,105 | 57,128,488 | 11,247,769 | 165,926,120 | 3,046,494 | - | 24,560 | 16,242,135.76 | 5,836,860,000  |\n|  Investments | 303,291,779 | 102,788,392 | - | - | - | - | - | - | - | 52,660,000  |\n|  Turnover | - | 1,212,390,154 | 366,298,369 | 13,002,074 | 214,680,125 | 20,731,029 | - | 12,758,391 | 32,45,478.22 | 1,638,150,000  |\n|  Profit/(loss) before taxation | 1,001,234 | 16,330,734 | (526,289) | (108,952) | 755,604 | 915,057 | -21,001 | 164,098 | (9,84,674.60) | (329,151,000)  |\n|  Profit/(loss) after taxation | 1,001,234 | 16,410,734 | (526,289) | (108,952) | 488,181 | 905,710 | -21,001 | 139,538 | (9,84,674.60) | (247,460,000)  |\n|  Percentage (%) of Shareholding | 100% | 100% | 100% | 49% | 49% | 100% | 100% | 100% | 100% | 100%  |\n|  The date since when subsidiary was acquired/ incorporated | 15-07-2013 | 24-09-2013 | 26-12-2017 | 20-05-2014 | 28-09-2014 | 09-08-2017 | 25-12-2023 | 16-11-2023 | 25-10-2017 | 24-04-2017  |\n\n|  Sl. No | Particulars | DIN | Date of Appointment in Company  |\n| --- | --- | --- | --- |\n|  1 | ANISH KUMAR SARAF | 00322784 | 31/01/2025  |\n|  2 | AGNIHOTRA DAKSHINA MURTY CHAVALI | 00374673 | 28/03/2016  |\n|  3 | TRIKKUR ANANTHARAMAN SEETHARAMAN | 00480136 | 15/12/2018  |\n|  4 | RAMESH TRIKKUR KALYANARAMAN | 01021868 | 29/01/2009  |\n|  5 | SEETHARAM TRIKKUR KALYANARAMAN | 01021898 | 29/01/2009  |\n|  6 | SEETHARAMA IYER THRIKUR KALYANARAMAN | 01021928 | 29/01/2009  |\n|  7 | KISHORI JAYENDRA UDESHI | 01344073 | 17/01/2018  |\n|  8 | SALIL NAIR | 01955091 | 29/05/2020  |\n|  9 | ANIL SADASIVAN NAIR | 08327721 | 29/05/2020  |\n|  10 | VINOD RAI | 00041867 | 01/07/2022  |",
     "page_intent": [
-      {
-        "section_name": "back_cover",
-        "section_confidence": 0.9
-      },
-      {
-        "section_name": "corporate_governance",
-        "section_confidence": 0.92
-      },
-      {
-        "section_name": "general_narrative",
-        "section_confidence": 0.4
-      }
+      "back_cover",
+      "corporate_governance",
+      "general_narrative"
     ],
     "company": "KALYANKJIL",
     "year": 2025
@@ -1191,26 +735,11 @@
     "doc_type": "ANNUAL_REPORT",
     "raw_tables": "|  Date of Allotment | Total Number of Equity shares allotted | Distinctive Numbers of Shares allotted  |   |\n| --- | --- | --- | --- |\n|   |   |  From | To  |\n|  10.05.2024 | 560341 | 1030053058 | 1030613398  |\n|  17.08.2024 | 618891 | 1030613399 | 1031232289  |\n|  13.11.2024 | 203086 | 1031232290 | 1031435375  |",
     "page_intent": [
-      {
-        "section_name": "back_cover",
-        "section_confidence": 0.9
-      },
-      {
-        "section_name": "corporate_governance",
-        "section_confidence": 0.92
-      },
-      {
-        "section_name": "shareholder_investor_info",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "human_resources_employees",
-        "section_confidence": 0.85
-      },
-      {
-        "section_name": "general_narrative",
-        "section_confidence": 0.4
-      }
+      "back_cover",
+      "corporate_governance",
+      "shareholder_investor_info",
+      "human_resources_employees",
+      "general_narrative"
     ],
     "company": "KALYANKJIL",
     "year": 2025
@@ -1225,14 +754,8 @@
     "doc_type": "ANNUAL_REPORT",
     "raw_tables": "",
     "page_intent": [
-      {
-        "section_name": "back_cover",
-        "section_confidence": 0.9
-      },
-      {
-        "section_name": "general_narrative",
-        "section_confidence": 0.4
-      }
+      "back_cover",
+      "general_narrative"
     ],
     "company": "KALYANKJIL",
     "year": 2025
@@ -1247,18 +770,9 @@
     "doc_type": "ANNUAL_REPORT",
     "raw_tables": "|  Sr. No. | Particulars | FY 2024-2025  |\n| --- | --- | --- |\n|  1 | Corporate Identity Number (CIN) of the Listed Entity | L36911KL2009PLC024641  |\n|  2 | Name of the Listed Entity | Kalyan Jewellers India Limited  |\n|  3 | Year of incorporation | 29/01/2009  |\n|  4 | Registered office address | Corporate Office, Tc-32/204/2 Sitaram Mill Road/ Premji Road, Punkunnam Thrissur KI 680 002, India  |\n|  5 | Corporate address | Corporate Office, Tc-32/204/2 Sitaram Mill Road/ Premji Road, Punkunnam Thrissur KI 680 002, India  |\n|  6 | E-mail | compliance@kalyanjewellers.net  |\n|  7 | Telephone | 0487-2437100  |\n|  8 | Website | http://www.kalyanjewellers.net  |\n|  9 | Financial year for which reporting is being done | 2024-25  |\n|  10 | Name of the Stock Exchange(s) where shares are listed | BSE Limited & National Stock Exchange of India Limited  |\n|  11 | Paid-up Capital | 10,31,43,53,750  |\n|  12 | Name and contact details (telephone, email address) of the person who may be contacted in case of any queries on the BRSR report | V Swaminathan CFO Email: swaminathan@kalyanjewellers.net Telephone: 04872437112  |\n|  13 | Reporting boundary - Are the disclosures under this report made on a standalone basis (i.e. only for the entity) or on a consolidated basis (i.e. for the entity and all the entities which form a part of its consolidated financial statements, taken together) | Standalone Basis  |\n|  14 | Name of assurance provider | Vinay & Keshava LLP  |\n|  15 | Type of assurance obtained | Reasonable  |\n\n|  Sr. No. | Description of Main Activity | Description of Business Activity | % of Turnover of the entity  |\n| --- | --- | --- | --- |\n|  1 | Manufacturing* | Manufacturing and sale of jewellery metals, bullion gold, ornaments, silver, diamonds, coins, metals, precious stones etc. | 100%  |\n\n|  Sr. No. | Product/Service | NIC Code | % of Total Turnover Contributed  |\n| --- | --- | --- | --- |\n|  1 | Gold, Silver, pearls, gems, diamonds, industrial diamonds and all kinds of precious and semi-precious stones. Also all kinds of diamonds and powered paste and all kinds jewellery and ornaments containing or having diamonds and all or any precious and semi-precious stones. | 32111 | 100%  |\n\n|  Location | Number of plants | Number of offices | Total  |\n| --- | --- | --- | --- |\n|  National | 0 | 1,365 | 1,365  |\n|  International | 0 | 0 | 0  |\n\n|  Locations | Number  |\n| --- | --- |\n|  National (No. of States)* | 23  |\n|  International (No. of Countries) | 0  |\n\n|  Sr. No. | Particulars | Total | Male |   | Female  |   |\n| --- | --- | --- | --- | --- | --- | --- |\n|   |   |  (A) | No. (B) | % (B / A) | No. (C) | % (C / A)  |\n|  EMPLOYEES  |   |   |   |   |   |   |\n|  1 | Permanent (D) | 12,534 | 10,031 | 80.03% | 2,503 | 19.97%  |\n|  2 | Other than Permanent (E) | 0 | 0 | 0% | 0 | 0%  |\n|  3 | Total employees (D + E) | 12,534 | 10,031 | 80.03% | 2,503 | 19.97%  |\n|  WORKERS  |   |   |   |   |   |   |\n|  4 | Permanent (F) | 0 | 0 | 0% | 0 | 0%  |\n|  5 | Other than Permanent (G) | 0 | 0 | 0% | 0 | 0%  |\n|  6 | Total workers (F + G) | 0 | 0 | 0% | 0 | 0%  |\n\n|  Sr. No. | Particulars | Total | Male |   | Female  |   |\n| --- | --- | --- | --- | --- | --- | --- |\n|   |   |  (A) | No. (B) | % (B / A) | No. (C) | % (C / A)  |\n|  DIFFERENTLY ABLED EMPLOYEES  |   |   |   |   |   |   |\n|  1 | Permanent (D) | 0 | 0 | 0% | 0 | 0%  |\n|  2 | Other than Permanent (E) | 0 | 0 | 0% | 0 | 0%  |\n|  3 | Total differently abled employees (D+E) | 0 | 0 | 0% | 0 | 0%  |\n|  DIFFERENTLY ABLED WORKERS  |   |   |   |   |   |   |\n|  4 | Permanent (F) | 0 | 0 | 0% | 0 | 0%  |\n|  5 | Other than Permanent (G) | 0 | 0 | 0% | 0 | 0%  |\n|  6 | Total differently abled workers (F + G) | 0 | 0 | 0% | 0 | 0%  |\n\n|  Particulars | Total | No. and percentage of Females  |   |\n| --- | --- | --- | --- |\n|   |  (A) | No. (B) | % (B / A)  |\n|  Board of Directors | 10 | 1 | 10%  |\n|  Key Management Personnel* | 3 | 0 | 0%  |",
     "page_intent": [
-      {
-        "section_name": "back_cover",
-        "section_confidence": 0.9
-      },
-      {
-        "section_name": "esg_csr",
-        "section_confidence": 0.88
-      },
-      {
-        "section_name": "general_narrative",
-        "section_confidence": 0.4
-      }
+      "back_cover",
+      "esg_csr",
+      "general_narrative"
     ],
     "company": "KALYANKJIL",
     "year": 2025

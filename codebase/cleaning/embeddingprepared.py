@@ -245,7 +245,7 @@ class EmbeddingPrepared:
     def store_in_chromadb(
         self,
         embedding_json_path: str,
-        collection_name:     str = "kalyan_annual_report",
+        collection_name:     str = "",
         chroma_path:         str | None = None,
     ) -> Any:
         """
@@ -276,7 +276,7 @@ class EmbeddingPrepared:
         dropped during preparation.
         """
         import chromadb
-        from embedder import EMBEDDER   # root-level singleton
+        from codebase.vectordb.embedder import EMBEDDER   # root-level singleton
 
         chroma_path = chroma_path or CONFIG.CHROMA_PATH
 

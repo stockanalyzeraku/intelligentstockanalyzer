@@ -515,18 +515,18 @@ class PageIntentTagger:
     def __init__(self):
         pass
 
-    def _tag_page(self, page: CleanResult) -> dict[str, float]:
+    def _tag_page(self, page: CleanResult) -> list[str]:
         """
         Run the intent rules against a single page dict.
         Returns the first matching IntentResult.
         """
         pn = page.page_number
         
-        intent:  list[IntentResult] = []
+        intent: list[str] = []
         
         for intent_label, confidence, detector in INTENT_RULES:
             if detector(page):
-                intent.append(IntentResult(section_name=intent_label, section_confidence=confidence))
+                intent.append(intent_label)
         return intent
 
         #     try:

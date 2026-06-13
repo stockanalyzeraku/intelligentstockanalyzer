@@ -178,7 +178,7 @@ def classify_error(exc: Exception) -> ErrorType:
     return ErrorType.PERMANENT
 
 
-def retry(
+def retry(self,
     max_attempts: Optional[int] = None,
     base_delay: Optional[float] = None,
     max_delay: Optional[float] = None,

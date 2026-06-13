@@ -14,14 +14,7 @@ TableExtractor
     strip_tables(text)           → (clean_text: str, tables_text: str)
     chunk_tables_by_row(...)     → list[dict]
 
-Notes
------
-- The original ``chunk_tables_by_row`` was defined without ``self``, making
-  it an unbound function masquerading as a method.  It is now a proper
-  instance method.
-- No external dependencies beyond the standard library.
 """
-
 from __future__ import annotations
 
 import re

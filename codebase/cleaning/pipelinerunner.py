@@ -149,9 +149,7 @@ class PipelineRunner:
         logger.info(f"[PipelineRunner] {len(pages)} pages loaded")
         return pages
 
-    def _process_pages(
-        self, pages: list[dict]
-    ) -> tuple[list[CleanResult], int]:
+    def _process_pages(self, pages: list[dict]) -> tuple[list[CleanResult], int]:
         """
         Run every cleaning stage on each page.
 
@@ -179,6 +177,7 @@ class PipelineRunner:
 
             # ── Stage 2: Intent tagging ───────────────────────────────
             result.page_intent = self._intent_tagger._tag_page(result)
+            logger.info(f"Intents for page {page_num}: {result.page_intent}")
 
             # ── Stage 3: Strip tables from prose ─────────────────────
             result.clean_text, result.raw_tables = (
@@ -196,7 +195,7 @@ class PipelineRunner:
                 f"words={result.word_count:>5} | "
                 f"table={str(result.has_table):<5} | "
                 f"type={str(result.table_type):<25} | "
-                f"intents={[i.section_name for i in result.page_intent]}"
+                f"intents={result.page_intent}"
             )
 
         return results, skipped

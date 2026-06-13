@@ -97,3 +97,104 @@
 {"ts": "2026-06-13T14:55:40.983775+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 2 chunks"}
 {"ts": "2026-06-13T14:55:40.983879+05:30", "level": "INFO", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] 204 chunks generated from 44 pages"}
 {"ts": "2026-06-13T14:55:40.992263+05:30", "level": "INFO", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] Embedding-ready JSON written \u2192 /workspaces/intelligentstockanalyzer/uploads/KALYANKJIL/ANNUAL_2025/1-50_EMBEDDINGREADY.json"}
+{"ts": "2026-06-13T18:06:02.885638+05:30", "level": "INFO", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] Initialised \u2014 max_words=180, overlap=30"}
+{"ts": "2026-06-13T18:06:03.080437+05:30", "level": "INFO", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] prepare_for_embedding: /workspaces/intelligentstockanalyzer/uploads/KALYANKJIL/ANNUAL_2025/1-50_CLEANED.json"}
+{"ts": "2026-06-13T18:06:03.081600+05:30", "level": "INFO", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] Loaded 44 pages"}
+{"ts": "2026-06-13T18:06:03.081784+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 3 chunks"}
+{"ts": "2026-06-13T18:06:03.081988+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 3 chunks"}
+{"ts": "2026-06-13T18:06:03.082103+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 1 chunks"}
+{"ts": "2026-06-13T18:06:03.082288+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 3 chunks"}
+{"ts": "2026-06-13T18:06:03.082436+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 2 chunks"}
+{"ts": "2026-06-13T18:06:03.082616+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 2 chunks"}
+{"ts": "2026-06-13T18:06:03.082829+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 3 chunks"}
+{"ts": "2026-06-13T18:06:03.082961+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 1 chunks"}
+{"ts": "2026-06-13T18:06:03.083103+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 1 chunks"}
+{"ts": "2026-06-13T18:06:03.083288+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 4 chunks"}
+{"ts": "2026-06-13T18:06:03.083429+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 1 chunks"}
+{"ts": "2026-06-13T18:06:03.083554+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 1 chunks"}
+{"ts": "2026-06-13T18:06:03.083802+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 7 chunks"}
+{"ts": "2026-06-13T18:06:03.083975+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 3 chunks"}
+{"ts": "2026-06-13T18:06:03.084175+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 4 chunks"}
+{"ts": "2026-06-13T18:06:03.084320+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 2 chunks"}
+{"ts": "2026-06-13T18:06:03.084482+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 2 chunks"}
+{"ts": "2026-06-13T18:06:03.084649+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 1 chunks"}
+{"ts": "2026-06-13T18:06:03.084835+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 3 chunks"}
+{"ts": "2026-06-13T18:06:03.085042+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 6 chunks"}
+{"ts": "2026-06-13T18:06:03.085191+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 2 chunks"}
+{"ts": "2026-06-13T18:06:03.085337+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 2 chunks"}
+{"ts": "2026-06-13T18:06:03.085505+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 2 chunks"}
+{"ts": "2026-06-13T18:06:03.085670+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 1 chunks"}
+{"ts": "2026-06-13T18:06:03.085934+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 11 chunks"}
+{"ts": "2026-06-13T18:06:03.086186+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 9 chunks"}
+{"ts": "2026-06-13T18:06:03.086430+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 9 chunks"}
+{"ts": "2026-06-13T18:06:03.086726+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 11 chunks"}
+{"ts": "2026-06-13T18:06:03.087000+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 10 chunks"}
+{"ts": "2026-06-13T18:06:03.087250+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 8 chunks"}
+{"ts": "2026-06-13T18:06:03.087511+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 9 chunks"}
+{"ts": "2026-06-13T18:06:03.087732+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 3 chunks"}
+{"ts": "2026-06-13T18:06:03.088001+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 14 chunks"}
+{"ts": "2026-06-13T18:06:03.088204+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 5 chunks"}
+{"ts": "2026-06-13T18:06:03.088436+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 7 chunks"}
+{"ts": "2026-06-13T18:06:03.088628+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 3 chunks"}
+{"ts": "2026-06-13T18:06:03.088871+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 8 chunks"}
+{"ts": "2026-06-13T18:06:03.089085+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 6 chunks"}
+{"ts": "2026-06-13T18:06:03.089296+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 5 chunks"}
+{"ts": "2026-06-13T18:06:03.089461+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 3 chunks"}
+{"ts": "2026-06-13T18:06:03.089660+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 4 chunks"}
+{"ts": "2026-06-13T18:06:03.089917+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 10 chunks"}
+{"ts": "2026-06-13T18:06:03.090142+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 7 chunks"}
+{"ts": "2026-06-13T18:06:03.090294+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 2 chunks"}
+{"ts": "2026-06-13T18:06:03.090406+05:30", "level": "INFO", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] 204 chunks generated from 44 pages"}
+{"ts": "2026-06-13T18:06:03.097072+05:30", "level": "INFO", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] Embedding-ready JSON written \u2192 /workspaces/intelligentstockanalyzer/uploads/KALYANKJIL/ANNUAL_2025/1-50_EMBEDDINGREADY.json"}
+{"ts": "2026-06-13T18:13:09.006244+05:30", "level": "INFO", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] Initialised \u2014 max_words=180, overlap=30"}
+{"ts": "2026-06-13T18:13:47.484441+05:30", "level": "INFO", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] Initialised \u2014 max_words=180, overlap=30"}
+{"ts": "2026-06-13T18:15:47.401285+05:30", "level": "INFO", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] Initialised \u2014 max_words=180, overlap=30"}
+{"ts": "2026-06-13T18:16:34.808432+05:30", "level": "INFO", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] Initialised \u2014 max_words=180, overlap=30"}
+{"ts": "2026-06-13T18:16:35.038497+05:30", "level": "INFO", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] prepare_for_embedding: /workspaces/intelligentstockanalyzer/uploads/KALYANKJIL/ANNUAL_2025/1-50_CLEANED.json"}
+{"ts": "2026-06-13T18:16:35.039640+05:30", "level": "INFO", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] Loaded 44 pages"}
+{"ts": "2026-06-13T18:16:35.039824+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 3 chunks"}
+{"ts": "2026-06-13T18:16:35.040016+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 3 chunks"}
+{"ts": "2026-06-13T18:16:35.040156+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 1 chunks"}
+{"ts": "2026-06-13T18:16:35.040353+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 3 chunks"}
+{"ts": "2026-06-13T18:16:35.040508+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 2 chunks"}
+{"ts": "2026-06-13T18:16:35.040687+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 2 chunks"}
+{"ts": "2026-06-13T18:16:35.040893+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 3 chunks"}
+{"ts": "2026-06-13T18:16:35.041010+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 1 chunks"}
+{"ts": "2026-06-13T18:16:35.041152+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 1 chunks"}
+{"ts": "2026-06-13T18:16:35.041333+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 4 chunks"}
+{"ts": "2026-06-13T18:16:35.041480+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 1 chunks"}
+{"ts": "2026-06-13T18:16:35.041627+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 1 chunks"}
+{"ts": "2026-06-13T18:16:35.041856+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 7 chunks"}
+{"ts": "2026-06-13T18:16:35.042022+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 3 chunks"}
+{"ts": "2026-06-13T18:16:35.042215+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 4 chunks"}
+{"ts": "2026-06-13T18:16:35.042373+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 2 chunks"}
+{"ts": "2026-06-13T18:16:35.042528+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 2 chunks"}
+{"ts": "2026-06-13T18:16:35.042702+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 1 chunks"}
+{"ts": "2026-06-13T18:16:35.042889+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 3 chunks"}
+{"ts": "2026-06-13T18:16:35.043190+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 6 chunks"}
+{"ts": "2026-06-13T18:16:35.043346+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 2 chunks"}
+{"ts": "2026-06-13T18:16:35.043491+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 2 chunks"}
+{"ts": "2026-06-13T18:16:35.043671+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 2 chunks"}
+{"ts": "2026-06-13T18:16:35.043805+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 1 chunks"}
+{"ts": "2026-06-13T18:16:35.044065+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 11 chunks"}
+{"ts": "2026-06-13T18:16:35.044305+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 9 chunks"}
+{"ts": "2026-06-13T18:16:35.044551+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 9 chunks"}
+{"ts": "2026-06-13T18:16:35.044852+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 11 chunks"}
+{"ts": "2026-06-13T18:16:35.045124+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 10 chunks"}
+{"ts": "2026-06-13T18:16:35.045369+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 8 chunks"}
+{"ts": "2026-06-13T18:16:35.045638+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 9 chunks"}
+{"ts": "2026-06-13T18:16:35.045828+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 3 chunks"}
+{"ts": "2026-06-13T18:16:35.046096+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 14 chunks"}
+{"ts": "2026-06-13T18:16:35.046297+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 5 chunks"}
+{"ts": "2026-06-13T18:16:35.046516+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 7 chunks"}
+{"ts": "2026-06-13T18:16:35.046704+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 3 chunks"}
+{"ts": "2026-06-13T18:16:35.046951+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 8 chunks"}
+{"ts": "2026-06-13T18:16:35.047164+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 6 chunks"}
+{"ts": "2026-06-13T18:16:35.047371+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 5 chunks"}
+{"ts": "2026-06-13T18:16:35.047535+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 3 chunks"}
+{"ts": "2026-06-13T18:16:35.047725+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 4 chunks"}
+{"ts": "2026-06-13T18:16:35.047981+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 10 chunks"}
+{"ts": "2026-06-13T18:16:35.048207+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 7 chunks"}
+{"ts": "2026-06-13T18:16:35.048358+05:30", "level": "DEBUG", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] split_text_into_chunks \u2192 2 chunks"}
+{"ts": "2026-06-13T18:16:35.048459+05:30", "level": "INFO", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] 204 chunks generated from 44 pages"}
+{"ts": "2026-06-13T18:16:35.057126+05:30", "level": "INFO", "component": "codebase.cleaning.embeddingprepared", "message": "[EmbeddingPrepared] Embedding-ready JSON written \u2192 /workspaces/intelligentstockanalyzer/uploads/KALYANKJIL/ANNUAL_2025/1-50_EMBEDDINGREADY.json"}
