@@ -57,7 +57,7 @@ class EmbeddingPrepared:
         cross-boundary context.  Defaults to ``30``.
     """
 
-    MAX_WORDS:    int = 180
+    MAX_WORDS:    int = 150
     OVERLAP_WORDS: int = 30
 
     def __init__(
@@ -200,13 +200,17 @@ class EmbeddingPrepared:
         records: list[dict] = []
 
         for page in data:
-            # Strip prose and tables from metadata to keep it flat
-            metadata = {
-                k: v
-                for k, v in page.items()
-                if k not in ("clean_text", "raw_tables")
-                and isinstance(v, (str, int, float, bool))   # ChromaDB-safe scalars only
-            }
+            # Convert page_intent list to comma-separated string
+            intents    = page.get("page_intent", [])
+            intent_str = ",".join(intents) if isinstance(intents, list) else ""
+
+            # Strip prose and tables from metadata, keep flat scalars
+            metadata = {k: v for k, v in page.items() if k not in ("clean_text", "raw_tables", "page_intent")
+             and isinstance(v, (str, int, float, bool))}
+
+            # Add intent as flat string
+            metadata["page_intent"] = intent_str  # "table_of_contents,company_overview,performance_highlights"
+            
 
             clean_text = page.get("clean_text", "")
             if not clean_text.strip():

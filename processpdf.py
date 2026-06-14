@@ -21,7 +21,7 @@ from hierarchychunker import create_chunks
 from pdfclassifier import classify_and_extract
 from tableextractor import extract_tables
 from bm25 import BM25_INDEX
-from codebase.mistralai.mistralaiprocessor import MistralAIProcessor
+from codebase.mistralaiprocessor.mistralaiprocessor import MistralAIProcessor
 
 
 def _detect_fy(filename: str) -> str:

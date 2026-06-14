@@ -92,14 +92,91 @@ def _safe_query(query: str, n_results: int = 6, where: dict | None = None) -> st
 # ------------------------------------------------------------------ #
 #  Tool functions                                                      #
 # ------------------------------------------------------------------ #
-
+@tool
 def search_annual_report(query: str) -> str:
     """
-    Searches the Kalyan Jewellers Annual Report 2025 for relevant information.
-    Use this for any general question about the company, operations, strategy, or overview.
+    Searches the Kalyan Jewellers Annual Report with optional filters.
+    Use this for any question about the company.
+    
+    Input formats:
+    - Plain query:                    "what is the revenue for FY25?"
+    - Filter by intent:               "intent:financial_performance | revenue FY25"
+    - Filter by page:                 "page:14 | what is on this page?"
+    - Filter by year:                 "year:2025 | revenue growth"
+    - Filter by has_table:            "has_table:true | show me all tables"
+    - Multiple filters:               "intent:company_overview,year:2025 | brief of company"
+
+    Available intents:
+    table_of_contents, company_overview, performance_highlights,
+    strategic_overview, esg_csr, general_narrative, financial_performance,
+    management_commentary, operational_highlights, risk_factors,
+    corporate_governance, auditor_report, timeline
     """
-    logger.info(f"[Tool] search_annual_report — query='{query}'")
-    return _safe_query(query, n_results=6)
+    logger.info(f"[Tool] search_annual_report — input='{query}'")
+
+    # ── Parse filters and query ────────────────────────────────────────
+    where        : dict  = {}
+    actual_query : str   = query
+
+    if "|" in query:
+        filter_str, actual_query = [p.strip() for p in query.split("|", 1)]
+
+        for token in filter_str.split(","):
+            token = token.strip()
+
+            if token.startswith("intent:"):
+                where["page_intent"] = {"$contains": token.replace("intent:", "").strip()}
+
+            elif token.startswith("year:"):
+                try:
+                    where["year"] = int(token.replace("year:", "").strip())
+                except ValueError:
+                    pass
+
+            elif token.startswith("page:"):
+                try:
+                    where["page_number"] = int(token.replace("page:", "").strip())
+                except ValueError:
+                    pass
+
+            elif token.startswith("has_table:"):
+                val = token.replace("has_table:", "").strip().lower()
+                where["has_table"] = val == "true"
+
+            elif token.startswith("section:"):
+                where["section"] = token.replace("section:", "").strip()
+
+            elif token.startswith("doc_type:"):
+                where["doc_type"] = token.replace("doc_type:", "").strip()
+
+    logger.info(f"[Tool] filters={where} | query='{actual_query}'")
+
+    # ── Search with filters ────────────────────────────────────────────
+    if where:
+        try:
+            results   = _store.query_collection(
+                collection_name = _COLLECTION,
+                query_texts     = [actual_query],
+                n_results       = 8,
+                where           = where,
+            )
+            formatted = _format_results(results)
+            if "No relevant information" not in formatted:
+                return formatted
+            logger.warning("[Tool] No results with filters, falling back to general search.")
+        except Exception as e:
+            logger.warning(f"[Tool] Filtered search failed ({e}), falling back to general search.")
+
+    # ── Fallback — no filters ──────────────────────────────────────────
+    return _safe_query(actual_query, n_results=8)
+
+# def search_annual_report(query: str) -> str:
+#     """
+#     Searches the Kalyan Jewellers Annual Report 2025 for relevant information.
+#     Use this for any general question about the company, operations, strategy, or overview.
+#     """
+#     logger.info(f"[Tool] search_annual_report — query='{query}'")
+#     return _safe_query(query, n_results=6)
 
 
 # def search_financial_data(query: str) -> str:

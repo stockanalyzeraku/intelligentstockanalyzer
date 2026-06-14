@@ -57,3 +57,31 @@
 {"ts": "2026-06-13T17:52:26.388843+05:30", "level": "INFO", "component": "codebase.vectordb.chromastore", "message": "[ChromaStore] Initialised \u2014 path='/workspaces/intelligentstockanalyzer/chroma_db'"}
 {"ts": "2026-06-13T17:52:26.389055+05:30", "level": "INFO", "component": "codebase.vectordb.chromastore", "message": "[ChromaStore] Creating PersistentClient at '/workspaces/intelligentstockanalyzer/chroma_db'"}
 {"ts": "2026-06-13T17:52:26.637974+05:30", "level": "INFO", "component": "codebase.vectordb.chromastore", "message": "[ChromaStore] Client ready"}
+{"ts": "2026-06-13T18:45:33.321495+05:30", "level": "INFO", "component": "codebase.vectordb.chromastore", "message": "[ChromaStore] Initialised \u2014 path='/workspaces/intelligentstockanalyzer/chroma_db'"}
+{"ts": "2026-06-13T18:45:33.322076+05:30", "level": "INFO", "component": "codebase.vectordb.chromastore", "message": "[ChromaStore] Creating PersistentClient at '/workspaces/intelligentstockanalyzer/chroma_db'"}
+{"ts": "2026-06-13T18:45:33.772785+05:30", "level": "INFO", "component": "codebase.vectordb.chromastore", "message": "[ChromaStore] Client ready"}
+{"ts": "2026-06-13T18:45:34.310907+05:30", "level": "INFO", "component": "codebase.vectordb.chromastore", "message": "[ChromaStore] === ChromaDB Status ===\n  kalyan_annual_2025: 0 chunks"}
+{"ts": "2026-06-13T18:46:41.526150+05:30", "level": "INFO", "component": "codebase.vectordb.chromastore", "message": "[ChromaStore] Initialised \u2014 path='/workspaces/intelligentstockanalyzer/chroma_db'"}
+{"ts": "2026-06-13T18:46:41.526423+05:30", "level": "INFO", "component": "codebase.vectordb.chromastore", "message": "[ChromaStore] Creating PersistentClient at '/workspaces/intelligentstockanalyzer/chroma_db'"}
+{"ts": "2026-06-13T18:46:41.849189+05:30", "level": "INFO", "component": "codebase.vectordb.chromastore", "message": "[ChromaStore] Client ready"}
+{"ts": "2026-06-13T18:46:41.937984+05:30", "level": "INFO", "component": "codebase.vectordb.chromastore", "message": "[ChromaStore] === ChromaDB Status ===\n  kalyan_annual_2025: 0 chunks"}
+{"ts": "2026-06-13T18:47:37.987361+05:30", "level": "INFO", "component": "codebase.vectordb.chromastore", "message": "[ChromaStore] Initialised \u2014 path='/workspaces/intelligentstockanalyzer/chroma_db'"}
+{"ts": "2026-06-13T18:47:37.988783+05:30", "level": "INFO", "component": "codebase.vectordb.chromastore", "message": "[ChromaStore] store_in_chromadb \u2014 collection='kalyan_annual_2025', path='/workspaces/intelligentstockanalyzer/chroma_db'"}
+{"ts": "2026-06-13T18:48:43.098829+05:30", "level": "INFO", "component": "codebase.vectordb.chromastore", "message": "[ChromaStore] Initialised \u2014 path='/workspaces/intelligentstockanalyzer/chroma_db'"}
+{"ts": "2026-06-13T18:48:43.100121+05:30", "level": "INFO", "component": "codebase.vectordb.chromastore", "message": "[ChromaStore] store_in_chromadb \u2014 collection='kalyan_annual_2025', path='/workspaces/intelligentstockanalyzer/chroma_db'"}
+{"ts": "2026-06-13T18:48:43.116030+05:30", "level": "INFO", "component": "codebase.vectordb.chromastore", "message": "[ChromaStore] Loaded 681 chunks"}
+{"ts": "2026-06-13T18:48:43.117910+05:30", "level": "INFO", "component": "codebase.vectordb.chromastore", "message": "[ChromaStore] Creating PersistentClient at '/workspaces/intelligentstockanalyzer/chroma_db'"}
+{"ts": "2026-06-13T18:48:43.506963+05:30", "level": "INFO", "component": "codebase.vectordb.chromastore", "message": "[ChromaStore] Client ready"}
+{"ts": "2026-06-13T18:48:53.933539+05:30", "level": "INFO", "component": "codebase.vectordb.chromastore", "message": "[ChromaStore] Upserted batch 0\u2013100"}
+{"ts": "2026-06-13T18:49:03.143034+05:30", "level": "INFO", "component": "codebase.vectordb.chromastore", "message": "[ChromaStore] Upserted batch 100\u2013200"}
+{"ts": "2026-06-13T18:49:11.781493+05:30", "level": "INFO", "component": "codebase.vectordb.chromastore", "message": "[ChromaStore] Upserted batch 200\u2013300"}
+{"ts": "2026-06-13T18:49:20.606606+05:30", "level": "INFO", "component": "codebase.vectordb.chromastore", "message": "[ChromaStore] Upserted batch 300\u2013400"}
+{"ts": "2026-06-13T18:49:28.897858+05:30", "level": "INFO", "component": "codebase.vectordb.chromastore", "message": "[ChromaStore] Upserted batch 400\u2013500"}
+{"ts": "2026-06-13T18:49:37.050518+05:30", "level": "INFO", "component": "codebase.vectordb.chromastore", "message": "[ChromaStore] Upserted batch 500\u2013600"}
+{"ts": "2026-06-13T18:49:44.207181+05:30", "level": "INFO", "component": "codebase.vectordb.chromastore", "message": "[ChromaStore] Upserted batch 600\u2013681"}
+{"ts": "2026-06-13T18:49:44.207366+05:30", "level": "INFO", "component": "codebase.vectordb.chromastore", "message": "[ChromaStore] Upsert complete \u2014 681 chunks into 'kalyan_annual_2025'"}
+{"ts": "2026-06-13T18:49:44.207468+05:30", "level": "INFO", "component": "codebase.vectordb.chromastore", "message": "[ChromaStore] Stored 681 chunks into 'kalyan_annual_2025'"}
+{"ts": "2026-06-13T18:49:44.250341+05:30", "level": "INFO", "component": "codebase.vectordb.chromastore", "message": "[ChromaStore] === ChromaDB Status ===\n  kalyan_annual_2025: 681 chunks"}
+{"ts": "2026-06-13T18:54:11.207026+05:30", "level": "INFO", "component": "codebase.vectordb.chromastore", "message": "[ChromaStore] Initialised \u2014 path='/workspaces/intelligentstockanalyzer/chroma_db'"}
+{"ts": "2026-06-13T18:54:11.926654+05:30", "level": "INFO", "component": "codebase.vectordb.chromastore", "message": "[ChromaStore] Creating PersistentClient at '/workspaces/intelligentstockanalyzer/chroma_db'"}
+{"ts": "2026-06-13T18:54:12.469357+05:30", "level": "INFO", "component": "codebase.vectordb.chromastore", "message": "[ChromaStore] Client ready"}

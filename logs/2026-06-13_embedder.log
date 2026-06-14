@@ -18,3 +18,8 @@
 {"ts": "2026-06-13T17:30:28.692054+05:30", "level": "INFO", "component": "embedder", "message": "Embedding model loaded.", "model": "all-MiniLM-L6-v2", "dim": 384}
 {"ts": "2026-06-13T17:50:23.168374+05:30", "level": "INFO", "component": "embedder", "message": "Embedding model loaded.", "model": "all-MiniLM-L6-v2", "dim": 384}
 {"ts": "2026-06-13T17:52:26.388331+05:30", "level": "INFO", "component": "embedder", "message": "Embedding model loaded.", "model": "all-MiniLM-L6-v2", "dim": 384}
+{"ts": "2026-06-13T18:45:33.318778+05:30", "level": "INFO", "component": "embedder", "message": "Embedding model loaded.", "model": "all-MiniLM-L6-v2", "dim": 384}
+{"ts": "2026-06-13T18:46:41.525447+05:30", "level": "INFO", "component": "embedder", "message": "Embedding model loaded.", "model": "all-MiniLM-L6-v2", "dim": 384}
+{"ts": "2026-06-13T18:47:37.983847+05:30", "level": "INFO", "component": "embedder", "message": "Embedding model loaded.", "model": "all-MiniLM-L6-v2", "dim": 384}
+{"ts": "2026-06-13T18:48:43.095472+05:30", "level": "INFO", "component": "embedder", "message": "Embedding model loaded.", "model": "all-MiniLM-L6-v2", "dim": 384}
+{"ts": "2026-06-13T18:54:11.206430+05:30", "level": "INFO", "component": "embedder", "message": "Embedding model loaded.", "model": "all-MiniLM-L6-v2", "dim": 384}

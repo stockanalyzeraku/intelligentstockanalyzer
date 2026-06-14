@@ -200,7 +200,7 @@ class PipelineRunner:
 
         return results, skipped
 
-    def _save_cleaned(self, input_file: str, results: list[CleanResult]) -> str:
+    def _em_cleaned(self, input_file: str, results: list[CleanResult]) -> str:
         base   = os.path.splitext(input_file)[0]
         output = f"{base}_CLEANED.json"
 
@@ -274,7 +274,7 @@ if __name__ == "__main__":
     DOC_TYPE = "ANNUAL"
 
     input_file = os.path.join(
-        CONFIG.UPLOADS_PATH, COMPANY, f"{DOC_TYPE}_{YEAR}", "1-50.json"
+        CONFIG.UPLOADS_PATH, COMPANY, f"{DOC_TYPE}_{YEAR}", "KALYANKJIL_ANNUAL_2025.json"
     )
 
     runner  = PipelineRunner(company=COMPANY, year=YEAR, doc_type="ANNUAL_REPORT")

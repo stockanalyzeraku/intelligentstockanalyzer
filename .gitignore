@@ -10,3 +10,4 @@ pathcreator.py
 filedumper.py
 codeold/
 chroma_db/
+.venv
