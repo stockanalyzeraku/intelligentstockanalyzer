@@ -1,14 +1,14 @@
 """
 cleaning/embeddingprepared.py
 =============================
-Chunk splitting and ChromaDB ingestion helpers.
+Parent-child record preparation and ChromaDB ingestion helpers.
 
 Classes
 -------
 EmbeddingPrepared
-    Converts cleaned page JSON into fixed-size word-based chunks suitable
-    for embedding with ``all-MiniLM-L6-v2`` (max ~256 tokens ≈ 180 words),
-    then persists them to a JSON file and optionally ingests into ChromaDB.
+    Converts cleaned page JSON into page-level parent records and smaller
+    child records suitable for retrieval, then persists them to a JSON file
+    and optionally ingests into ChromaDB.
 
 Design notes
 ------------
@@ -43,8 +43,8 @@ logger = get_logger(__name__)
 
 class EmbeddingPrepared:
     """
-    Splits cleaned page text into embeddable chunks and manages ChromaDB
-    ingestion.
+    Builds page-level parent records and child search records, then manages
+    ChromaDB ingestion.
 
     Parameters
     ----------
@@ -83,7 +83,7 @@ class EmbeddingPrepared:
         overlap:   int | None = None,
     ) -> list[str]:
         """
-        Split *text* into word-based chunks with overlap.
+        Split *text* into word-based child chunks with overlap.
 
         Strategy
         --------
@@ -102,8 +102,8 @@ class EmbeddingPrepared:
         Returns
         -------
         list[str]
-            One string per chunk; chunks may share up to *overlap* words
-            with their neighbours.
+            One string per child chunk; chunks may share up to *overlap*
+            words with their neighbours.
         """
         max_words = max_words if max_words is not None else self.max_words
         overlap   = overlap   if overlap   is not None else self.overlap_words
@@ -148,6 +148,33 @@ class EmbeddingPrepared:
         logger.debug(f"[EmbeddingPrepared] split_text_into_chunks → {len(chunks)} chunks")
         return chunks
 
+    def _build_metadata(
+        self,
+        page: dict,
+        record_type: str,
+        parent_id: str,
+        child_index: int | None = None,
+        child_count: int | None = None,
+    ) -> dict:
+        """Build flat metadata shared by parent and child records."""
+        intents = page.get("page_intent", [])
+        intent_str = ",".join(intents) if isinstance(intents, list) else ""
+
+        metadata = {
+            k: v
+            for k, v in page.items()
+            if k not in ("clean_text", "raw_tables", "page_intent")
+            and isinstance(v, (str, int, float, bool))
+        }
+        metadata["page_intent"] = intent_str
+        metadata["record_type"] = record_type
+        metadata["parent_id"] = parent_id
+        if child_index is not None:
+            metadata["child_index"] = child_index
+        if child_count is not None:
+            metadata["child_count"] = child_count
+        return metadata
+
     # ------------------------------------------------------------------
     # Prepare JSON for embedding
     # ------------------------------------------------------------------
@@ -158,10 +185,10 @@ class EmbeddingPrepared:
         output_path: str,
         max_words:   int | None = None,
         overlap:     int | None = None,
-    ) -> list[dict]:
+    ) -> dict[str, list[dict]]:
         """
-        Read cleaned page JSON, split prose into chunks, and write an
-        embedding-ready JSON file.
+        Read cleaned page JSON, build page parents plus child records, and
+        write an embedding-ready JSON file.
 
         Input format
         ------------
@@ -170,13 +197,11 @@ class EmbeddingPrepared:
 
         Output format
         -------------
-        A JSON array where each element is::
+        A JSON object containing two arrays::
 
             {
-                "id":       "page_<N>_text_chunk_<C>",
-                "text":     "<chunk text>",
-                "metadata": { <all CleanResult fields except clean_text
-                               and raw_tables> }
+                "parents": [...],
+                "children": [...]
             }
 
         Parameters
@@ -188,7 +213,7 @@ class EmbeddingPrepared:
 
         Returns
         -------
-        list[dict]  — the same records written to *output_path*.
+        dict[str, list[dict]]  — the same records written to *output_path*.
         """
         logger.info(f"[EmbeddingPrepared] prepare_for_embedding: {input_path}")
 
@@ -197,21 +222,9 @@ class EmbeddingPrepared:
 
         logger.info(f"[EmbeddingPrepared] Loaded {len(data)} pages")
 
-        records: list[dict] = []
+        bundle: dict[str, list[dict]] = {"parents": [], "children": []}
 
         for page in data:
-            # Convert page_intent list to comma-separated string
-            intents    = page.get("page_intent", [])
-            intent_str = ",".join(intents) if isinstance(intents, list) else ""
-
-            # Strip prose and tables from metadata, keep flat scalars
-            metadata = {k: v for k, v in page.items() if k not in ("clean_text", "raw_tables", "page_intent")
-             and isinstance(v, (str, int, float, bool))}
-
-            # Add intent as flat string
-            metadata["page_intent"] = intent_str  # "table_of_contents,company_overview,performance_highlights"
-            
-
             clean_text = page.get("clean_text", "")
             if not clean_text.strip():
                 logger.debug(
@@ -220,27 +233,53 @@ class EmbeddingPrepared:
                 )
                 continue
 
-            text_chunks = self.split_text_into_chunks(clean_text, max_words, overlap)
+            page_number = page.get("page_number") or page.get("page_num")
+            if page_number is None:
+                logger.debug("[EmbeddingPrepared] Page without page_number — skipping")
+                continue
 
-            for c_idx, chunk in enumerate(text_chunks):
-                records.append(
+            parent_id = f"page_{page_number}_parent"
+            child_chunks = self.split_text_into_chunks(clean_text, max_words, overlap)
+            child_count = len(child_chunks)
+
+            bundle["parents"].append(
+                {
+                    "id": parent_id,
+                    "text": clean_text,
+                    "metadata": self._build_metadata(
+                        page=page,
+                        record_type="parent",
+                        parent_id=parent_id,
+                        child_count=child_count,
+                    ),
+                }
+            )
+
+            for c_idx, chunk in enumerate(child_chunks):
+                bundle["children"].append(
                     {
-                        "id":       f"page_{page['page_number']}_text_chunk_{c_idx}",
+                        "id":       f"{parent_id}_child_{c_idx}",
                         "text":     chunk,
-                        "metadata": metadata,
+                        "metadata": self._build_metadata(
+                            page=page,
+                            record_type="child",
+                            parent_id=parent_id,
+                            child_index=c_idx,
+                            child_count=child_count,
+                        ),
                     }
                 )
 
         logger.info(
-            f"[EmbeddingPrepared] {len(records)} chunks generated from "
+            f"[EmbeddingPrepared] {len(bundle['parents'])} parents and {len(bundle['children'])} children generated from "
             f"{len(data)} pages"
         )
 
         with open(output_path, "w", encoding="utf-8") as fh:
-            json.dump(records, fh, ensure_ascii=False, indent=2)
+            json.dump(bundle, fh, ensure_ascii=False, indent=2)
 
         logger.info(f"[EmbeddingPrepared] Embedding-ready JSON written → {output_path}")
-        return records
+        return bundle
 
     # ------------------------------------------------------------------
     # ChromaDB ingestion
@@ -253,11 +292,8 @@ class EmbeddingPrepared:
         chroma_path:         str | None = None,
     ) -> Any:
         """
-        Load embedding-ready chunks and upsert them into a ChromaDB
-        persistent collection.
-
-        The collection uses the project-wide ``EMBEDDER`` singleton so
-        that embedding happens automatically on ``collection.add()``.
+        Load embedding-ready parent/child records and upsert them into the
+        ChromaDB store.
 
         Parameters
         ----------
@@ -271,55 +307,20 @@ class EmbeddingPrepared:
 
         Returns
         -------
-        chromadb.Collection
-            The collection after upsert.
-
         Notes
         -----
         ChromaDB metadata must be flat scalars; nested objects are silently
         dropped during preparation.
         """
-        import chromadb
-        from codebase.vectordb.embedder import EMBEDDER   # root-level singleton
+        from codebase.vectordb.chromastore import CHROMA_STORE
 
         chroma_path = chroma_path or CONFIG.CHROMA_PATH
-
         logger.info(
-            f"[EmbeddingPrepared] store_in_chromadb — "
-            f"collection='{collection_name}', path='{chroma_path}'"
+            f"[EmbeddingPrepared] store_in_chromadb — collection='{collection_name}', path='{chroma_path}'"
         )
 
-        with open(embedding_json_path, "r", encoding="utf-8") as fh:
-            records: list[dict] = json.load(fh)
-
-        logger.info(f"[EmbeddingPrepared] Loaded {len(records)} chunks for ingestion")
-
-        client = chromadb.PersistentClient(path=chroma_path)
-        collection = client.get_or_create_collection(
-            name=collection_name,
-            embedding_function=EMBEDDER,
+        return CHROMA_STORE.store_in_chromadb(
+            embedding_json_path=embedding_json_path,
+            collection_name=collection_name,
+            chroma_path=chroma_path,
         )
-
-        ids:       list[str]  = []
-        documents: list[str]  = []
-        metadatas: list[dict] = []
-
-        for rec in records:
-            ids.append(rec["id"])
-            documents.append(rec["text"])
-
-            # Flatten metadata to ChromaDB-safe scalars
-            meta: dict = {
-                k: v
-                for k, v in rec.get("metadata", {}).items()
-                if isinstance(v, (str, int, float, bool))
-            }
-            metadatas.append(meta)
-
-        collection.add(ids=ids, documents=documents, metadatas=metadatas)
-
-        logger.info(
-            f"[EmbeddingPrepared] Upserted {len(ids)} chunks into "
-            f"collection '{collection_name}'"
-        )
-        return collection

@@ -66,6 +66,30 @@ class ChromaStore:
             metadata           = {"hnsw:space": "cosine"},  # set once, can't change later
         )
 
+    def _sanitize_metadata(self, metadata: dict) -> dict:
+        """Keep only scalar metadata values that ChromaDB can store."""
+        return {
+            k: v
+            for k, v in metadata.items()
+            if isinstance(v, (str, int, float, bool))
+        }
+
+    def _upsert_records(self, collection_name: str, records: list[dict]) -> None:
+        """Upsert a list of records into one collection."""
+        if not records:
+            return
+
+        ids: list[str] = []
+        documents: list[str] = []
+        metadatas: list[dict] = []
+
+        for rec in records:
+            ids.append(rec["id"])
+            documents.append(rec["text"])
+            metadatas.append(self._sanitize_metadata(rec.get("metadata", {})))
+
+        self.upsert_batch(collection_name, ids, documents, metadatas)
+
     # ------------------------------------------------------------------ #
     #  Store                                                               #
     # ------------------------------------------------------------------ #
@@ -77,7 +101,12 @@ class ChromaStore:
         chroma_path         : str | None = None,
     ) -> chromadb.Collection:
         """
-        Loads embedded chunks from a JSON file and upserts into a collection.
+        Loads records from a JSON file and upserts them into ChromaDB.
+
+        Supports:
+        - legacy flat record lists, stored into ``collection_name``
+        - parent/child bundles with ``{"parents": [...], "children": [...]}``
+          stored into ``CONFIG.COL_PARENT`` and ``CONFIG.COL_CHILD``
 
         Parameters
         ----------
@@ -99,25 +128,25 @@ class ChromaStore:
         )
 
         with open(embedding_json_path, "r", encoding="utf-8") as fh:
-            records: list[dict] = json.load(fh)
-        logger.info(f"[ChromaStore] Loaded {len(records)} chunks")
+            payload: Any = json.load(fh)
 
-        ids       : list[str]  = []
-        documents : list[str]  = []
-        metadatas : list[dict] = []
+        if isinstance(payload, dict) and "parents" in payload and "children" in payload:
+            parents = payload.get("parents", [])
+            children = payload.get("children", [])
+            logger.info(
+                f"[ChromaStore] Loaded parent/child bundle — parents={len(parents)}, children={len(children)}"
+            )
+            self._upsert_records(CONFIG.COL_PARENT, parents)
+            self._upsert_records(CONFIG.COL_CHILD, children)
+            logger.info(
+                f"[ChromaStore] Stored bundle into '{CONFIG.COL_PARENT}' and '{CONFIG.COL_CHILD}'"
+            )
+            return self._get_collection(CONFIG.COL_CHILD)
 
-        for rec in records:
-            ids.append(rec["id"])
-            documents.append(rec["text"])
-            meta = {
-                k: v
-                for k, v in rec.get("metadata", {}).items()
-                if isinstance(v, (str, int, float, bool))
-            }
-            metadatas.append(meta)
-
-        self.upsert_batch(collection_name, ids, documents, metadatas)
-        logger.info(f"[ChromaStore] Stored {len(ids)} chunks into '{collection_name}'")
+        records: list[dict] = payload
+        logger.info(f"[ChromaStore] Loaded {len(records)} legacy records")
+        self._upsert_records(collection_name, records)
+        logger.info(f"[ChromaStore] Stored {len(records)} records into '{collection_name}'")
         return self._get_collection(collection_name)
 
     # ------------------------------------------------------------------ #
@@ -234,6 +263,98 @@ class ChromaStore:
         except Exception as exc:
             logger.error(f"[ChromaStore] get_by_id failed for '{chunk_id}' — {exc}")
         return None
+
+    def get_many_by_ids(
+        self,
+        collection_name: str,
+        chunk_ids: list[str],
+    ) -> list[dict]:
+        """Fetch multiple chunks by exact id and preserve the requested order."""
+        if not chunk_ids:
+            return []
+
+        collection = self._get_collection(collection_name)
+        try:
+            result = collection.get(ids=chunk_ids)
+            if not result or not result.get("ids"):
+                return []
+
+            lookup = {
+                cid: {"id": cid, "document": doc, "metadata": meta}
+                for cid, doc, meta in zip(
+                    result.get("ids", []),
+                    result.get("documents", []),
+                    result.get("metadatas", []),
+                )
+            }
+            return [lookup[cid] for cid in chunk_ids if cid in lookup]
+        except Exception as exc:
+            logger.error(f"[ChromaStore] get_many_by_ids failed for '{collection_name}' — {exc}")
+            return []
+
+    def query_children_with_parent_context(
+        self,
+        query_texts: list[str],
+        n_results: int = 10,
+        where: dict | None = None,
+    ) -> list[dict[str, Any]]:
+        """Search child records first, then return the matching parents."""
+        raw = self.query_collection(
+            collection_name=CONFIG.COL_CHILD,
+            query_texts=query_texts,
+            n_results=n_results,
+            where=where,
+        )
+
+        ids = raw.get("ids", [[]])[0]
+        docs = raw.get("documents", [[]])[0]
+        metas = raw.get("metadatas", [[]])[0]
+        dists = raw.get("distances", [[]])[0]
+
+        best_children: dict[str, dict[str, Any]] = {}
+        parent_order: list[str] = []
+
+        for cid, doc, meta, dist in zip(ids, docs, metas, dists):
+            parent_id = (meta or {}).get("parent_id")
+            if not parent_id:
+                continue
+
+            existing = best_children.get(parent_id)
+            if existing is None or dist < existing["distance"]:
+                best_children[parent_id] = {
+                    "child_id": cid,
+                    "child_text": doc,
+                    "child_metadata": meta,
+                    "distance": dist,
+                }
+            if parent_id not in parent_order:
+                parent_order.append(parent_id)
+
+        parents = self.get_many_by_ids(CONFIG.COL_PARENT, parent_order)
+        parent_lookup = {rec["id"]: rec for rec in parents}
+
+        merged: list[dict[str, Any]] = []
+        for parent_id in parent_order:
+            parent = parent_lookup.get(parent_id)
+            child = best_children.get(parent_id)
+            if not parent or not child:
+                continue
+            merged.append(
+                {
+                    "id": parent["id"],
+                    "text": parent["document"],
+                    "metadata": parent["metadata"],
+                    "parent_id": parent["id"],
+                    "parent_text": parent["document"],
+                    "parent_metadata": parent["metadata"],
+                    "child_id": child["child_id"],
+                    "child_text": child["child_text"],
+                    "child_metadata": child["child_metadata"],
+                    "distance": child["distance"],
+                }
+            )
+
+        return merged
 
     # ------------------------------------------------------------------ #
     #  Status                                                              #

@@ -31,8 +31,6 @@ if _ROOT not in sys.path:
 import json
 from dataclasses import asdict
 
-from sklearn import base
-
 from config import CONFIG
 from logger import get_logger
 from codebase.cleaning.cleanresult import CleanResult
@@ -200,7 +198,7 @@ class PipelineRunner:
 
         return results, skipped
 
-    def _em_cleaned(self, input_file: str, results: list[CleanResult]) -> str:
+    def _save_cleaned(self, input_file: str, results: list[CleanResult]) -> str:
         base   = os.path.splitext(input_file)[0]
         output = f"{base}_CLEANED.json"
 
@@ -270,11 +268,11 @@ class PipelineRunner:
 if __name__ == "__main__":
 
     COMPANY  = "KALYANKJIL"
-    YEAR     = 2025
+    YEAR     = 2023
     DOC_TYPE = "ANNUAL"
 
     input_file = os.path.join(
-        CONFIG.UPLOADS_PATH, COMPANY, f"{DOC_TYPE}_{YEAR}", "KALYANKJIL_ANNUAL_2025.json"
+        CONFIG.UPLOADS_PATH, COMPANY, f"{DOC_TYPE}_{YEAR}", "KALYANKJIL_ANNUAL_2023.json"
     )
 
     runner  = PipelineRunner(company=COMPANY, year=YEAR, doc_type="ANNUAL_REPORT")
