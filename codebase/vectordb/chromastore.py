@@ -311,6 +311,14 @@ class ChromaStore:
         metas = raw.get("metadatas", [[]])[0]
         dists = raw.get("distances", [[]])[0]
 
+        self._logger.info(
+            "[ChromaStore] Child search complete",
+            query_texts=query_texts,
+            requested=n_results,
+            returned=len(ids),
+            where=where,
+        )
+
         best_children: dict[str, dict[str, Any]] = {}
         parent_order: list[str] = []
 
@@ -333,6 +341,12 @@ class ChromaStore:
         parents = self.get_many_by_ids(CONFIG.COL_PARENT, parent_order)
         parent_lookup = {rec["id"]: rec for rec in parents}
 
+        self._logger.info(
+            "[ChromaStore] Parent expansion complete",
+            parent_ids=parent_order,
+            parent_count=len(parents),
+        )
+
         merged: list[dict[str, Any]] = []
         for parent_id in parent_order:
             parent = parent_lookup.get(parent_id)
@@ -353,6 +367,18 @@ class ChromaStore:
                     "distance": child["distance"],
                 }
             )
+
+        self._logger.debug(
+            "[ChromaStore] Retrieval bundle",
+            items=[
+                {
+                    "parent_id": item["parent_id"],
+                    "child_id": item["child_id"],
+                    "distance": item["distance"],
+                }
+                for item in merged
+            ],
+        )
 
         return merged
 

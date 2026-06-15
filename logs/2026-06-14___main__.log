@@ -545,3 +545,156 @@
 {"ts": "2026-06-14T21:19:53.579432+05:30", "level": "INFO", "component": "__main__", "message": "  File   : KALYANKJIL_ANNUAL_2023.json"}
 {"ts": "2026-06-14T21:19:53.579518+05:30", "level": "INFO", "component": "__main__", "message": "  Ticker : KALYANKJIL | Year: 2023"}
 {"ts": "2026-06-14T21:19:53.579605+05:30", "level": "INFO", "component": "__main__", "message": "============================================================"}
+{"ts": "2026-06-14T21:46:59.589983+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Ready \u2014 primary=Mistral, fallback=Gemini"}
+{"ts": "2026-06-14T21:46:59.592347+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Question: Give me a brief of the 2025 Annual Report"}
+{"ts": "2026-06-14T21:46:59.592495+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Using Mistral"}
+{"ts": "2026-06-14T21:47:00.121252+05:30", "level": "INFO", "component": "__main__", "message": "[Tool] search_annual_report \u2014 input='year:2025 | brief of company'"}
+{"ts": "2026-06-14T21:47:00.121453+05:30", "level": "INFO", "component": "__main__", "message": "[Tool] filters={'year': 2025} | query='brief of company'"}
+{"ts": "2026-06-14T21:47:02.841389+05:30", "level": "WARNING", "component": "__main__", "message": "[Tool] No results with filters, falling back to general search."}
+{"ts": "2026-06-14T21:47:11.988584+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Mistral answered successfully"}
+{"ts": "2026-06-14T21:47:11.989175+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Question: What did the MD say about the annual report this year?"}
+{"ts": "2026-06-14T21:47:11.989716+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Using Mistral"}
+{"ts": "2026-06-14T21:47:12.552623+05:30", "level": "INFO", "component": "__main__", "message": "[Tool] search_annual_report \u2014 input='management_commentary | what did the MD say about the annual report this year?'"}
+{"ts": "2026-06-14T21:47:12.552828+05:30", "level": "INFO", "component": "__main__", "message": "[Tool] filters={} | query='what did the MD say about the annual report this year?'"}
+{"ts": "2026-06-14T21:47:14.317262+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Mistral answered successfully"}
+{"ts": "2026-06-14T21:47:14.317566+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Question: Give me the complete timeline of Kalyan Jewellers"}
+{"ts": "2026-06-14T21:47:14.317674+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Using Mistral"}
+{"ts": "2026-06-14T21:47:14.751842+05:30", "level": "INFO", "component": "__main__", "message": "[Tool] search_annual_report \u2014 input='intent:timeline'"}
+{"ts": "2026-06-14T21:47:14.752225+05:30", "level": "INFO", "component": "__main__", "message": "[Tool] filters={} | query='intent:timeline'"}
+{"ts": "2026-06-14T21:47:15.268846+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Mistral answered successfully"}
+{"ts": "2026-06-14T21:47:15.269171+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Question: What are the fixed assets bought by Kalyan?"}
+{"ts": "2026-06-14T21:47:15.269270+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Using Mistral"}
+{"ts": "2026-06-14T21:47:15.736355+05:30", "level": "INFO", "component": "__main__", "message": "[Tool] search_annual_report \u2014 input='fixed assets bought by Kalyan'"}
+{"ts": "2026-06-14T21:47:15.736537+05:30", "level": "INFO", "component": "__main__", "message": "[Tool] filters={} | query='fixed assets bought by Kalyan'"}
+{"ts": "2026-06-14T21:47:16.853282+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Mistral answered successfully"}
+{"ts": "2026-06-14T21:47:16.853502+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Question: Give me details of financial numbers for 2025"}
+{"ts": "2026-06-14T21:47:16.853590+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Using Mistral"}
+{"ts": "2026-06-14T21:47:17.354312+05:30", "level": "INFO", "component": "__main__", "message": "[Tool] search_annual_report \u2014 input='year:2025 | financial_performance'"}
+{"ts": "2026-06-14T21:47:17.354528+05:30", "level": "INFO", "component": "__main__", "message": "[Tool] filters={'year': 2025} | query='financial_performance'"}
+{"ts": "2026-06-14T21:47:17.379452+05:30", "level": "WARNING", "component": "__main__", "message": "[Tool] No results with filters, falling back to general search."}
+{"ts": "2026-06-14T21:47:18.453528+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Mistral answered successfully"}
+{"ts": "2026-06-14T21:47:18.453824+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Question: Give me details between 2023 and 2025 financial performance"}
+{"ts": "2026-06-14T21:47:18.454248+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Using Mistral"}
+{"ts": "2026-06-14T21:47:18.979965+05:30", "level": "INFO", "component": "__main__", "message": "[Tool] search_annual_report \u2014 input='year:2023,2024,2025 | intent:financial_performance'"}
+{"ts": "2026-06-14T21:47:18.980169+05:30", "level": "INFO", "component": "__main__", "message": "[Tool] filters={'year': 2023} | query='intent:financial_performance'"}
+{"ts": "2026-06-14T21:47:21.219699+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Mistral answered successfully"}
+{"ts": "2026-06-14T21:51:10.480076+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Ready \u2014 primary=Mistral, fallback=Gemini"}
+{"ts": "2026-06-14T21:51:10.482000+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Question: Give me a brief of the 2025 Annual Report"}
+{"ts": "2026-06-14T21:51:10.482149+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Using Mistral"}
+{"ts": "2026-06-14T21:51:10.981360+05:30", "level": "INFO", "component": "__main__", "message": "[Tool] search_annual_report \u2014 input='year:2025 | brief of company'"}
+{"ts": "2026-06-14T21:51:10.981547+05:30", "level": "INFO", "component": "__main__", "message": "[Tool] filters={'year': 2025} | query='brief of company'"}
+{"ts": "2026-06-14T21:51:14.220288+05:30", "level": "WARNING", "component": "__main__", "message": "[Tool] Filtered search failed ('ChromaStore' object has no attribute '_logger'), falling back to general search."}
+{"ts": "2026-06-14T21:51:14.291737+05:30", "level": "WARNING", "component": "__main__", "message": "[Agent] Query failed ('ChromaStore' object has no attribute '_logger'), retrying without filter."}
+{"ts": "2026-06-14T21:51:16.050763+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Mistral answered successfully"}
+{"ts": "2026-06-14T21:51:16.051098+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Question: What did the MD say about the annual report this year?"}
+{"ts": "2026-06-14T21:51:16.051198+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Using Mistral"}
+{"ts": "2026-06-14T21:51:16.611386+05:30", "level": "INFO", "component": "__main__", "message": "[Tool] search_annual_report \u2014 input='management_commentary | what did the MD say about the annual report this year?'"}
+{"ts": "2026-06-14T21:51:16.611557+05:30", "level": "INFO", "component": "__main__", "message": "[Tool] filters={} | query='what did the MD say about the annual report this year?'"}
+{"ts": "2026-06-14T21:51:16.657633+05:30", "level": "WARNING", "component": "__main__", "message": "[Agent] Query failed ('ChromaStore' object has no attribute '_logger'), retrying without filter."}
+{"ts": "2026-06-14T21:51:17.221774+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Mistral answered successfully"}
+{"ts": "2026-06-14T21:51:17.222066+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Question: Give me the complete timeline of Kalyan Jewellers"}
+{"ts": "2026-06-14T21:51:17.222160+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Using Mistral"}
+{"ts": "2026-06-14T21:51:17.659266+05:30", "level": "INFO", "component": "__main__", "message": "[Tool] search_annual_report \u2014 input='intent:timeline'"}
+{"ts": "2026-06-14T21:51:17.659467+05:30", "level": "INFO", "component": "__main__", "message": "[Tool] filters={} | query='intent:timeline'"}
+{"ts": "2026-06-14T21:51:17.690180+05:30", "level": "WARNING", "component": "__main__", "message": "[Agent] Query failed ('ChromaStore' object has no attribute '_logger'), retrying without filter."}
+{"ts": "2026-06-14T21:51:18.132426+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Mistral answered successfully"}
+{"ts": "2026-06-14T21:51:18.133886+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Question: What are the fixed assets bought by Kalyan Jewellers?"}
+{"ts": "2026-06-14T21:51:18.134023+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Using Mistral"}
+{"ts": "2026-06-14T21:51:18.592486+05:30", "level": "INFO", "component": "__main__", "message": "[Tool] search_annual_report \u2014 input='fixed assets bought by Kalyan Jewellers'"}
+{"ts": "2026-06-14T21:51:18.593493+05:30", "level": "INFO", "component": "__main__", "message": "[Tool] filters={} | query='fixed assets bought by Kalyan Jewellers'"}
+{"ts": "2026-06-14T21:51:18.663744+05:30", "level": "WARNING", "component": "__main__", "message": "[Agent] Query failed ('ChromaStore' object has no attribute '_logger'), retrying without filter."}
+{"ts": "2026-06-14T21:51:19.109362+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Mistral answered successfully"}
+{"ts": "2026-06-14T21:51:19.109720+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Question: Give me details of financial numbers for 2025"}
+{"ts": "2026-06-14T21:51:19.109842+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Using Mistral"}
+{"ts": "2026-06-14T21:51:19.561276+05:30", "level": "INFO", "component": "__main__", "message": "[Tool] search_annual_report \u2014 input='year:2025 | financial_performance'"}
+{"ts": "2026-06-14T21:51:19.561491+05:30", "level": "INFO", "component": "__main__", "message": "[Tool] filters={'year': 2025} | query='financial_performance'"}
+{"ts": "2026-06-14T21:51:19.590834+05:30", "level": "WARNING", "component": "__main__", "message": "[Tool] Filtered search failed ('ChromaStore' object has no attribute '_logger'), falling back to general search."}
+{"ts": "2026-06-14T21:51:19.613096+05:30", "level": "WARNING", "component": "__main__", "message": "[Agent] Query failed ('ChromaStore' object has no attribute '_logger'), retrying without filter."}
+{"ts": "2026-06-14T21:51:20.071360+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Mistral answered successfully"}
+{"ts": "2026-06-14T21:51:20.071728+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Question: Give me details between 2023 and 2025 financial performance"}
+{"ts": "2026-06-14T21:51:20.071837+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Using Mistral"}
+{"ts": "2026-06-14T21:51:20.630419+05:30", "level": "INFO", "component": "__main__", "message": "[Tool] search_annual_report \u2014 input='year:2023,2024,2025 | intent:financial_performance'"}
+{"ts": "2026-06-14T21:51:20.630642+05:30", "level": "INFO", "component": "__main__", "message": "[Tool] filters={'year': 2023} | query='intent:financial_performance'"}
+{"ts": "2026-06-14T21:51:20.790459+05:30", "level": "WARNING", "component": "__main__", "message": "[Tool] Filtered search failed ('ChromaStore' object has no attribute '_logger'), falling back to general search."}
+{"ts": "2026-06-14T21:51:20.815046+05:30", "level": "WARNING", "component": "__main__", "message": "[Agent] Query failed ('ChromaStore' object has no attribute '_logger'), retrying without filter."}
+{"ts": "2026-06-14T21:51:21.314444+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Mistral answered successfully"}
+{"ts": "2026-06-14T22:01:39.498780+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Ready \u2014 primary=Mistral, fallback=Gemini"}
+{"ts": "2026-06-14T22:01:39.554581+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Question: Give me a brief of the 2025 Annual Report"}
+{"ts": "2026-06-14T22:01:39.554747+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Using Mistral"}
+{"ts": "2026-06-14T22:01:40.236575+05:30", "level": "INFO", "component": "__main__", "message": "[Tool] search_annual_report \u2014 input='year:2025 | intent:company_overview'"}
+{"ts": "2026-06-14T22:01:40.236841+05:30", "level": "INFO", "component": "__main__", "message": "[Tool] filters={'year': 2025} | query='intent:company_overview'"}
+{"ts": "2026-06-14T22:01:42.367699+05:30", "level": "WARNING", "component": "__main__", "message": "[Tool] Filtered search failed ('ChromaStore' object has no attribute '_logger'), falling back to general search."}
+{"ts": "2026-06-14T22:01:42.411653+05:30", "level": "WARNING", "component": "__main__", "message": "[Agent] Query failed ('ChromaStore' object has no attribute '_logger'), retrying without filter."}
+{"ts": "2026-06-14T22:01:42.821292+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Mistral answered successfully"}
+{"ts": "2026-06-14T22:01:42.821510+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Question: What did the MD say about the annual report this year?"}
+{"ts": "2026-06-14T22:01:42.821590+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Using Mistral"}
+{"ts": "2026-06-14T22:01:43.308773+05:30", "level": "INFO", "component": "__main__", "message": "[Tool] search_annual_report \u2014 input='management_commentary | what did the MD say about the annual report this year?'"}
+{"ts": "2026-06-14T22:01:43.308931+05:30", "level": "INFO", "component": "__main__", "message": "[Tool] filters={} | query='what did the MD say about the annual report this year?'"}
+{"ts": "2026-06-14T22:01:43.364531+05:30", "level": "WARNING", "component": "__main__", "message": "[Agent] Query failed ('ChromaStore' object has no attribute '_logger'), retrying without filter."}
+{"ts": "2026-06-14T22:01:43.812085+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Mistral answered successfully"}
+{"ts": "2026-06-14T22:01:43.812419+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Question: Give me the complete timeline of Kalyan Jewellers"}
+{"ts": "2026-06-14T22:01:43.812705+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Using Mistral"}
+{"ts": "2026-06-14T22:01:44.422633+05:30", "level": "INFO", "component": "__main__", "message": "[Tool] search_annual_report \u2014 input='intent:timeline'"}
+{"ts": "2026-06-14T22:01:44.422850+05:30", "level": "INFO", "component": "__main__", "message": "[Tool] filters={} | query='intent:timeline'"}
+{"ts": "2026-06-14T22:01:44.444502+05:30", "level": "WARNING", "component": "__main__", "message": "[Agent] Query failed ('ChromaStore' object has no attribute '_logger'), retrying without filter."}
+{"ts": "2026-06-14T22:01:44.955750+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Mistral answered successfully"}
+{"ts": "2026-06-14T22:01:44.956050+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Question: What are the fixed assets bought by Kalyan Jewellers?"}
+{"ts": "2026-06-14T22:01:44.956158+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Using Mistral"}
+{"ts": "2026-06-14T22:01:45.407253+05:30", "level": "INFO", "component": "__main__", "message": "[Tool] search_annual_report \u2014 input='fixed assets bought by Kalyan Jewellers'"}
+{"ts": "2026-06-14T22:01:45.407404+05:30", "level": "INFO", "component": "__main__", "message": "[Tool] filters={} | query='fixed assets bought by Kalyan Jewellers'"}
+{"ts": "2026-06-14T22:01:45.488894+05:30", "level": "WARNING", "component": "__main__", "message": "[Agent] Query failed ('ChromaStore' object has no attribute '_logger'), retrying without filter."}
+{"ts": "2026-06-14T22:01:46.094841+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Mistral answered successfully"}
+{"ts": "2026-06-14T22:01:46.095065+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Question: Give me details of financial numbers for 2025"}
+{"ts": "2026-06-14T22:01:46.095169+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Using Mistral"}
+{"ts": "2026-06-14T22:01:46.617593+05:30", "level": "INFO", "component": "__main__", "message": "[Tool] search_annual_report \u2014 input='year:2025 | financial_performance'"}
+{"ts": "2026-06-14T22:01:46.617815+05:30", "level": "INFO", "component": "__main__", "message": "[Tool] filters={'year': 2025} | query='financial_performance'"}
+{"ts": "2026-06-14T22:01:46.658278+05:30", "level": "WARNING", "component": "__main__", "message": "[Tool] Filtered search failed ('ChromaStore' object has no attribute '_logger'), falling back to general search."}
+{"ts": "2026-06-14T22:01:46.680982+05:30", "level": "WARNING", "component": "__main__", "message": "[Agent] Query failed ('ChromaStore' object has no attribute '_logger'), retrying without filter."}
+{"ts": "2026-06-14T22:01:47.098990+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Mistral answered successfully"}
+{"ts": "2026-06-14T22:01:47.099337+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Question: Give me details between 2023 and 2025 financial performance"}
+{"ts": "2026-06-14T22:01:47.099432+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Using Mistral"}
+{"ts": "2026-06-14T22:01:47.647702+05:30", "level": "INFO", "component": "__main__", "message": "[Tool] search_annual_report \u2014 input='year:2023,2024,2025 | intent:financial_performance'"}
+{"ts": "2026-06-14T22:01:47.647911+05:30", "level": "INFO", "component": "__main__", "message": "[Tool] filters={'year': 2023} | query='intent:financial_performance'"}
+{"ts": "2026-06-14T22:01:47.726060+05:30", "level": "WARNING", "component": "__main__", "message": "[Tool] Filtered search failed ('ChromaStore' object has no attribute '_logger'), falling back to general search."}
+{"ts": "2026-06-14T22:01:47.743850+05:30", "level": "WARNING", "component": "__main__", "message": "[Agent] Query failed ('ChromaStore' object has no attribute '_logger'), retrying without filter."}
+{"ts": "2026-06-14T22:01:49.667465+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Mistral answered successfully"}
+{"ts": "2026-06-14T22:06:26.086083+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Ready \u2014 primary=Mistral, fallback=Gemini"}
+{"ts": "2026-06-14T22:06:26.086270+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Question: Give me a brief of the 2025 Annual Report"}
+{"ts": "2026-06-14T22:06:26.086358+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Using Mistral"}
+{"ts": "2026-06-14T22:06:26.641690+05:30", "level": "INFO", "component": "__main__", "message": "[Tool] search_annual_report \u2014 input='year:2025 | brief of company'"}
+{"ts": "2026-06-14T22:06:26.641922+05:30", "level": "INFO", "component": "__main__", "message": "[Tool] filters={'year': 2025} | query='brief of company'"}
+{"ts": "2026-06-14T22:06:29.271104+05:30", "level": "WARNING", "component": "__main__", "message": "[Tool] Filtered search failed ('ChromaStore' object has no attribute '_logger'), falling back to general search."}
+{"ts": "2026-06-14T22:06:29.419157+05:30", "level": "WARNING", "component": "__main__", "message": "[Agent] Query failed ('ChromaStore' object has no attribute '_logger'), retrying without filter."}
+{"ts": "2026-06-14T22:06:29.885518+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Mistral answered successfully"}
+{"ts": "2026-06-14T22:06:29.885914+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Question: What did the MD say about the annual report this year?"}
+{"ts": "2026-06-14T22:06:29.886143+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Using Mistral"}
+{"ts": "2026-06-14T22:06:30.397715+05:30", "level": "INFO", "component": "__main__", "message": "[Tool] search_annual_report \u2014 input='management_commentary | what did the MD say about the annual report this year?'"}
+{"ts": "2026-06-14T22:06:30.397950+05:30", "level": "INFO", "component": "__main__", "message": "[Tool] filters={} | query='what did the MD say about the annual report this year?'"}
+{"ts": "2026-06-14T22:06:30.431416+05:30", "level": "WARNING", "component": "__main__", "message": "[Agent] Query failed ('ChromaStore' object has no attribute '_logger'), retrying without filter."}
+{"ts": "2026-06-14T22:06:30.849797+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Mistral answered successfully"}
+{"ts": "2026-06-14T22:06:30.850152+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Question: Give me the complete timeline of Kalyan Jewellers"}
+{"ts": "2026-06-14T22:06:30.850254+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Using Mistral"}
+{"ts": "2026-06-14T22:06:31.263870+05:30", "level": "INFO", "component": "__main__", "message": "[Tool] search_annual_report \u2014 input='intent:timeline'"}
+{"ts": "2026-06-14T22:06:31.264099+05:30", "level": "INFO", "component": "__main__", "message": "[Tool] filters={} | query='intent:timeline'"}
+{"ts": "2026-06-14T22:06:31.284686+05:30", "level": "WARNING", "component": "__main__", "message": "[Agent] Query failed ('ChromaStore' object has no attribute '_logger'), retrying without filter."}
+{"ts": "2026-06-14T22:06:32.890812+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Mistral answered successfully"}
+{"ts": "2026-06-14T22:06:32.891111+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Question: What are the fixed assets bought by Kalyan Jewellers?"}
+{"ts": "2026-06-14T22:06:32.891219+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Using Mistral"}
+{"ts": "2026-06-14T22:06:33.331232+05:30", "level": "INFO", "component": "__main__", "message": "[Tool] search_annual_report \u2014 input='fixed assets bought by Kalyan Jewellers'"}
+{"ts": "2026-06-14T22:06:33.331438+05:30", "level": "INFO", "component": "__main__", "message": "[Tool] filters={} | query='fixed assets bought by Kalyan Jewellers'"}
+{"ts": "2026-06-14T22:06:33.371127+05:30", "level": "WARNING", "component": "__main__", "message": "[Agent] Query failed ('ChromaStore' object has no attribute '_logger'), retrying without filter."}
+{"ts": "2026-06-14T22:06:33.832675+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Mistral answered successfully"}
+{"ts": "2026-06-14T22:06:33.833808+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Question: Give me details of financial numbers for 2025"}
+{"ts": "2026-06-14T22:06:33.834046+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Using Mistral"}
+{"ts": "2026-06-14T22:06:34.346823+05:30", "level": "INFO", "component": "__main__", "message": "[Tool] search_annual_report \u2014 input='year:2025 | financial_performance'"}
+{"ts": "2026-06-14T22:06:34.347076+05:30", "level": "INFO", "component": "__main__", "message": "[Tool] filters={'year': 2025} | query='financial_performance'"}
+{"ts": "2026-06-14T22:06:34.383106+05:30", "level": "WARNING", "component": "__main__", "message": "[Tool] Filtered search failed ('ChromaStore' object has no attribute '_logger'), falling back to general search."}
+{"ts": "2026-06-14T22:06:34.441841+05:30", "level": "WARNING", "component": "__main__", "message": "[Agent] Query failed ('ChromaStore' object has no attribute '_logger'), retrying without filter."}
+{"ts": "2026-06-14T22:06:34.837589+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Mistral answered successfully"}
+{"ts": "2026-06-14T22:06:34.837936+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Question: Give me details between 2023 and 2025 financial performance"}
+{"ts": "2026-06-14T22:06:34.838103+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Using Mistral"}
+{"ts": "2026-06-14T22:06:35.365328+05:30", "level": "INFO", "component": "__main__", "message": "[Tool] search_annual_report \u2014 input='year:2023,2024,2025 | intent:financial_performance'"}
+{"ts": "2026-06-14T22:06:35.365500+05:30", "level": "INFO", "component": "__main__", "message": "[Tool] filters={'year': 2023} | query='intent:financial_performance'"}
+{"ts": "2026-06-14T22:06:35.461210+05:30", "level": "WARNING", "component": "__main__", "message": "[Tool] Filtered search failed ('ChromaStore' object has no attribute '_logger'), falling back to general search."}
+{"ts": "2026-06-14T22:06:35.479412+05:30", "level": "WARNING", "component": "__main__", "message": "[Agent] Query failed ('ChromaStore' object has no attribute '_logger'), retrying without filter."}
+{"ts": "2026-06-14T22:06:35.949623+05:30", "level": "INFO", "component": "__main__", "message": "[AnnualReportAgent] Mistral answered successfully"}

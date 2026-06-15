@@ -1,7 +1,6 @@
 from __future__ import annotations
 import os
 import sys
-from unittest import result
 
 _ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 if _ROOT not in sys.path:
@@ -10,8 +9,7 @@ if _ROOT not in sys.path:
 import os
 os.environ["ANONYMIZED_TELEMETRY"] = "False"
 
-import json
-from typing import Any, Optional
+from typing import Optional
 
 from langgraph.prebuilt import create_react_agent
 from langchain.tools import tool
@@ -28,7 +26,8 @@ logger = get_logger(__name__)
 #  Constants                                                           #
 # ------------------------------------------------------------------ #
 
-_COLLECTION        = "kalyan_annual_2025"
+_CHILD_COLLECTION   = CONFIG.COL_CHILD
+_PARENT_COLLECTION  = CONFIG.COL_PARENT
 _DISTANCE_THRESHOLD = 0.75
 
 # ------------------------------------------------------------------ #
@@ -41,52 +40,97 @@ _store = ChromaStore.get_instance()
 #  Tool helpers                                                        #
 # ------------------------------------------------------------------ #
 
-def _format_results(results: dict) -> str:
-    """Formats ChromaDB results into readable text for the LLM."""
-    ids       = results["ids"][0]
-    documents = results["documents"][0]
-    metadatas = results["metadatas"][0]
-    distances = results["distances"][0]
-    
-    if not ids:
-        return "No relevant information found in the document."
+def _format_results(results: list[dict]) -> str:
+    """Formats parent-expanded retrieval results into readable text for the LLM."""
+    if not results:
+        return "INSUFFICIENT_EVIDENCE: no relevant parent chunks were retrieved."
 
     output = []
-    for doc_id, text, meta, dist in zip(ids, documents, metadatas, distances):
+    for index, item in enumerate(results, start=1):
+        parent_meta = item.get("parent_metadata", {})
+        child_meta = item.get("child_metadata", {})
+        dist = item.get("distance", 1.0)
         if dist > _DISTANCE_THRESHOLD:
             continue
         output.append(
-            f"[Page {meta.get('page_number', '?')} | "
-            f"Section: {meta.get('section', 'unknown')} | "
-            f"Relevance: {1 - dist:.2f}]\n{text}"
+            f"[Source {index} | page={parent_meta.get('page_number', '?')} | "
+            f"section={parent_meta.get('section', 'unknown')} | "
+            f"parent_id={item.get('parent_id', 'unknown')} | "
+            f"child_id={item.get('child_id', 'unknown')} | "
+            f"child_index={child_meta.get('child_index', '?')} | "
+            f"collections={_CHILD_COLLECTION} -> {_PARENT_COLLECTION} | "
+            f"relevance={1 - dist:.2f}]\n"
+            f"{item.get('parent_text', '')}"
         )
 
-    return "\n\n---\n\n".join(output) if output else "No relevant information found."
+    if not output:
+        return "INSUFFICIENT_EVIDENCE: retrieved chunks did not clear the relevance threshold."
+
+    return "\n\n---\n\n".join(output)
+
+
+def _log_retrieval_bundle(query: str, results: list[dict], where: dict | None = None) -> None:
+    """Log which child and parent chunks were used for one retrieval step."""
+    if not results:
+        logger.info(
+            "[Agent] Retrieval bundle empty",
+            query=query,
+            where=where,
+        )
+        return
+
+    logger.info(
+        "[Agent] Retrieval bundle",
+        query=query,
+        where=where,
+        result_count=len(results),
+        parent_ids=[item.get("parent_id") for item in results],
+        child_ids=[item.get("child_id") for item in results],
+    )
+
+    for item in results:
+        parent_meta = item.get("parent_metadata", {})
+        child_meta = item.get("child_metadata", {})
+        logger.debug(
+            "[Agent] Retrieval item",
+            parent_id=item.get("parent_id"),
+            child_id=item.get("child_id"),
+            parent_page=parent_meta.get("page_number"),
+            parent_section=parent_meta.get("section"),
+            child_index=child_meta.get("child_index"),
+            distance=item.get("distance"),
+            parent_preview=(item.get("parent_text", "")[:240]),
+            child_preview=(item.get("child_text", "")[:240]),
+        )
 
 
 def _safe_query(query: str, n_results: int = 6, where: dict | None = None) -> str:
-    """Runs a ChromaDB query with optional filter, falls back without filter on error."""
+    """Search child chunks, then expand to the best parent chunks."""
     try:
-        results = _store.query_collection(
-            collection_name = _COLLECTION,
-            query_texts     = [query],
-            n_results       = n_results,
-            where           = where,
+        results = _store.query_children_with_parent_context(
+            query_texts = [query],
+            n_results   = n_results,
+            where       = where,
         )
-        return _format_results(results)
+        _log_retrieval_bundle(query, results, where)
+        formatted = _format_results(results)
+        if formatted.startswith("INSUFFICIENT_EVIDENCE"):
+            return formatted
+        return formatted
     except Exception as e:
-        if where:
-            logger.warning(f"[Agent] Query with filter failed ({e}), retrying without filter.")
-            try:
-                results = _store.query_collection(
-                    collection_name = _COLLECTION,
-                    query_texts     = [query],
-                    n_results       = n_results,
-                )
-                return _format_results(results)
-            except Exception as e2:
-                return f"Search failed: {e2}"
-        return f"Search failed: {e}"
+        logger.warning(f"[Agent] Query failed ({e}), retrying without filter.")
+        try:
+            results = _store.query_children_with_parent_context(
+                query_texts = [query],
+                n_results   = n_results,
+            )
+            _log_retrieval_bundle(query, results)
+            formatted = _format_results(results)
+            if formatted.startswith("INSUFFICIENT_EVIDENCE"):
+                return formatted
+            return formatted
+        except Exception as exc:
+            return f"Search failed: {exc}"
 
 
 # ------------------------------------------------------------------ #
@@ -154,95 +198,20 @@ def search_annual_report(query: str) -> str:
     # ── Search with filters ────────────────────────────────────────────
     if where:
         try:
-            results   = _store.query_collection(
-                collection_name = _COLLECTION,
-                query_texts     = [actual_query],
-                n_results       = 8,
-                where           = where,
+            results = _store.query_children_with_parent_context(
+                query_texts = [actual_query],
+                n_results   = 8,
+                where       = where,
             )
+            _log_retrieval_bundle(actual_query, results, where)
             formatted = _format_results(results)
-            if "No relevant information" not in formatted:
+            if not formatted.startswith("INSUFFICIENT_EVIDENCE"):
                 return formatted
-            logger.warning("[Tool] No results with filters, falling back to general search.")
+            logger.warning("[Tool] No sufficiently relevant results with filters, falling back to general search.")
         except Exception as e:
             logger.warning(f"[Tool] Filtered search failed ({e}), falling back to general search.")
 
-    # ── Fallback — no filters ──────────────────────────────────────────
     return _safe_query(actual_query, n_results=8)
-
-# def search_annual_report(query: str) -> str:
-#     """
-#     Searches the Kalyan Jewellers Annual Report 2025 for relevant information.
-#     Use this for any general question about the company, operations, strategy, or overview.
-#     """
-#     logger.info(f"[Tool] search_annual_report — query='{query}'")
-#     return _safe_query(query, n_results=6)
-
-
-# def search_financial_data(query: str) -> str:
-#     """
-#     Searches for financial numbers, tables, revenue, profit, assets, ratios,
-#     fixed assets, capital expenditure, and any numeric financial data from
-#     the Kalyan Jewellers Annual Report 2025.
-#     Use this for any question involving numbers or financial figures.
-#     """
-#     logger.info(f"[Tool] search_financial_data — query='{query}'")
-#     return _safe_query(query, n_results=8, where={"has_table": True})
-
-
-# def search_management_commentary(query: str) -> str:
-#     """
-#     Searches for management commentary, MD&A, chairman letter, CEO statements,
-#     and strategic direction from leadership in the Kalyan Jewellers Annual Report 2025.
-#     Use this when asked what management or MD said about anything.
-#     """
-#     logger.info(f"[Tool] search_management_commentary — query='{query}'")
-#     return _safe_query(query, n_results=6, where={"section": "management"})
-
-
-# def search_timeline(query: str) -> str:
-#     """
-#     Searches for timeline, milestones, history, and chronological events
-#     from the Kalyan Jewellers Annual Report 2025.
-#     Use this for questions about company history or a timeline of events.
-#     """
-#     logger.info(f"[Tool] search_timeline — query='{query}'")
-#     return _safe_query(query, n_results=6, where={"section": "timeline"})
-
-
-def calculate(expression: str) -> str:
-    """
-    Evaluates a mathematical expression for financial calculations.
-    Use this to calculate growth percentages, ratios, or comparisons between numbers.
-    Input must be a valid Python math expression.
-    Example input: (21092 - 16600) / 16600 * 100
-    """
-    logger.info(f"[Tool] calculate — expression='{expression}'")
-    try:
-        result = eval(expression, {"__builtins__": {}}, {})
-        return f"Result: {result:.4f}"
-    except Exception as e:
-        return f"Calculation failed: {e}"
-
-
-def get_chunk_by_id(chunk_id: str) -> str:
-    """
-    Fetches a specific chunk by its exact ID from the annual report.
-    Use this when you already know the chunk ID and need its full content.
-    Example input: page_16_text_chunk_3
-    """
-    logger.info(f"[Tool] get_chunk_by_id — id='{chunk_id}'")
-    try:
-        chunk = _store.get_by_id(_COLLECTION, chunk_id)
-        if chunk:
-            return (
-                f"ID       : {chunk['id']}\n"
-                f"Metadata : {chunk['metadata']}\n"
-                f"Text     : {chunk['document']}"
-            )
-        return f"Chunk '{chunk_id}' not found."
-    except Exception as e:
-        return f"get_by_id failed: {e}"
 
 
 # ------------------------------------------------------------------ #
@@ -251,8 +220,6 @@ def get_chunk_by_id(chunk_id: str) -> str:
 
 TOOLS = [
     search_annual_report,
-    calculate,
-    get_chunk_by_id,
 ]
 
 # ------------------------------------------------------------------ #
@@ -369,8 +336,9 @@ if __name__ == "__main__":
         "Give me a brief of the 2025 Annual Report",
         "What did the MD say about the annual report this year?",
         "Give me the complete timeline of Kalyan Jewellers",
-        "What are the fixed assets bought by Kalyan?",
+        "What are the fixed assets bought by Kalyan Jewellers?",
         "Give me details of financial numbers for 2025",
+        "Give me details between 2023 and 2025 financial performance"
     ]
 
     for q in questions:
