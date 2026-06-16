@@ -27,3 +27,4 @@ class RAGResponse:
     debug_json_path: str | None
     tools_used: list[dict[str, Any]]
     checkpointer: dict[str, Any]
+    cache: dict[str, Any] = field(default_factory=dict)
