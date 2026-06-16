@@ -32,6 +32,7 @@ class ChromaStore:
     def __init__(self, chroma_path: str | None = None):
         self.chroma_path = chroma_path or CONFIG.CHROMA_PATH
         self._client: chromadb.PersistentClient | None = None
+        self._logger = logger
         logger.info(f"[ChromaStore] Initialised — path='{self.chroma_path}'")
 
     # ------------------------------------------------------------------ #
