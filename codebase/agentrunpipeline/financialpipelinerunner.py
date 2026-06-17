@@ -25,12 +25,13 @@ class FinancialPipelineRunner:
         answer_generator: AnswerGenerator | None = None,
         cache_memory: CacheMemory | None = None,
         use_cache: bool = True,
+        use_default_llm: bool = False,
     ) -> None:
         self.checkpointer = QueryCheckpointer()
         self.planner = FinancialQueryPlanner()
         self.retrieval_tools = FinancialRetrievalTools(chroma_store)
         self.context_builder = FinancialContextBuilder()
-        self.answer_composer = FinancialAnswerComposer(answer_generator)
+        self.answer_composer = FinancialAnswerComposer(answer_generator, use_default_llm=use_default_llm)
         self.debug_writer = CitationDebugWriter(debug_output_dir)
         self.cache_memory = cache_memory or CacheMemory()
         self.use_cache = use_cache
