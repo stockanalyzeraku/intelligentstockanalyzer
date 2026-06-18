@@ -2,53 +2,126 @@
 # CELL 5 — Error Handler
 # =============================================================================
 """
-Error classification, retry-with-backoff decorator, and CircuitBreaker.
-All external calls (Gemini, ChromaDB) must be wrapped with these utilities.
+Exception hierarchy, error classification, retry-with-backoff, timeout helpers,
+and circuit breakers for external/fragile operations.
 """
 
+from __future__ import annotations
+
+import concurrent.futures
 import functools
 import random
 import threading
 import time
 from enum import Enum
-from typing import Callable, Optional, Type, Tuple
-from config import Config
+from typing import Any, Callable, Optional, Tuple, Type
+
+from config import CONFIG, Config
 from logger import get_logger
 
 
 class ErrorType(Enum):
     """Classification of errors by recoverability."""
-    TRANSIENT = "transient"   # Retry is worthwhile (rate limit, timeout, network)
-    PERMANENT = "permanent"   # Do not retry (bad input, auth failure, not found)
+    TRANSIENT = "transient"
+    PERMANENT = "permanent"
+
+
+class AppError(Exception):
+    """Base application error carrying structured diagnostic metadata."""
+
+    error_code = "APP_ERROR"
+    retryable = False
+    recoverable = False
+
+    def __init__(self, message: str, *, safe_message: str | None = None, details: dict[str, Any] | None = None, cause: BaseException | None = None):
+        super().__init__(message)
+        self.safe_message = safe_message or message
+        self.details = details or {}
+        self.cause = cause
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "error_type": self.__class__.__name__,
+            "error_code": self.error_code,
+            "message": str(self),
+            "safe_message": self.safe_message,
+            "retryable": self.retryable,
+            "recoverable": self.recoverable,
+            "details": self.details,
+        }
+
+
+class ValidationError(AppError, ValueError):
+    error_code = "VALIDATION_ERROR"
+
+
+class PromptInjectionError(ValidationError):
+    error_code = "PROMPT_INJECTION_DETECTED"
+
+
+class PathSafetyError(ValidationError):
+    error_code = "PATH_SAFETY_ERROR"
+
+
+class FileTooLargeError(ValidationError):
+    error_code = "FILE_TOO_LARGE"
+
+
+class InvalidSchemaError(ValidationError):
+    error_code = "INVALID_SCHEMA"
+
+
+class UnsafeQueryFilterError(ValidationError):
+    error_code = "UNSAFE_QUERY_FILTER"
+
+
+class ProcessingError(AppError):
+    error_code = "PROCESSING_ERROR"
+    recoverable = True
+
+
+class RetrievalError(AppError):
+    error_code = "RETRIEVAL_ERROR"
+    retryable = True
+    recoverable = True
+
+
+class LLMError(AppError):
+    error_code = "LLM_ERROR"
+    retryable = True
+    recoverable = True
+
+
+class LLMTimeoutError(LLMError, TimeoutError):
+    error_code = "LLM_TIMEOUT"
+
+
+class DataIntegrityError(AppError):
+    error_code = "DATA_INTEGRITY_ERROR"
+
+
+class DependencyError(AppError):
+    error_code = "DEPENDENCY_ERROR"
+    retryable = True
+    recoverable = True
+
+
+class CircuitBreakerOpenError(DependencyError):
+    """Raised when a call is attempted while the circuit breaker is OPEN."""
+
+    error_code = "CIRCUIT_BREAKER_OPEN"
 
 
 class CircuitBreakerState(Enum):
-    """States of the circuit breaker finite-state machine."""
-    CLOSED = "closed"        # Normal operation
-    OPEN = "open"            # Failing; reject calls immediately
-    HALF_OPEN = "half_open"  # Testing if service recovered
-
-
-class CircuitBreakerOpenError(Exception):
-    """Raised when a call is attempted while the circuit breaker is OPEN."""
+    CLOSED = "closed"
+    OPEN = "open"
+    HALF_OPEN = "half_open"
 
 
 class CircuitBreaker:
-    """
-    Thread-safe circuit breaker implementing CLOSED → OPEN → HALF_OPEN transitions.
-
-    Parameters
-    ----------
-    name : str
-        Human-readable name (e.g. "gemini", "chromadb").
-    failure_threshold : int
-        Number of consecutive failures before opening the circuit.
-    recovery_timeout : int
-        Seconds to wait before transitioning from OPEN to HALF_OPEN.
-    """
+    """Thread-safe circuit breaker implementing CLOSED → OPEN → HALF_OPEN."""
 
     def __init__(self, name: str, failure_threshold: int, recovery_timeout: int):
-        """Initialise the circuit breaker in CLOSED state."""
         self._name = name
         self._failure_threshold = failure_threshold
         self._recovery_timeout = recovery_timeout
@@ -56,12 +129,10 @@ class CircuitBreaker:
         self._failure_count = 0
         self._last_failure_time: Optional[float] = None
         self._lock = threading.Lock()
-        self._CONFIG = Config()
-        self._logger = get_logger("circuit_breaker")
+        self._logger = get_logger("circuit_breaker").bind(breaker=name)
 
     @property
     def state(self) -> CircuitBreakerState:
-        """Return current state, auto-transitioning OPEN→HALF_OPEN on timeout."""
         with self._lock:
             if (
                 self._state == CircuitBreakerState.OPEN
@@ -69,145 +140,81 @@ class CircuitBreaker:
                 and time.monotonic() - self._last_failure_time >= self._recovery_timeout
             ):
                 self._state = CircuitBreakerState.HALF_OPEN
-                self._logger.info(
-                    "Circuit breaker transitioned to HALF_OPEN",
-                    breaker=self._name,
-                )
+                self._logger.info("Circuit breaker transitioned to HALF_OPEN", event="circuit_half_open")
             return self._state
 
-    def call(self, func: Callable, *args, **kwargs):
-        """
-        Execute func if circuit allows; raise CircuitBreakerOpenError otherwise.
-
-        Parameters
-        ----------
-        func : Callable
-            The function to execute.
-        *args, **kwargs
-            Arguments forwarded to func.
-
-        Returns
-        -------
-        Any
-            Return value of func on success.
-
-        Raises
-        ------
-        CircuitBreakerOpenError
-            When the circuit is OPEN.
-        Exception
-            Re-raises any exception from func after recording failure.
-        """
+    def call(self, func: Callable[..., Any], *args: Any, **kwargs: Any) -> Any:
         current = self.state
         if current == CircuitBreakerState.OPEN:
-            raise CircuitBreakerOpenError(
-                f"Circuit breaker '{self._name}' is OPEN — call rejected."
-            )
+            raise CircuitBreakerOpenError(f"Circuit breaker '{self._name}' is OPEN — call rejected.")
         try:
             result = func(*args, **kwargs)
             self._on_success()
             return result
         except Exception as exc:
-            self._on_failure(exc)
+            if classify_error(exc) == ErrorType.TRANSIENT:
+                self._on_failure(exc)
             raise
 
     def _on_success(self) -> None:
-        """Reset failure count and close circuit on success."""
         with self._lock:
             self._failure_count = 0
             if self._state == CircuitBreakerState.HALF_OPEN:
                 self._state = CircuitBreakerState.CLOSED
-                self._logger.info(
-                    "Circuit breaker recovered to CLOSED", breaker=self._name
-                )
+                self._logger.info("Circuit breaker recovered to CLOSED", event="circuit_closed")
 
     def _on_failure(self, exc: Exception) -> None:
-        """Increment failure count and open circuit if threshold reached."""
         with self._lock:
             self._failure_count += 1
             self._last_failure_time = time.monotonic()
             self._logger.error(
                 "Circuit breaker recorded failure",
-                breaker=self._name,
+                event="circuit_failure",
                 failure_count=self._failure_count,
+                exception_type=exc.__class__.__name__,
                 error=str(exc),
             )
             if self._failure_count >= self._failure_threshold:
                 self._state = CircuitBreakerState.OPEN
-                self._logger.error(
-                    "Circuit breaker OPENED",
-                    breaker=self._name,
-                    failure_count=self._failure_count,
-                )
+                self._logger.error("Circuit breaker OPENED", event="circuit_opened", failure_count=self._failure_count)
+
+    def status(self) -> dict[str, Any]:
+        return {
+            "name": self._name,
+            "state": self.state.value,
+            "failure_count": self._failure_count,
+            "failure_threshold": self._failure_threshold,
+            "recovery_timeout": self._recovery_timeout,
+        }
 
 
 def classify_error(exc: Exception) -> ErrorType:
-    """
-    Classify an exception as TRANSIENT or PERMANENT.
-
-    Parameters
-    ----------
-    exc : Exception
-        The exception to classify.
-
-    Returns
-    -------
-    ErrorType
-    """
-    transient_types = (
-        TimeoutError,
-        ConnectionError,
-        OSError,
-    )
-    transient_messages = (
-        "rate limit",
-        "quota",
-        "503",
-        "502",
-        "500",
-        "429",
-        "timeout",
-        "temporarily",
-        "unavailable",
-    )
+    """Classify an exception as TRANSIENT or PERMANENT."""
+    if isinstance(exc, AppError):
+        return ErrorType.TRANSIENT if exc.retryable else ErrorType.PERMANENT
+    transient_types = (TimeoutError, ConnectionError, OSError, concurrent.futures.TimeoutError)
+    transient_messages = ("rate limit", "quota", "503", "502", "500", "429", "timeout", "temporarily", "unavailable", "connection reset")
     if isinstance(exc, transient_types):
         return ErrorType.TRANSIENT
     msg = str(exc).lower()
-    if any(kw in msg for kw in transient_messages):
-        return ErrorType.TRANSIENT
-    return ErrorType.PERMANENT
+    return ErrorType.TRANSIENT if any(kw in msg for kw in transient_messages) else ErrorType.PERMANENT
 
 
-def retry(self,
+def retry(
     max_attempts: Optional[int] = None,
     base_delay: Optional[float] = None,
     max_delay: Optional[float] = None,
     retryable_exceptions: Tuple[Type[Exception], ...] = (Exception,),
-):
-    """
-    Decorator: retry with exponential backoff and jitter on TRANSIENT errors.
-
-    Parameters
-    ----------
-    max_attempts : int, optional
-        Override self._CONFIG.RETRY_MAX_ATTEMPTS.
-    base_delay : float, optional
-        Override self._CONFIG.RETRY_BASE_DELAY.
-    max_delay : float, optional
-        Override self._CONFIG.RETRY_MAX_DELAY.
-    retryable_exceptions : tuple
-        Exception types eligible for retry.
-    """
+) -> Callable[[Callable[..., Any]], Callable[..., Any]]:
+    """Decorator: retry transient errors using exponential backoff with full jitter."""
     _logger = get_logger("retry")
 
-    def decorator(func: Callable) -> Callable:
-        """Wrap func with retry logic."""
+    def decorator(func: Callable[..., Any]) -> Callable[..., Any]:
         @functools.wraps(func)
-        def wrapper(*args, **kwargs):
-            """Execute func, retrying on transient errors."""
-            attempts = max_attempts or self._CONFIG.RETRY_MAX_ATTEMPTS
-            b_delay = base_delay or self._CONFIG.RETRY_BASE_DELAY
-            m_delay = max_delay or self._CONFIG.RETRY_MAX_DELAY
+        def wrapper(*args: Any, **kwargs: Any) -> Any:
+            attempts = max_attempts or CONFIG.RETRY_MAX_ATTEMPTS
+            b_delay = base_delay or CONFIG.RETRY_BASE_DELAY
+            m_delay = max_delay or CONFIG.RETRY_MAX_DELAY
             last_exc: Optional[Exception] = None
             for attempt in range(1, attempts + 1):
                 try:
@@ -215,62 +222,87 @@ def retry(self,
                 except retryable_exceptions as exc:
                     last_exc = exc
                     if classify_error(exc) == ErrorType.PERMANENT:
-                        _logger.error(
-                            "Permanent error — not retrying",
-                            func=func.__name__,
-                            error=str(exc),
-                        )
+                        _logger.error("Permanent error — not retrying", event="retry_permanent_error", func=func.__name__, error=str(exc))
                         raise
                     if attempt == attempts:
                         break
-                    delay = min(b_delay * (2 ** (attempt - 1)), m_delay)
-                    delay += random.uniform(0, delay * 0.1)
+                    upper = min(m_delay, b_delay * (2 ** (attempt - 1)))
+                    delay = random.uniform(0, upper)
                     _logger.warning(
                         "Transient error — retrying",
+                        event="retry_attempt",
                         func=func.__name__,
                         attempt=attempt,
+                        max_attempts=attempts,
                         delay_s=round(delay, 2),
                         error=str(exc),
                     )
                     time.sleep(delay)
-            _logger.error(
-                "All retry attempts exhausted",
-                func=func.__name__,
-                attempts=attempts,
-                error=str(last_exc),
-            )
+            _logger.error("All retry attempts exhausted", event="retry_exhausted", func=func.__name__, attempts=attempts, error=str(last_exc))
             raise last_exc  # type: ignore[misc]
+
+        return wrapper
+
+    return decorator
+
+
+def with_timeout(seconds: float, timeout_error: Type[Exception] = TimeoutError) -> Callable[[Callable[..., Any]], Callable[..., Any]]:
+    """Run a callable in a worker thread and raise timeout_error on deadline."""
+    def decorator(func: Callable[..., Any]) -> Callable[..., Any]:
+        @functools.wraps(func)
+        def wrapper(*args: Any, **kwargs: Any) -> Any:
+            executor = concurrent.futures.ThreadPoolExecutor(max_workers=1)
+            future = executor.submit(func, *args, **kwargs)
+            try:
+                return future.result(timeout=seconds)
+            except concurrent.futures.TimeoutError as exc:
+                future.cancel()
+                executor.shutdown(wait=False, cancel_futures=True)
+                raise timeout_error(f"{func.__name__} timed out after {seconds}s") from exc
+            finally:
+                if future.done():
+                    executor.shutdown(wait=False, cancel_futures=True)
         return wrapper
     return decorator
 
 
+def run_guarded(operation: str, func: Callable[..., Any], *, breaker: CircuitBreaker | None = None, timeout_s: float | None = None, retry_attempts: int | None = None, exception_type: Type[AppError] = AppError) -> Any:
+    """Execute func with optional timeout, retry, circuit breaker, and structured logging."""
+    logger = get_logger("guardrails")
+
+    def call() -> Any:
+        target = func
+        if timeout_s:
+            target = with_timeout(timeout_s)(target)
+        if retry_attempts and retry_attempts > 1:
+            target = retry(max_attempts=retry_attempts)(target)
+        if breaker:
+            return breaker.call(target)
+        return target()
+
+    start = time.perf_counter()
+    try:
+        result = call()
+        logger.info(operation, event=f"{operation}_completed", duration_ms=round((time.perf_counter() - start) * 1000, 2))
+        return result
+    except AppError:
+        raise
+    except Exception as exc:
+        logger.exception(operation, exc, event=f"{operation}_failed", duration_ms=round((time.perf_counter() - start) * 1000, 2))
+        raise exception_type(f"{operation} failed: {exc}", cause=exc) from exc
+
+
 # Pre-instantiated circuit breakers for shared services
-CB_GEMINI = CircuitBreaker(
-    "gemini",
-    Config.CB_FAILURE_THRESHOLD,
-    Config.CB_RECOVERY_TIMEOUT,
-)
-CB_CHROMADB = CircuitBreaker(
-    "chromadb",
-    Config.CB_FAILURE_THRESHOLD,
-    Config.CB_RECOVERY_TIMEOUT,
-)
+CB_GEMINI = CircuitBreaker("gemini", Config.CB_FAILURE_THRESHOLD, Config.CB_RECOVERY_TIMEOUT)
+CB_MISTRAL = CircuitBreaker("mistral", Config.CB_FAILURE_THRESHOLD, Config.CB_RECOVERY_TIMEOUT)
+CB_CHROMADB = CircuitBreaker("chromadb", Config.CB_FAILURE_THRESHOLD, Config.CB_RECOVERY_TIMEOUT)
+CB_EMBEDDER = CircuitBreaker("embedder", Config.CB_FAILURE_THRESHOLD, Config.CB_RECOVERY_TIMEOUT)
+CB_FILESYSTEM = CircuitBreaker("filesystem", Config.CB_FAILURE_THRESHOLD, Config.CB_RECOVERY_TIMEOUT)
+CB_SQLITE = CircuitBreaker("sqlite", Config.CB_FAILURE_THRESHOLD, Config.CB_RECOVERY_TIMEOUT)
 
 _eh_logger = get_logger("error_handler")
-_eh_logger.info("Error handler initialised.", gemini_cb=CB_GEMINI._name, chroma_cb=CB_CHROMADB._name)
-
-# ----------------------------------------------------------------------------
-# Cell 5: Error Handler
-# Purpose: Provide ErrorType enum, retry decorator, and CircuitBreaker.
-# Key Classes: CircuitBreaker, CircuitBreakerOpenError, ErrorType, CircuitBreakerState
-# Key Functions: classify_error(exc) → ErrorType, retry(...) → Callable
-# Key Constants/Config: CB_GEMINI, CB_CHROMADB (shared breaker instances)
-# Imports exported: CircuitBreaker, CircuitBreakerOpenError, ErrorType,
-#   classify_error, retry, CB_GEMINI, CB_CHROMADB
-# Depends on: Cell 3 (CONFIG), Cell 4 (get_logger)
-# Critical notes: CB_GEMINI and CB_CHROMADB are module-level singletons —
-#   import them rather than creating new instances.
-#   retry() must sit INSIDE the circuit-breaker call, not outside.
-# Context Update: None
-# Status: Complete
-# ----------------------------------------------------------------------------
+_eh_logger.info(
+    "Error handler initialised.",
+    event="error_handler_ready",
+    breakers=[CB_GEMINI.status(), CB_MISTRAL.status(), CB_CHROMADB.status(), CB_EMBEDDER.status(), CB_FILESYSTEM.status(), CB_SQLITE.status()],
+)

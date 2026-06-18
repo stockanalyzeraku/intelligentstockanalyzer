@@ -12,6 +12,10 @@ from codebase.ragrun.debugger import RAGDebugger
 from codebase.ragrun.llm_router import LLMRouter
 from codebase.ragrun.retriever import ChromaRAGRetriever
 from codebase.ragrun.schemas import RAGWorkerResponse
+from inputvalidator import InputValidator
+from logger import get_logger
+
+logger = get_logger(__name__)
 
 
 class BackgroundRAGWorker:
@@ -33,48 +37,50 @@ class BackgroundRAGWorker:
 
     def answer(self, query: str, top_k: int | None = None) -> RAGWorkerResponse:
         """Answer one user query and always write a JSON debug file."""
-        limit = top_k or RAGRUN_CONFIG.top_k
-        check = self.checkpointer.validate(query)
+        query = InputValidator.validate_question(query)
+        limit = InputValidator.validate_top_k(top_k, default=RAGRUN_CONFIG.top_k, max_value=RAGRUN_CONFIG.top_k)
+        with logger.timed("rag_answer", query_preview=query[:120], top_k=limit):
+            check = self.checkpointer.validate(query)
 
-        if not check.allowed:
-            return self._reject_query(query, check.to_dict())
+            if not check.allowed:
+                return self._reject_query(query, check.to_dict())
 
-        cache_key, cache_payload = self.cache_manager.build_key(query, top_k=limit)
-        # cached = self.cache_manager.get(cache_key)
+            cache_key, cache_payload = self.cache_manager.build_key(query, top_k=limit)
+            # cached = self.cache_manager.get(cache_key)
 
-        # if cached:
-        #     return self._answer_from_cache(query, check.to_dict(), cache_key, cached)
+            # if cached:
+            #     return self._answer_from_cache(query, check.to_dict(), cache_key, cached)
 
-        chunks = self.retriever.search(query, top_k=limit)
-        if not chunks:
-            return self._answer_no_context(query, check.to_dict(), cache_key, cache_payload)
+            chunks = self.retriever.search(query, top_k=limit)
+            if not chunks:
+                return self._answer_no_context(query, check.to_dict(), cache_key, cache_payload)
 
-        model_result = self.llm_router.answer(query, chunks)
-        response = RAGWorkerResponse(
-            status="answered" if model_result.provider_used else "llm_failed",
-            answer=model_result.answer,
-            source="llm",
-            debug_json_path=None,
-            checkpointer=check.to_dict(),
-            cache={"enabled": True, "hit": False, "cache_key": cache_key},
-            model=model_result.to_dict(),
-            retrieved_chunks=[chunk.to_dict() for chunk in chunks],
-        )
-        debug_path = self.debugger.write(
-            query,
-            {
-                "status": response.status,
-                "checkpointer": response.checkpointer,
-                "cache": response.cache,
-                "answer_source": "llm",
-                "model": response.model,
-                "documents_used": response.retrieved_chunks,
-                "answer": response.answer,
-            },
-        )
-        response.debug_json_path = debug_path
-        self.cache_manager.set(cache_key, cache_payload, query, response)
-        return response
+            model_result = self.llm_router.answer(query, chunks)
+            response = RAGWorkerResponse(
+                status="answered" if model_result.provider_used else "llm_failed",
+                answer=model_result.answer,
+                source="llm",
+                debug_json_path=None,
+                checkpointer=check.to_dict(),
+                cache={"enabled": True, "hit": False, "cache_key": cache_key},
+                model=model_result.to_dict(),
+                retrieved_chunks=[chunk.to_dict() for chunk in chunks],
+            )
+            debug_path = self.debugger.write(
+                query,
+                {
+                    "status": response.status,
+                    "checkpointer": response.checkpointer,
+                    "cache": response.cache,
+                    "answer_source": "llm",
+                    "model": response.model,
+                    "documents_used": response.retrieved_chunks,
+                    "answer": response.answer,
+                },
+            )
+            response.debug_json_path = debug_path
+            self.cache_manager.set(cache_key, cache_payload, query, response)
+            return response
 
     def _reject_query(self, query: str, check: dict) -> RAGWorkerResponse:
         debug_path = self.debugger.write(

@@ -33,6 +33,7 @@ from dataclasses import asdict
 
 from config import CONFIG
 from logger import get_logger
+from inputvalidator import InputValidator
 from codebase.cleaning.cleanresult import CleanResult
 from codebase.cleaning.textcleaner import TextCleaner
 from codebase.cleaning.pageintent import PageIntentTagger
@@ -77,19 +78,19 @@ class PipelineRunner:
         year:     int = 2025,
         doc_type: str = "ANNUAL_REPORT",
     ) -> None:
-        self.company  = company
-        self.year     = year
-        self.doc_type = doc_type
+        self.company  = InputValidator.validate_scrip(company)
+        self.year     = InputValidator.validate_year_int(year)
+        self.doc_type = InputValidator.validate_doc_type(doc_type)
 
         # Initialise all pipeline components once
-        self._cleaner         = TextCleaner(company, year, doc_type)
+        self._cleaner         = TextCleaner(self.company, self.year, self.doc_type)
         self._intent_tagger   = PageIntentTagger()
         self._table_extractor = TableExtractor()
         self._embedder        = EmbeddingPrepared()
 
         logger.info(
             f"[PipelineRunner] Initialised — "
-            f"company={company}, year={year}, doc_type={doc_type}"
+            f"company={self.company}, year={self.year}, doc_type={self.doc_type}"
         )
 
     # ------------------------------------------------------------------
@@ -118,16 +119,18 @@ class PipelineRunner:
         - ``<name>_CLEANED.json``         — serialised CleanResult list
         - ``<name>_EMBEDDINGREADY.json``  — chunked embedding records
         """
+        input_file = InputValidator.validate_json_path(input_file, must_exist=True)
         self._log_banner("PIPELINE STARTED", input_file)
 
-        pages = self._load(input_file)
+        with logger.timed("cleaning_pipeline", company=self.company, year=self.year, input_file=input_file):
+            pages = self._load(input_file)
 
-        results, skipped = self._process_pages(pages)
+            results, skipped = self._process_pages(pages)
 
-        self._log_summary(pages, results, skipped)
+            self._log_summary(pages, results, skipped)
 
-        cleaned_path    = self._save_cleaned(input_file, results)
-        embedding_path  = self._save_embeddings(cleaned_path)
+            cleaned_path    = self._save_cleaned(input_file, results)
+            embedding_path  = self._save_embeddings(cleaned_path)
 
         logger.info(f"[PipelineRunner] Cleaned JSON      → {cleaned_path}")
         logger.info(f"[PipelineRunner] Embedding JSON    → {embedding_path}")
@@ -142,9 +145,9 @@ class PipelineRunner:
     def _load(self, input_file: str) -> list[dict]:
         """Load and return the raw OCR page list from *input_file*."""
         logger.info(f"[PipelineRunner] Loading: {input_file}")
-        with open(input_file, "r", encoding="utf-8") as fh:
-            pages = json.load(fh)
-        logger.info(f"[PipelineRunner] {len(pages)} pages loaded")
+        pages = InputValidator.load_json_file(input_file)
+        pages = InputValidator.validate_raw_ocr_pages(pages)
+        logger.info(f"[PipelineRunner] {len(pages)} pages loaded", event="raw_json_loaded", page_count=len(pages))
         return pages
 
     def _process_pages(self, pages: list[dict]) -> tuple[list[CleanResult], int]:
@@ -162,8 +165,12 @@ class PipelineRunner:
         for page in pages:
             page_num = page.get("page_num") or page.get("page_number")
 
+            if page_num is None:
+                raise ValueError("Page is missing page number after validation.")
+
             # ── Stage 1: Clean ────────────────────────────────────────
-            result = self._cleaner.clean(page["text"], page_num)
+            with logger.timed("page_clean", page_num=page_num):
+                result = self._cleaner.clean(page["text"], page_num)
 
             if result.is_short:
                 logger.info(
@@ -207,6 +214,7 @@ class PipelineRunner:
                 return obj.value   # "financial" or "qualitative" instead of TableType.FINANCIAL
             raise TypeError(f"Object of type {type(obj).__name__} is not JSON serialisable")
 
+        output = InputValidator.validate_output_path(output)
         with open(output, "w", encoding="utf-8") as fh:
             json.dump(
                 [asdict(r) for r in results],
@@ -226,7 +234,9 @@ class PipelineRunner:
         """
         base   = os.path.splitext(cleaned_path)[0].replace("_CLEANED", "")
         output = f"{base}_EMBEDDINGREADY.json"
+        output = InputValidator.validate_output_path(output)
         self._embedder.prepare_for_embedding(cleaned_path, output)
+        InputValidator.validate_embedding_payload(InputValidator.load_json_file(output))
         logger.info(f"[PipelineRunner] Saved embedding JSON → {output}")
         return output
 

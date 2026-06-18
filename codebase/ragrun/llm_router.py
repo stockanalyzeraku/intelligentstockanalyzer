@@ -9,6 +9,11 @@ from typing import Any
 
 from codebase.ragrun.models import LangChainModelFactory
 from codebase.ragrun.schemas import ModelRunResult, RetrievedChunk
+from errorhandler import CB_GEMINI, CB_MISTRAL, LLMError, run_guarded
+from inputvalidator import InputValidator
+from logger import get_logger
+
+logger = get_logger(__name__)
 
 
 class LLMRouter:
@@ -23,6 +28,7 @@ class LLMRouter:
         self.model_factory = model_factory or LangChainModelFactory()
 
     def answer(self, query: str, chunks: list[RetrievedChunk]) -> ModelRunResult:
+        query = InputValidator.validate_question(query)
         context = self._format_context(chunks)
         attempts: list[dict[str, Any]] = []
         providers = [
@@ -32,7 +38,15 @@ class LLMRouter:
 
         for provider, model_name, factory in providers:
             try:
-                answer = self._invoke(factory(), query, context).strip()
+                breaker = CB_MISTRAL if provider == "mistral" else CB_GEMINI
+                answer = run_guarded(
+                    f"llm_{provider}_answer",
+                    lambda factory=factory: self._invoke(factory(), query, context),
+                    breaker=breaker,
+                    timeout_s=60,
+                    retry_attempts=2,
+                    exception_type=LLMError,
+                ).strip()
                 good_enough = bool(answer) and not self._is_insufficient(answer)
                 attempts.append(
                     {
@@ -85,6 +99,7 @@ class LLMRouter:
         blocks = []
         for index, chunk in enumerate(chunks, start=1):
             location = f"source={chunk.source or 'unknown'}, page={chunk.page_number or 'unknown'}"
+            InputValidator.detect_prompt_injection(chunk.text, field=f"retrieved_chunk[{index}]", strict=False)
             blocks.append(f"[Chunk {index}; {location}]\n{chunk.text}")
         return "\n\n".join(blocks)
 

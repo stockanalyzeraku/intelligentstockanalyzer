@@ -12,6 +12,7 @@ import chromadb
 
 from config import CONFIG
 from logger import get_logger
+from inputvalidator import InputValidator
 from codebase.vectordb.embedder import EMBEDDER
 
 logger = get_logger(__name__)
@@ -109,6 +110,8 @@ class ChromaStore:
         -------
         chromadb.Collection
         """
+        collection_name = InputValidator.validate_collection_name(collection_name)
+        embedding_json_path = InputValidator.validate_json_path(embedding_json_path, must_exist=True)
         if chroma_path:
             self.chroma_path = chroma_path
             self._client     = None
@@ -120,6 +123,7 @@ class ChromaStore:
 
         with open(embedding_json_path, "r", encoding="utf-8") as fh:
             payload: Any = json.load(fh)
+        payload = InputValidator.validate_embedding_payload(payload)
 
         if isinstance(payload, dict) and "parents" in payload and "children" in payload:
             parents = payload.get("parents", [])
@@ -163,6 +167,9 @@ class ChromaStore:
         metadatas       : Metadata dicts per chunk.
         batch_size      : Number of chunks per upsert call (default 100).
         """
+        collection_name = InputValidator.validate_collection_name(collection_name)
+        if not (len(ids) == len(documents) == len(metadatas)):
+            raise ValueError("ids, documents, and metadatas must have matching lengths.")
         if not ids:
             logger.warning("[ChromaStore] upsert_batch called with empty ids, skipping.")
             return
@@ -222,7 +229,11 @@ class ChromaStore:
     #         raise
 
     def query_collection(self, collection_name: str, query_texts: list[str], n_results: int = 10, where: dict | None = None,) -> dict:
+        collection_name = InputValidator.validate_collection_name(collection_name)
+        query_texts = InputValidator.validate_query_texts(query_texts)
+        where = InputValidator.validate_chroma_where(where)
         collection = self._get_collection(collection_name)
+        n_results = InputValidator.validate_top_k(n_results, default=10, max_value=max(CONFIG.FINAL_TOP_K, CONFIG.SEMANTIC_TOP_K))
         query_embeddings = [EMBEDDER.embed_query(q) for q in query_texts]
 
         return collection.query(
@@ -253,6 +264,7 @@ class ChromaStore:
         -------
         dict with keys: id, document, metadata — or None if not found.
         """
+        collection_name = InputValidator.validate_collection_name(collection_name)
         collection = self._get_collection(collection_name)
         try:
             result = collection.get(ids=[chunk_id])
@@ -272,6 +284,7 @@ class ChromaStore:
         chunk_ids: list[str],
     ) -> list[dict]:
         """Fetch multiple chunks by exact id and preserve the requested order."""
+        collection_name = InputValidator.validate_collection_name(collection_name)
         if not chunk_ids:
             return []
 
