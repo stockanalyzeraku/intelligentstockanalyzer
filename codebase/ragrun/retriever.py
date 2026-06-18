@@ -9,6 +9,7 @@ from typing import Any
 
 from codebase.ragrun.config import RAGRUN_CONFIG
 from codebase.ragrun.schemas import RetrievedChunk
+from inputvalidator import InputValidator
 
 
 class ChromaRAGRetriever:
@@ -19,9 +20,10 @@ class ChromaRAGRetriever:
 
     def search(self, query: str, top_k: int | None = None) -> list[RetrievedChunk]:
         store = self._store()
-        limit = top_k or RAGRUN_CONFIG.top_k
+        query = InputValidator.validate_question(query)
+        limit = InputValidator.validate_top_k(top_k, default=RAGRUN_CONFIG.top_k, max_value=RAGRUN_CONFIG.top_k)
         if hasattr(store, "query_children_with_parent_context"):
-            records = store.quergity_children_with_parent_context([query], n_results=limit)
+            records = store.query_children_with_parent_context([query], n_results=limit)
         else:
             raw = store.query_collection(RAGRUN_CONFIG.collection_name, [query], n_results=limit)
             records = self._raw_to_records(raw)
