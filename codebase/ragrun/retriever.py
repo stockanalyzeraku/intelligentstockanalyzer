@@ -1,6 +1,9 @@
 """Chroma retrieval for the background RAG worker."""
 
 from __future__ import annotations
+import sys
+import os
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 from typing import Any
 
@@ -18,7 +21,7 @@ class ChromaRAGRetriever:
         store = self._store()
         limit = top_k or RAGRUN_CONFIG.top_k
         if hasattr(store, "query_children_with_parent_context"):
-            records = store.query_children_with_parent_context([query], n_results=limit)
+            records = store.quergity_children_with_parent_context([query], n_results=limit)
         else:
             raw = store.query_collection(RAGRUN_CONFIG.collection_name, [query], n_results=limit)
             records = self._raw_to_records(raw)

@@ -1,6 +1,9 @@
 """Background RAG worker pipeline built with LangChain model components."""
 
 from __future__ import annotations
+import sys
+import os
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 from codebase.ragrun.cache_manager import RAGCacheManager
 from codebase.ragrun.checkpointer import RuleBasedCheckpointer
@@ -37,10 +40,10 @@ class BackgroundRAGWorker:
             return self._reject_query(query, check.to_dict())
 
         cache_key, cache_payload = self.cache_manager.build_key(query, top_k=limit)
-        cached = self.cache_manager.get(cache_key)
+        # cached = self.cache_manager.get(cache_key)
 
-        if cached:
-            return self._answer_from_cache(query, check.to_dict(), cache_key, cached)
+        # if cached:
+        #     return self._answer_from_cache(query, check.to_dict(), cache_key, cached)
 
         chunks = self.retriever.search(query, top_k=limit)
         if not chunks:
@@ -164,5 +167,5 @@ class BackgroundRAGWorker:
 
 if __name__ == "__main__":
     worker = BackgroundRAGWorker()
-    example = worker.answer("What is revenue for Kalyan Jewellers for 2025?")
+    example = worker.answer("What is revenue for Kalyan Jewellers for 2023?")
     print(example.to_dict())
