@@ -11,7 +11,6 @@ from dataclasses import dataclass, field
 from typing import Optional
 #from google.colab import userdata
 from folderstructure import get_base_path
-from dotenv import load_dotenv
 
 @dataclass
 class Config:

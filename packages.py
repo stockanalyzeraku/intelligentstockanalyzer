@@ -28,7 +28,10 @@ def install_dependencies():
         "tqdm>=4.66.0",
         "tenacity>=8.3.0",
         "reportlab",
-        "mistralai>=2.4.9"
+        "mistralai>=2.4.9",
+        "langchain-core>=0.3.0",
+        "langchain-mistralai>=0.2.0",
+        "langchain-google-genai>=2.0.0"
     ]
     for pkg_spec in packages:
         # Extract the base package name (e.g., 'google-generativeai' from 'google-generativeai>=0.7.0')
