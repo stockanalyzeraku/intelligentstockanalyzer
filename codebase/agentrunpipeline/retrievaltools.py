@@ -1,6 +1,9 @@
 """Retrieval tools that wrap the existing ChromaStore API."""
 
 from __future__ import annotations
+import sys
+import os
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 from typing import Any
 
@@ -32,7 +35,8 @@ class FinancialRetrievalTools:
         results = self.chroma_store.query_children_with_parent_context(
             query_texts=queries,
             n_results=top_k,
-            where=filters or None,
+#            where=filters or None,
+            where = self._to_chroma_where(filters or {}),
         )
         trace = ToolTrace(
             tool_name="child_parent_search",
@@ -40,3 +44,17 @@ class FinancialRetrievalTools:
             output_summary={"result_count": len(results)},
         )
         return results, trace
+
+    def _to_chroma_where(self, filters: dict) -> dict | None:
+        """Convert plain filter dict to ChromaDB $and format."""
+        if not filters:
+            return None
+        if len(filters) == 1:
+            key, val = next(iter(filters.items()))
+            return {key: {"$eq": val}}
+        return {
+            "$and": [
+                {key: {"$eq": val}}
+                for key, val in filters.items()
+            ]
+        }

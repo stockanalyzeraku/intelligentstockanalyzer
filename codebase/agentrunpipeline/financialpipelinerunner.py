@@ -1,6 +1,9 @@
 """Runner module for executing the financial RAG pipeline."""
 
 from __future__ import annotations
+import sys
+import os
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 from pathlib import Path
 from typing import Any
@@ -13,6 +16,9 @@ from codebase.agentrunpipeline.models import AnswerGenerator, RAGResponse
 from codebase.agentrunpipeline.querycheckpointer import QueryCheckpointer
 from codebase.agentrunpipeline.queryplanner import FinancialQueryPlanner
 from codebase.agentrunpipeline.retrievaltools import FinancialRetrievalTools
+
+from config import CONFIG
+from codebase.vectordb.chromastore import CHROMASTORE
 
 
 class FinancialPipelineRunner:
@@ -46,6 +52,7 @@ class FinancialPipelineRunner:
         top_k: int = 8,
     ) -> RAGResponse:
         """Run validation, cache lookup, retrieval, answer composition, and debug JSON writing."""
+        
         check = self.checkpointer.validate(question, company=company, year=year, doc_type=doc_type)
         tools_used: list[ToolTrace] = []
 
@@ -211,3 +218,11 @@ class FinancialPipelineRunner:
                 )
             )
         return citations
+
+if __name__ == "__main__":
+    runner = FinancialPipelineRunner(CHROMASTORE)
+    response = runner.answer("What is Revenue of Kalyan Jewellers in 2024", "KALYANKJIL", 2025, "ANNUAL_REPORT")
+    print(f"\n{'='*60}")
+    print(f"STATUS : {response.status}")
+    print(f"ANSWER : {response.answer}")
+    print(f"{'='*60}")

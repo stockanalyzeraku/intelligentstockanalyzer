@@ -7,6 +7,9 @@ ChromaDB ingestion metadata.
 """
 
 from __future__ import annotations
+import sys
+import os
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 PDF_FILES_TABLE = "pdf_files"
 PDF_ARTIFACTS_TABLE = "pdf_artifacts"

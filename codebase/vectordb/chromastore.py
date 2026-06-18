@@ -408,3 +408,8 @@ class ChromaStore:
         except Exception as exc:
             logger.error(f"[ChromaStore] status failed — {exc}")
             return f"Error fetching status: {exc}"
+    
+CHROMASTORE = ChromaStore()
+
+if __name__ == "__main__":
+    CHROMASTORE.get_instance()

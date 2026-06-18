@@ -79,22 +79,42 @@ class LocalEmbedder:
             self._logger.error("Embedding failed", error=str(exc), batch_size=len(input))
             raise
 
-    def embed_query(self, text: str) -> List[float]:
-        """
-        Embed a single query string for retrieval.
+    # def embed_query(self, input: str) -> List[float]:
+    #     """
+    #     Embed a single query string for retrieval.
 
-        Parameters
-        ----------
-        text : str
-            Query text.
+    #     Parameters
+    #     ----------
+    #     text : str
+    #         Query text
 
-        Returns
-        -------
-        List[float]
-            384-dimensional float vector.
-        """
-        return self([text])[0]
+    #     Returns
+    #     -------
+    #     List[float]
+    #         384-dimensional float vector.
+    #     """
+    #     text=input
+    #     return self([text])[0]
 
+    # def embed_query(self, input: str, **kwargs) -> List[float]:
+    #     # ChromaDB sometimes passes a list; unwrap to a single string
+    #     if isinstance(input, list):
+    #         text = input[0] if input else ""
+    #     else:
+    #         text = input
+    #     return self([text])[0]
+
+    def embed_query(self, input: str, **kwargs) -> List[float]:
+        if isinstance(input, list):
+            if len(input) == 1:
+                # single query — return one vector
+                return self(input)[0]
+            else:
+                # multiple queries — return list of vectors
+                return self(input)
+        else:
+            return self([input])[0]
+    
     @classmethod
     def get_instance(cls) -> "LocalEmbedder":
         """

@@ -5,6 +5,9 @@ Prefer importing :class:`FinancialPipelineRunner` from
 """
 
 from __future__ import annotations
+import sys
+import os
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 from codebase.agentrunpipeline.answercomposer import FinancialAnswerComposer
 from codebase.agentrunpipeline.contextbuilder import FinancialContextBuilder

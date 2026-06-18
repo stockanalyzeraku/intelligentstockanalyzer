@@ -1,0 +1,73 @@
+{
+  "trace_id": "131da282-4532-42ea-b8ac-70810238bc8b",
+  "created_at": "2026-06-18T06:13:20.254748+00:00",
+  "question": "What is Revenue of Kalyan Jewellers in 2025",
+  "status": "no_context_found",
+  "answer": "I could not find enough relevant context in the vector store to answer this question.",
+  "checkpointer": {
+    "allowed": true,
+    "reason": "accepted",
+    "message": "Query accepted.",
+    "missing_context": [],
+    "doc_type": "ANNUAL_REPORT"
+  },
+  "filters": {
+    "company": "KALYANKJIL",
+    "year": 2025,
+    "doc_type": "ANNUAL_REPORT"
+  },
+  "expanded_queries": [
+    "What is Revenue of Kalyan Jewellers in 2025",
+    "revenue",
+    "total income",
+    "income from operations",
+    "sales",
+    "topline"
+  ],
+  "tools_used": [
+    {
+      "tool_name": "query_cache_lookup",
+      "input": {
+        "cache_key": "255249c8aeeb87bedf675c558c0c21dd612c0fa3d599f840057a3769fa2ccd87",
+        "payload": {
+          "question": "what is revenue of kalyan jewellers in 2025",
+          "company": "KALYANKJIL",
+          "year": "2025",
+          "doc_type": "ANNUAL_REPORT",
+          "extra_filters": {},
+          "top_k": 8,
+          "pipeline_version": "financial_rag_v1"
+        },
+        "enabled": true
+      },
+      "output_summary": {
+        "cache_hit": false,
+        "hit_count": 0,
+        "cached_status": null
+      }
+    },
+    {
+      "tool_name": "child_parent_search",
+      "input": {
+        "queries": [
+          "What is Revenue of Kalyan Jewellers in 2025",
+          "revenue",
+          "total income",
+          "income from operations",
+          "sales",
+          "topline"
+        ],
+        "filters": {
+          "company": "KALYANKJIL",
+          "year": 2025,
+          "doc_type": "ANNUAL_REPORT"
+        },
+        "top_k": 8
+      },
+      "output_summary": {
+        "result_count": 0
+      }
+    }
+  ],
+  "citations": []
+}

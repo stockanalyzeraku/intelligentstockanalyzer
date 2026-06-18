@@ -1,0 +1,16 @@
+{"ts": "2026-06-18T10:59:32.678227+05:30", "level": "INFO", "component": "embedder", "message": "Embedding model loaded.", "model": "all-MiniLM-L6-v2", "dim": 384}
+{"ts": "2026-06-18T11:01:30.234594+05:30", "level": "INFO", "component": "embedder", "message": "Embedding model loaded.", "model": "all-MiniLM-L6-v2", "dim": 384}
+{"ts": "2026-06-18T11:02:41.301406+05:30", "level": "INFO", "component": "embedder", "message": "Embedding model loaded.", "model": "all-MiniLM-L6-v2", "dim": 384}
+{"ts": "2026-06-18T11:04:38.235700+05:30", "level": "INFO", "component": "embedder", "message": "Embedding model loaded.", "model": "all-MiniLM-L6-v2", "dim": 384}
+{"ts": "2026-06-18T11:21:06.095944+05:30", "level": "INFO", "component": "embedder", "message": "Embedding model loaded.", "model": "all-MiniLM-L6-v2", "dim": 384}
+{"ts": "2026-06-18T11:24:12.140322+05:30", "level": "INFO", "component": "embedder", "message": "Embedding model loaded.", "model": "all-MiniLM-L6-v2", "dim": 384}
+{"ts": "2026-06-18T11:25:40.504394+05:30", "level": "INFO", "component": "embedder", "message": "Embedding model loaded.", "model": "all-MiniLM-L6-v2", "dim": 384}
+{"ts": "2026-06-18T11:29:38.829283+05:30", "level": "INFO", "component": "embedder", "message": "Embedding model loaded.", "model": "all-MiniLM-L6-v2", "dim": 384}
+{"ts": "2026-06-18T11:29:38.939452+05:30", "level": "ERROR", "component": "embedder", "message": "Embedding failed", "error": "Unsupported input type: list. Expected one of: str, dict, PIL.Image.Image, np.ndarray, torch.Tensor", "batch_size": 1}
+{"ts": "2026-06-18T11:33:52.726551+05:30", "level": "INFO", "component": "embedder", "message": "Embedding model loaded.", "model": "all-MiniLM-L6-v2", "dim": 384}
+{"ts": "2026-06-18T11:38:20.340866+05:30", "level": "INFO", "component": "embedder", "message": "Embedding model loaded.", "model": "all-MiniLM-L6-v2", "dim": 384}
+{"ts": "2026-06-18T11:39:09.273959+05:30", "level": "INFO", "component": "embedder", "message": "Embedding model loaded.", "model": "all-MiniLM-L6-v2", "dim": 384}
+{"ts": "2026-06-18T11:41:04.436195+05:30", "level": "INFO", "component": "embedder", "message": "Embedding model loaded.", "model": "all-MiniLM-L6-v2", "dim": 384}
+{"ts": "2026-06-18T11:43:19.930042+05:30", "level": "INFO", "component": "embedder", "message": "Embedding model loaded.", "model": "all-MiniLM-L6-v2", "dim": 384}
+{"ts": "2026-06-18T11:47:07.241482+05:30", "level": "INFO", "component": "embedder", "message": "Embedding model loaded.", "model": "all-MiniLM-L6-v2", "dim": 384}
+{"ts": "2026-06-18T11:47:43.641248+05:30", "level": "INFO", "component": "embedder", "message": "Embedding model loaded.", "model": "all-MiniLM-L6-v2", "dim": 384}
