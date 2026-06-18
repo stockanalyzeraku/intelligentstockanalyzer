@@ -45,6 +45,7 @@ from mistralai.client import Mistral
 from config import CONFIG
 from inputvalidator import InputValidator
 from logger import get_logger
+from healthcheck import assert_system_health
 
 logger = get_logger(__name__)
 
@@ -97,7 +98,7 @@ class MistralAIProcessor:
 
         validator         = InputValidator()
         self._pdf_path    = validator.validate_pdf_path(pdf_path)
-        self._output_file = output_file
+        self._output_file = validator.validate_output_path(output_file)
 
         self._pages:          list[PageContent] = []
         self._client:         Optional[Mistral] = None
@@ -130,10 +131,12 @@ class MistralAIProcessor:
         str
             Path to the generated JSON output file.
         """
-        self.log.info("Pipeline started")
-        self._init_client()
-        self._upload_pdf_and_process_ocr()
-        self.log.info(f"Pipeline complete — output: '{self._output_file}'")
+        assert_system_health(include_llm=True)
+        self.log.process_event("ocr_pipeline_started", "ocr", pdf_path=self._pdf_path, output_file=self._output_file)
+        with self.log.timed("ocr_pipeline", pdf_path=self._pdf_path, output_file=self._output_file):
+            self._init_client()
+            self._upload_pdf_and_process_ocr()
+        self.log.process_event("ocr_pipeline_completed", "ocr", output_file=self._output_file)
         return self._output_file
 
     def save_pages_to_json(self, pages: list[PageContent], output_path: str) -> None:

@@ -12,6 +12,8 @@ import chromadb
 
 from config import CONFIG
 from logger import get_logger
+from inputvalidator import InputValidator
+from healthcheck import assert_system_health
 from codebase.vectordb.embedder import EMBEDDER
 
 logger = get_logger(__name__)
@@ -109,35 +111,32 @@ class ChromaStore:
         -------
         chromadb.Collection
         """
+        assert_system_health(include_chroma=False)
+        collection_name = InputValidator.validate_collection_name(collection_name)
+        embedding_json_path = InputValidator.validate_json_path(embedding_json_path, must_exist=True)
         if chroma_path:
             self.chroma_path = chroma_path
             self._client     = None
 
-        logger.info(
-            f"[ChromaStore] store_in_chromadb — "
-            f"collection='{collection_name}', path='{self.chroma_path}'"
-        )
+        logger.process_event("chroma_store_started", "vectordb", collection=collection_name, path=self.chroma_path)
 
         with open(embedding_json_path, "r", encoding="utf-8") as fh:
             payload: Any = json.load(fh)
+        payload = InputValidator.validate_embedding_payload(payload)
 
         if isinstance(payload, dict) and "parents" in payload and "children" in payload:
             parents = payload.get("parents", [])
             children = payload.get("children", [])
-            logger.info(
-                f"[ChromaStore] Loaded parent/child bundle — parents={len(parents)}, children={len(children)}"
-            )
+            logger.process_event("embedding_bundle_loaded", "vectordb", parents=len(parents), children=len(children))
             self._upsert_records(CONFIG.COL_PARENT, parents)
             self._upsert_records(CONFIG.COL_CHILD, children)
-            logger.info(
-                f"[ChromaStore] Stored bundle into '{CONFIG.COL_PARENT}' and '{CONFIG.COL_CHILD}'"
-            )
+            logger.process_event("chroma_store_completed", "vectordb", parent_collection=CONFIG.COL_PARENT, child_collection=CONFIG.COL_CHILD, parents=len(parents), children=len(children))
             return self._get_collection(CONFIG.COL_CHILD)
 
         records: list[dict] = payload
-        logger.info(f"[ChromaStore] Loaded {len(records)} legacy records")
+        logger.process_event("embedding_records_loaded", "vectordb", records=len(records), collection=collection_name)
         self._upsert_records(collection_name, records)
-        logger.info(f"[ChromaStore] Stored {len(records)} records into '{collection_name}'")
+        logger.process_event("chroma_store_completed", "vectordb", records=len(records), collection=collection_name)
         return self._get_collection(collection_name)
 
     # ------------------------------------------------------------------ #
@@ -163,6 +162,9 @@ class ChromaStore:
         metadatas       : Metadata dicts per chunk.
         batch_size      : Number of chunks per upsert call (default 100).
         """
+        collection_name = InputValidator.validate_collection_name(collection_name)
+        if not (len(ids) == len(documents) == len(metadatas)):
+            raise ValueError("ids, documents, and metadatas must have matching lengths.")
         if not ids:
             logger.warning("[ChromaStore] upsert_batch called with empty ids, skipping.")
             return
@@ -175,9 +177,9 @@ class ChromaStore:
             batch_meta = metadatas[start : start + batch_size]
             try:
                 collection.upsert(ids=batch_ids, documents=batch_docs, metadatas=batch_meta)
-                logger.info(f"[ChromaStore] Upserted batch {start}–{start + len(batch_ids)}")
+                logger.process_event("chroma_upsert_batch_completed", "vectordb", collection=collection_name, start=start, count=len(batch_ids))
             except Exception as exc:
-                logger.error(f"[ChromaStore] Upsert batch failed at {start} — {exc}")
+                logger.exception("Chroma upsert batch failed", exc, event="chroma_upsert_batch_failed", collection=collection_name, start=start)
                 raise
 
         logger.info(f"[ChromaStore] Upsert complete — {len(ids)} chunks into '{collection_name}'")
@@ -222,15 +224,23 @@ class ChromaStore:
     #         raise
 
     def query_collection(self, collection_name: str, query_texts: list[str], n_results: int = 10, where: dict | None = None,) -> dict:
+        collection_name = InputValidator.validate_collection_name(collection_name)
+        query_texts = InputValidator.validate_query_texts(query_texts)
+        where = InputValidator.validate_chroma_where(where)
         collection = self._get_collection(collection_name)
+        n_results = InputValidator.validate_top_k(n_results, default=10, max_value=max(CONFIG.FINAL_TOP_K, CONFIG.SEMANTIC_TOP_K))
         query_embeddings = [EMBEDDER.embed_query(q) for q in query_texts]
 
-        return collection.query(
+        logger.process_event("chroma_query_started", "vectordb", collection=collection_name, n_results=n_results, query_count=len(query_texts))
+        result = collection.query(
             query_embeddings=query_embeddings,   # ← pass embeddings, not texts
             n_results=n_results,
             where=where,
             include=["documents", "metadatas", "distances", "embeddings"],
         )
+        returned = len(result.get("ids", [[]])[0]) if result.get("ids") else 0
+        logger.process_event("chroma_query_completed", "vectordb", collection=collection_name, returned=returned)
+        return result
 
     # ------------------------------------------------------------------ #
     #  Get by ID                                                           #
@@ -253,6 +263,7 @@ class ChromaStore:
         -------
         dict with keys: id, document, metadata — or None if not found.
         """
+        collection_name = InputValidator.validate_collection_name(collection_name)
         collection = self._get_collection(collection_name)
         try:
             result = collection.get(ids=[chunk_id])
@@ -272,6 +283,7 @@ class ChromaStore:
         chunk_ids: list[str],
     ) -> list[dict]:
         """Fetch multiple chunks by exact id and preserve the requested order."""
+        collection_name = InputValidator.validate_collection_name(collection_name)
         if not chunk_ids:
             return []
 
