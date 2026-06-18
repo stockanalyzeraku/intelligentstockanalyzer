@@ -14,6 +14,7 @@ from codebase.ragrun.retriever import ChromaRAGRetriever
 from codebase.ragrun.schemas import RAGWorkerResponse
 from inputvalidator import InputValidator
 from logger import get_logger
+from healthcheck import assert_system_health
 
 logger = get_logger(__name__)
 
@@ -37,12 +38,15 @@ class BackgroundRAGWorker:
 
     def answer(self, query: str, top_k: int | None = None) -> RAGWorkerResponse:
         """Answer one user query and always write a JSON debug file."""
+        assert_system_health(include_llm=True)
         query = InputValidator.validate_question(query)
         limit = InputValidator.validate_top_k(top_k, default=RAGRUN_CONFIG.top_k, max_value=RAGRUN_CONFIG.top_k)
+        logger.process_event("rag_query_received", "rag", query_preview=query[:120], top_k=limit)
         with logger.timed("rag_answer", query_preview=query[:120], top_k=limit):
             check = self.checkpointer.validate(query)
 
             if not check.allowed:
+                logger.process_event("rag_validation_rejected", "rag", status="skipped", reason=check.reason)
                 return self._reject_query(query, check.to_dict())
 
             cache_key, cache_payload = self.cache_manager.build_key(query, top_k=limit)
@@ -52,6 +56,7 @@ class BackgroundRAGWorker:
             #     return self._answer_from_cache(query, check.to_dict(), cache_key, cached)
 
             chunks = self.retriever.search(query, top_k=limit)
+            logger.process_event("retrieval_completed", "rag", chunks_found=len(chunks), top_k=limit)
             if not chunks:
                 return self._answer_no_context(query, check.to_dict(), cache_key, cache_payload)
 
@@ -80,6 +85,7 @@ class BackgroundRAGWorker:
             )
             response.debug_json_path = debug_path
             self.cache_manager.set(cache_key, cache_payload, query, response)
+            logger.process_event("rag_answer_completed", "rag", status=response.status, provider=response.model.get("provider_used"), chunks_used=len(response.retrieved_chunks))
             return response
 
     def _reject_query(self, query: str, check: dict) -> RAGWorkerResponse:

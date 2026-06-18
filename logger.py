@@ -91,6 +91,19 @@ class StructuredLogger:
             **kwargs,
         )
 
+    def process_event(self, event: str, stage: str, status: str = "ok", **fields: Any) -> None:
+        """Log a normalized pipeline/process lifecycle event."""
+        level = "ERROR" if status == "failed" else "WARNING" if status in {"warning", "degraded", "skipped"} else "INFO"
+        self._write(
+            level,
+            fields.pop("message", event.replace("_", " ").title()),
+            echo=level in {"ERROR", "WARNING"},
+            event=event,
+            stage=stage,
+            status=status,
+            **fields,
+        )
+
     @contextmanager
     def timed(self, event: str, **fields: Any) -> Iterator[None]:
         """Log start/completion/failure events with duration_ms."""

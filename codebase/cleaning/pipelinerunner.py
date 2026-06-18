@@ -34,6 +34,7 @@ from dataclasses import asdict
 from config import CONFIG
 from logger import get_logger
 from inputvalidator import InputValidator
+from healthcheck import assert_system_health
 from codebase.cleaning.cleanresult import CleanResult
 from codebase.cleaning.textcleaner import TextCleaner
 from codebase.cleaning.pageintent import PageIntentTagger
@@ -119,8 +120,10 @@ class PipelineRunner:
         - ``<name>_CLEANED.json``         — serialised CleanResult list
         - ``<name>_EMBEDDINGREADY.json``  — chunked embedding records
         """
+        assert_system_health(include_llm=False)
         input_file = InputValidator.validate_json_path(input_file, must_exist=True)
         self._log_banner("PIPELINE STARTED", input_file)
+        logger.process_event("cleaning_pipeline_started", "cleaning", company=self.company, year=self.year, input_file=input_file)
 
         with logger.timed("cleaning_pipeline", company=self.company, year=self.year, input_file=input_file):
             pages = self._load(input_file)
@@ -134,6 +137,7 @@ class PipelineRunner:
 
         logger.info(f"[PipelineRunner] Cleaned JSON      → {cleaned_path}")
         logger.info(f"[PipelineRunner] Embedding JSON    → {embedding_path}")
+        logger.process_event("cleaning_pipeline_completed", "cleaning", company=self.company, year=self.year, cleaned_path=cleaned_path, embedding_path=embedding_path)
         self._log_banner("PIPELINE COMPLETE", input_file)
 
         return results
@@ -173,16 +177,13 @@ class PipelineRunner:
                 result = self._cleaner.clean(page["text"], page_num)
 
             if result.is_short:
-                logger.info(
-                    f"  Page {page_num:>4} — SKIPPED "
-                    f"({result.word_count} words below threshold)"
-                )
+                logger.process_event("page_skipped_short", "cleaning", status="skipped", page_num=page_num, word_count=result.word_count)
                 skipped += 1
                 continue
 
             # ── Stage 2: Intent tagging ───────────────────────────────
             result.page_intent = self._intent_tagger._tag_page(result)
-            logger.info(f"Intents for page {page_num}: {result.page_intent}")
+            logger.process_event("page_intent_completed", "cleaning", page_num=page_num, intents=result.page_intent)
 
             # ── Stage 3: Strip tables from prose ─────────────────────
             result.clean_text, result.raw_tables = (
@@ -195,13 +196,7 @@ class PipelineRunner:
             )
 
             results.append(result)
-            logger.info(
-                f"  Page {page_num:>4} — OK | "
-                f"words={result.word_count:>5} | "
-                f"table={str(result.has_table):<5} | "
-                f"type={str(result.table_type):<25} | "
-                f"intents={result.page_intent}"
-            )
+            logger.process_event("page_cleaned", "cleaning", page_num=page_num, word_count=result.word_count, has_table=result.has_table, table_type=str(result.table_type), intents=result.page_intent)
 
         return results, skipped
 

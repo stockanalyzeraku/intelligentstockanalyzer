@@ -281,6 +281,43 @@ class InputValidator:
             raise InvalidSchemaError(f"Invalid JSON: {json_path}") from exc
 
     @staticmethod
+    def sanitize_untrusted_context(text: str, *, max_chars: int = 12_000) -> str:
+        """Wrap retrieved/document text so prompt templates treat it as data, not instructions."""
+        if not isinstance(text, str):
+            raise ValidationError("Context text must be a string.")
+        cleaned = InputValidator._CONTROL_CHARS.sub("", text).strip()
+        if len(cleaned) > max_chars:
+            cleaned = cleaned[:max_chars] + "\n[TRUNCATED_CONTEXT]"
+        return f"<untrusted_context>\n{cleaned}\n</untrusted_context>"
+
+    @staticmethod
+    def prompt_injection_score(text: str) -> int:
+        """Return a simple rule-based suspicion score for document/query text."""
+        if not isinstance(text, str) or not text:
+            return 0
+        score = 0
+        if InputValidator._INJECTION_PATTERNS.search(text):
+            score += 5
+        lowered = text.lower()
+        score += sum(1 for marker in ("ignore", "system", "developer", "secret", "tool", "instruction") if marker in lowered)
+        if "```" in text or "<!--" in text:
+            score += 1
+        return score
+
+    @staticmethod
+    def validate_llm_answer(answer: str, source_chunks: list[Any]) -> str:
+        """Validate LLM output is non-empty and not obviously ungrounded/unsafe."""
+        if not isinstance(answer, str) or not answer.strip():
+            raise ValidationError("LLM answer is empty.")
+        cleaned = InputValidator._CONTROL_CHARS.sub("", answer).strip()
+        InputValidator.detect_prompt_injection(cleaned, field="llm_answer", strict=True)
+        if not source_chunks:
+            lowered = cleaned.lower()
+            if "not able to" not in lowered and "insufficient" not in lowered and "could not find" not in lowered:
+                raise ValidationError("LLM answer has no supporting source chunks.")
+        return cleaned
+
+    @staticmethod
     def validate_chunk_count(count: int, context: str = "") -> None:
         """Warn if chunk count is outside the expected range."""
         logger = get_logger("validator")

@@ -47,6 +47,7 @@ class LLMRouter:
                     retry_attempts=2,
                     exception_type=LLMError,
                 ).strip()
+                answer = InputValidator.validate_llm_answer(answer, chunks)
                 good_enough = bool(answer) and not self._is_insufficient(answer)
                 attempts.append(
                     {
@@ -99,8 +100,10 @@ class LLMRouter:
         blocks = []
         for index, chunk in enumerate(chunks, start=1):
             location = f"source={chunk.source or 'unknown'}, page={chunk.page_number or 'unknown'}"
+            score = InputValidator.prompt_injection_score(chunk.text)
             InputValidator.detect_prompt_injection(chunk.text, field=f"retrieved_chunk[{index}]", strict=False)
-            blocks.append(f"[Chunk {index}; {location}]\n{chunk.text}")
+            safe_text = InputValidator.sanitize_untrusted_context(chunk.text)
+            blocks.append(f"[Chunk {index}; {location}; injection_score={score}]\n{safe_text}")
         return "\n\n".join(blocks)
 
     def _is_insufficient(self, answer: str) -> bool:
