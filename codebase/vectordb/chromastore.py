@@ -35,17 +35,7 @@ class ChromaStore:
         self._logger = logger
         logger.info(f"[ChromaStore] Initialised — path='{self.chroma_path}'")
 
-    # ------------------------------------------------------------------ #
-    #  Singleton                                                           #
-    # ------------------------------------------------------------------ #
-
-    @classmethod
-    def get_instance(cls, chroma_path: str | None = None) -> "ChromaStore":
-        """Return the singleton ChromaStore, creating it if needed."""
-        if cls._instance is None:
-            cls._instance = cls(chroma_path)
-        return cls._instance
-
+    
     # ------------------------------------------------------------------ #
     #  Client                                                              #
     # ------------------------------------------------------------------ #
@@ -196,40 +186,51 @@ class ChromaStore:
     #  Query                                                               #
     # ------------------------------------------------------------------ #
 
-    def query_collection(
-        self,
-        collection_name : str,
-        query_texts     : list[str],
-        n_results       : int = 10,
-        where           : dict | None = None,
-    ) -> dict[str, Any]:
-        """
-        Query a collection by text — ChromaDB embeds the query automatically.
+    # def query_collection(
+    #     self,
+    #     collection_name : str,
+    #     query_texts     : list[str],
+    #     n_results       : int = 10,
+    #     where           : dict | None = None,
+    # ) -> dict[str, Any]:
+    #     """
+    #     Query a collection by text — ChromaDB embeds the query automatically.
 
-        Parameters
-        ----------
-        collection_name : Collection to search.
-        query_texts     : One or more query strings.
-        n_results       : Max results to return.
-        where           : Optional metadata filter e.g. {"company": "KALYANKJIL"}.
+    #     Parameters
+    #     ----------
+    #     collection_name : Collection to search.
+    #     query_texts     : One or more query strings.
+    #     n_results       : Max results to return.
+    #     where           : Optional metadata filter e.g. {"company": "KALYANKJIL"}.
 
-        Returns
-        -------
-        dict with keys: ids, documents, metadatas, distances
-        """
+    #     Returns
+    #     -------
+    #     dict with keys: ids, documents, metadatas, distances
+    #     """
+    #     collection = self._get_collection(collection_name)
+    #     kwargs: dict[str, Any] = {
+    #         "query_texts" : query_texts,
+    #         "n_results"   : min(n_results, max(collection.count(), 1)),
+    #     }
+    #     if where:
+    #         kwargs["where"] = where
+
+    #     try:
+    #         return collection.query(**kwargs)
+    #     except Exception as exc:
+    #         logger.error(f"[ChromaStore] Query failed on '{collection_name}' — {exc}")
+    #         raise
+
+    def query_collection(self, collection_name: str, query_texts: list[str], n_results: int = 10, where: dict | None = None,) -> dict:
         collection = self._get_collection(collection_name)
-        kwargs: dict[str, Any] = {
-            "query_texts" : query_texts,
-            "n_results"   : min(n_results, max(collection.count(), 1)),
-        }
-        if where:
-            kwargs["where"] = where
+        query_embeddings = [EMBEDDER.embed_query(q) for q in query_texts]
 
-        try:
-            return collection.query(**kwargs)
-        except Exception as exc:
-            logger.error(f"[ChromaStore] Query failed on '{collection_name}' — {exc}")
-            raise
+        return collection.query(
+            query_embeddings=query_embeddings,   # ← pass embeddings, not texts
+            n_results=n_results,
+            where=where,
+            include=["documents", "metadatas", "distances", "embeddings"],
+        )
 
     # ------------------------------------------------------------------ #
     #  Get by ID                                                           #
@@ -408,6 +409,14 @@ class ChromaStore:
         except Exception as exc:
             logger.error(f"[ChromaStore] status failed — {exc}")
             return f"Error fetching status: {exc}"
+    
+    @classmethod
+    def get_instance(cls, chroma_path: str | None = None) -> "ChromaStore":
+        """Return the singleton ChromaStore, creating it if needed."""
+        if cls._instance is None:
+            cls._instance = cls(chroma_path)
+        return cls._instance
+
     
 CHROMASTORE = ChromaStore()
 

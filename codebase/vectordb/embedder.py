@@ -96,24 +96,21 @@ class LocalEmbedder:
     #     text=input
     #     return self([text])[0]
 
-    # def embed_query(self, input: str, **kwargs) -> List[float]:
-    #     # ChromaDB sometimes passes a list; unwrap to a single string
-    #     if isinstance(input, list):
-    #         text = input[0] if input else ""
-    #     else:
-    #         text = input
-    #     return self([text])[0]
-
     def embed_query(self, input: str, **kwargs) -> List[float]:
-        if isinstance(input, list):
-            if len(input) == 1:
-                # single query — return one vector
-                return self(input)[0]
-            else:
-                # multiple queries — return list of vectors
-                return self(input)
-        else:
-            return self([input])[0]
+        # input should always be a plain string here
+        result = self([input])   # returns shape (1, dim)
+        return result[0].tolist() if hasattr(result[0], 'tolist') else list(result[0])
+    
+    # def embed_query(self, input: str, **kwargs) -> List[float]:
+    #     if isinstance(input, list):
+    #         if len(input) == 1:
+    #             # single query — return one vector
+    #             return self(input)[0]
+    #         else:
+    #             # multiple queries — return list of vectors
+    #             return self(input)
+    #     else:
+    #         return self([input])[0]
     
     @classmethod
     def get_instance(cls) -> "LocalEmbedder":
