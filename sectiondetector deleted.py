@@ -1,15 +1,7 @@
-# =============================================================================
-# CELL 10 — Section Detector
-# =============================================================================
-"""
-Detect annual report sections from the first 300 characters of a text block.
-28+ regex patterns covering standard Indian annual report sections.
-"""
 
 import re
 from typing import Optional, Set
 
-# ── Section name constants ────────────────────────────────────────────────────
 SEC_CHAIRMAN = "chairman_letter"
 SEC_MD_OVERVIEW = "managing_director_overview"
 SEC_MGT_DISCUSSION = "management_discussion"
@@ -83,44 +75,8 @@ _SECTION_PATTERNS = [
 
 
 def detect_section(text: str, previous_section: Optional[str] = None) -> str:
-    """
-    Identify the annual report section from the first 300 characters of text.
-
-    If no pattern matches, inherits the previous section. If no previous
-    section is available, returns 'unknown'.
-
-    Parameters
-    ----------
-    text : str
-        Raw page/chunk text.
-    previous_section : str, optional
-        Section name from the previous chunk (for inheritance).
-
-    Returns
-    -------
-    str
-        Section name constant (e.g. 'management_discussion').
-    """
     snippet = text[:300]
     for pattern, section_name in _SECTION_PATTERNS:
         if pattern.search(snippet):
             return section_name
     return previous_section if previous_section else SEC_UNKNOWN
-
-# ----------------------------------------------------------------------------
-# Cell 10: Section Detector
-# Purpose: Classify a text block into one of 28+ named annual report sections.
-# Key Classes: None (functions + constants only)
-# Key Functions: detect_section(text, previous_section=None) → str
-# Key Constants/Config: SEC_* constants, MGMT_SECTIONS, FINANCIAL_SECTIONS,
-#   _SECTION_PATTERNS
-# Imports exported: detect_section, MGMT_SECTIONS, FINANCIAL_SECTIONS, SEC_*
-# Depends on: None
-# Critical notes: Patterns are matched against the FIRST 300 chars only —
-#   section headers appear at page tops. Section inheritance (previous_section)
-#   ensures all chunks have a meaningful section label.
-# Context Update: None
-# Status: Complete
-# ----------------------------------------------------------------------------
-
-

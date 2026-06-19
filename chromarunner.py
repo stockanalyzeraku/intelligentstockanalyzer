@@ -4,12 +4,12 @@ import os
 store = ChromaStore.get_instance()
 
 # Store
-path = os.path.join(CONFIG.UPLOADS_PATH, "KALYANKJIL", "ANNUAL_2025", "KALYANKJIL_ANNUAL_2025_EMBEDDINGREADY.json")
-store.store_in_chromadb(path, "kalyan_annual")
-print("Store 2025")
-path = os.path.join(CONFIG.UPLOADS_PATH, "KALYANKJIL", "ANNUAL_2024", "KALYANKJIL_ANNUAL_2024_EMBEDDINGREADY.json")
-store.store_in_chromadb(path, "kalyan_annual")
-print("stored 2024")
+# path = os.path.join(CONFIG.UPLOADS_PATH, "KALYANKJIL", "ANNUAL_2025", "KALYANKJIL_ANNUAL_2025_EMBEDDINGREADY.json")
+# store.store_in_chromadb(path, "kalyan_annual")
+# print("Store 2025")
+# path = os.path.join(CONFIG.UPLOADS_PATH, "KALYANKJIL", "ANNUAL_2024", "KALYANKJIL_ANNUAL_2024_EMBEDDINGREADY.json")
+# store.store_in_chromadb(path, "kalyan_annual")
+# print("stored 2024")
 path = os.path.join(CONFIG.UPLOADS_PATH, "KALYANKJIL", "ANNUAL_2023", "KALYANKJIL_ANNUAL_2023_EMBEDDINGREADY.json")
 store.store_in_chromadb(path, "kalyan_annual")
 print("stored 2023")

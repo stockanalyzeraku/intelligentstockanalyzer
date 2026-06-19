@@ -2,49 +2,14 @@
 cleaning/pageintent.py
 ======================
 Rule-based page-intent tagger for annual report pages.
- 
-Overview
---------
-Each cleaned page is assigned zero or more *intent labels* that describe
-what kind of content it contains (table of contents, back cover, financial
-statements, MD&A, etc.).  Multiple intents can fire on the same page.
- 
-Architecture
-------------
-``INTENT_RULES`` is an ordered list of ``(label, confidence, detector)``
-tuples.  Each *detector* is a callable that accepts a :class:`CleanResult`
-and returns ``bool``.  The tagger runs every rule against every page and
-collects all matches — it does **not** stop at the first match.
- 
-Return type fix
----------------
-The original ``_tag_page`` returned ``list[IntentResult]`` but
-``CleanResult.page_intent`` was typed as ``dict``.  Both are now
-``list[IntentResult]`` (serialised to ``list[dict]`` via
-``dataclasses.asdict`` at save time).
- 
-Extending the ruleset
----------------------
-Add a new tuple to ``INTENT_RULES``::
- 
-    ("management_discussion", 0.90, lambda p: (
-        _heading_has(p, r"management.?s? discussion|md&a")
-    )),
- 
-The label string becomes the ``section_name`` in ``IntentResult``.
 """
 
 
-# ---------------------------------------------------------------------------
-# Ensure project root is on sys.path for root-level imports
-# ---------------------------------------------------------------------------
 import sys
 import os
 _ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 if _ROOT not in sys.path:
     sys.path.insert(0, _ROOT)
-
- 
  
 import re
 from dataclasses import dataclass, field
@@ -53,15 +18,6 @@ from codebase.cleaning.cleanresult import CleanResult
 
 logger = get_logger(__name__)
 
-
-# ---------------------------------------------------------------------------
-# Intent taxonomy
-# ---------------------------------------------------------------------------
-# Each entry: (intent_label, confidence_when_matched, [signal_functions])
-# Signal functions take (page_dict) → bool.
-# A label is chosen if ANY signal fires.
-# Entries are tested in order; first match wins.
-# Confidence reflects how unambiguous the match is.
 
 def _headings(page: CleanResult) -> list[str]:
     """Extract all markdown heading texts (# / ## / ###) from clean_text."""
@@ -90,10 +46,6 @@ def _word_count(page: CleanResult) -> int:
     return page.word_count
 
 
-# ---------------------------------------------------------------------------
-# Individual intent detectors
-# (name, confidence, detection_function)
-# ---------------------------------------------------------------------------
 
 INTENT_RULES: list[tuple[str, float, object]] = [
 
@@ -494,10 +446,6 @@ INTENT_RULES: list[tuple[str, float, object]] = [
     ("general_narrative", 0.40, lambda p: True),
 ]
 
-
-# ---------------------------------------------------------------------------
-# Main tagger class
-# ---------------------------------------------------------------------------
 @dataclass
 class IntentResult:
     section_name: str
@@ -507,10 +455,6 @@ class PageIntentTagger:
     """
     Tags each page in the cleaned JSON with a page_intent label.
 
-    The tagger works on a plain list of page dicts (the JSON structure).
-    It returns the same list with two new keys added to each dict:
-        page_intent        : str
-        intent_confidence  : float  (0.0 – 1.0)
     """
     def __init__(self):
         pass
@@ -529,22 +473,6 @@ class PageIntentTagger:
                 intent.append(intent_label)
         return intent
 
-        #     try:
-        #         if detector(page):
-        #             intent[intent_label] = intent_label
-        #             intent[confidence] = confidence
-        #             logger.debug(
-        #                 f"  p{pn:03d} → {intent_label} "
-        #                 f"(conf={confidence:.2f})"
-        #             )
-        #     except Exception as e:
-        #         logger.warning(
-        #             f"  p{pn:03d}: rule '{intent_label}' raised {e} — skipping"
-        #         )
-        #         continue
-
-        # # Should never reach here because general_narrative is the catch-all
-        # return intent
-
+        
 
 

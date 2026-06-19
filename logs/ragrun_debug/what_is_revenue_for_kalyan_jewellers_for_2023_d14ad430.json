@@ -1,0 +1,243 @@
+{
+  "trace_id": "d14ad430-7c62-4f22-8421-970aca277ab8",
+  "created_at": "2026-06-19T18:50:25.337266+00:00",
+  "query": "What is revenue for Kalyan Jewellers for 2023?",
+  "status": "llm_failed",
+  "checkpointer": {
+    "allowed": true,
+    "reason": "accepted",
+    "message": "Query accepted.",
+    "company": "Kalyan Jewellers",
+    "financial_year": "2023",
+    "topic": "revenue",
+    "missing_context": []
+  },
+  "cache": {
+    "enabled": true,
+    "hit": false,
+    "cache_key": "070c89ee29c640770ab45af4972afb9ef07be88c15e1f94e58bc3ddbadb4b76d"
+  },
+  "answer_source": "llm",
+  "model": {
+    "answer": "I was not able to generate an answer from the retrieved context.",
+    "model_used": null,
+    "provider_used": null,
+    "fallback_used": true,
+    "attempts": [
+      {
+        "provider": "mistral",
+        "model": "mistral-large-latest",
+        "status": "failed",
+        "error": "llm_mistral_answer failed: Illegal header value b'Bearer '"
+      },
+      {
+        "provider": "gemini",
+        "model": "gemini",
+        "status": "failed",
+        "error": "llm_gemini_answer failed: 1 validation error for ChatGoogleGenerativeAI\n  Value error, API key required for Gemini Developer API. Provide api_key parameter or set GOOGLE_API_KEY/GEMINI_API_KEY environment variable. [type=value_error, input_value={'model': 'gemini-2.5-fla... 60, 'model_kwargs': {}}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/value_error"
+      }
+    ]
+  },
+  "documents_used": [
+    {
+      "chunk_id": "page_61_parent_child_0",
+      "parent_id": "page_61_parent",
+      "text": "Kalyan Jewellers India Limited Corporate Overview // Statutory Reports // > Financial Statements # Notes forming part of standalone financial statements for the year ended March 31, 2023 (Amounts in ₹ million, except for shares data or as otherwise stated) a) Sale of goods: Revenue from the sale of products is recognised at the point in time when control is transferred to the customer. Revenue is measured based on the transaction price, which is the consideration, net of customer incentives, discounts, variable considerations, payments made to customers, other similar charges, as specified in the contract with the customer. Additionally, revenue excludes taxes collected from customers, which are subsequently remitted to governmental authorities.",
+      "page_number": 61,
+      "source": null,
+      "company": "KALYANKJIL",
+      "financial_year": 2023,
+      "distance": 0.22691458463668823,
+      "metadata": {
+        "child_count": 16,
+        "child_index": 0,
+        "company": "KALYANKJIL",
+        "doc_type": "ANNUAL_REPORT",
+        "has_table": false,
+        "is_short": false,
+        "page_intent": "human_resources_employees,general_narrative",
+        "page_number": 61,
+        "parent_id": "page_61_parent",
+        "record_type": "child",
+        "table_type": "financial",
+        "word_count": 1591,
+        "year": 2023
+      }
+    },
+    {
+      "chunk_id": "page_28_parent_child_9",
+      "parent_id": "page_28_parent",
+      "text": "business platform, Candere, reported a revenue of ₹1,567 million for FY23. With a focus on franchise-driven network expansion in the coming years, Kalyan Jewellers is poised to achieve continued growth and success.",
+      "page_number": 28,
+      "source": null,
+      "company": "KALYANKJIL",
+      "financial_year": 2023,
+      "distance": 0.2720593214035034,
+      "metadata": {
+        "child_count": 12,
+        "child_index": 9,
+        "company": "KALYANKJIL",
+        "doc_type": "ANNUAL_REPORT",
+        "has_table": true,
+        "is_short": false,
+        "page_intent": "company_overview,retail_footprint_expansion,product_portfolio,corporate_governance,consolidated_profit_loss,human_resources_employees,general_narrative",
+        "page_number": 28,
+        "parent_id": "page_28_parent",
+        "record_type": "child",
+        "table_type": "financial",
+        "word_count": 1196,
+        "year": 2023
+      }
+    },
+    {
+      "chunk_id": "page_112_parent_child_0",
+      "parent_id": "page_112_parent",
+      "text": "Kalyan Jewellers India Limited in accordance with the provisions of the Companies Act, 2013 effective from the financial year 2022-23 and thereafter. The payment of such remuneration shall be in addition to the sitting fees and reimbursement of expenses for attending the meetings of the Board of Directors or Committees thereof. This remuneration will be distributed amongst all or some of the Non-Executive Directors in accordance with the directions given by the Board of Directors and subject to any other applicable requirements under the Companies Act, 2013 and SEBI (Listing Obligations and Disclosure Requirements) Regulations, 2015.",
+      "page_number": 112,
+      "source": null,
+      "company": "KALYANKJIL",
+      "financial_year": 2023,
+      "distance": 0.27402701912126504,
+      "metadata": {
+        "child_count": 8,
+        "child_index": 0,
+        "company": "KALYANKJIL",
+        "doc_type": "ANNUAL_REPORT",
+        "has_table": true,
+        "is_short": false,
+        "page_intent": "corporate_governance,subsidiary_information,general_narrative",
+        "page_number": 112,
+        "parent_id": "page_112_parent",
+        "record_type": "child",
+        "table_type": "qualitative",
+        "word_count": 718,
+        "year": 2023
+      }
+    },
+    {
+      "chunk_id": "page_88_parent_child_0",
+      "parent_id": "page_88_parent",
+      "text": "Kalyan Jewellers India Limited Corporate Overview // Statutory Reports // > Financial Statements # Notes forming part of consolidated financial statements for the year ended March 31, 2023 (Amounts in ₹ million, except for shares data or as otherwise stated) take a substantial period to get ready for their intended use or sale, are added to the cost of those assets, until such time the assets are substantially ready for their intended use or sale. All other borrowing costs are recognised in profit or loss in the period in which they are incurred. ## (x) Employee benefits",
+      "page_number": 88,
+      "source": null,
+      "company": "KALYANKJIL",
+      "financial_year": 2023,
+      "distance": 0.2844458818435669,
+      "metadata": {
+        "child_count": 17,
+        "child_index": 0,
+        "company": "KALYANKJIL",
+        "doc_type": "ANNUAL_REPORT",
+        "has_table": false,
+        "is_short": false,
+        "page_intent": "accounting_policies,human_resources_employees,general_narrative",
+        "page_number": 88,
+        "parent_id": "page_88_parent",
+        "record_type": "child",
+        "table_type": "financial",
+        "word_count": 1592,
+        "year": 2023
+      }
+    },
+    {
+      "chunk_id": "page_69_parent_child_0",
+      "parent_id": "page_69_parent",
+      "text": "Kalyan Jewellers India Limited Corporate Overview // Statutory Reports // » Financial Statements # Notes forming part of standalone financial statements for the year ended March 31, 2023 (Amounts in ₹ million, except for shares data or as otherwise stated) ## (ii) Details of interest rate and securities provided for loans repayable on demand from various banks",
+      "page_number": 69,
+      "source": null,
+      "company": "KALYANKJIL",
+      "financial_year": 2023,
+      "distance": 0.2957819700241089,
+      "metadata": {
+        "child_count": 7,
+        "child_index": 0,
+        "company": "KALYANKJIL",
+        "doc_type": "ANNUAL_REPORT",
+        "has_table": true,
+        "is_short": false,
+        "page_intent": "vision_mission_values,human_resources_employees,general_narrative",
+        "page_number": 69,
+        "parent_id": "page_69_parent",
+        "record_type": "child",
+        "table_type": "qualitative",
+        "word_count": 600,
+        "year": 2023
+      }
+    },
+    {
+      "chunk_id": "page_11_parent_child_0",
+      "parent_id": "page_11_parent",
+      "text": "Kalyan Jewellers India Limited # MD's Message # MAXIMISING A GROWING DEMAND ## Dear Shareholders, I am delighted to share our third Annual Report, which reflects our continued solid progress despite a challenging market backdrop in recent years. The demand for jewellery, particularly for organised formats of retailing, has witnessed an upswing, attributed to increased incomes and the resumption of customary festivities and celebrations. This year marks an inflexion point in our journey. ## India's Strong Economy",
+      "page_number": 11,
+      "source": null,
+      "company": "KALYANKJIL",
+      "financial_year": 2023,
+      "distance": 0.309963583946228,
+      "metadata": {
+        "child_count": 11,
+        "child_index": 0,
+        "company": "KALYANKJIL",
+        "doc_type": "ANNUAL_REPORT",
+        "has_table": false,
+        "is_short": false,
+        "page_intent": "vision_mission_values,mds_message,retail_footprint_expansion,product_portfolio,general_narrative",
+        "page_number": 11,
+        "parent_id": "page_11_parent",
+        "record_type": "child",
+        "word_count": 950,
+        "year": 2023
+      }
+    },
+    {
+      "chunk_id": "page_52_parent_child_0",
+      "parent_id": "page_52_parent",
+      "text": "Kalyan Jewellers India Limited Corporate Overview // > Statutory Reports // Financial Statements Annexure - 9 # Information required under Section 197 of the Act Read with Rule 5(1) of the Companies (Appointment and Remuneration of Managerial Personnel) Rules, 2014 i. Ratio of the remuneration of each director to the median remuneration of the employees of the Company for the FY2022-23 and the percentage increase in remuneration of each Director, Chief Financial Officer and Company Secretary during the FY2022-23: ii. The percentage increase in the median remuneration of employees in the financial year 2022-23: 5% iii. The number of permanent employees on the rolls of the Company as on March 31, 2023: 9,478",
+      "page_number": 52,
+      "source": null,
+      "company": "KALYANKJIL",
+      "financial_year": 2023,
+      "distance": 0.31109267473220825,
+      "metadata": {
+        "child_count": 7,
+        "child_index": 0,
+        "company": "KALYANKJIL",
+        "doc_type": "ANNUAL_REPORT",
+        "has_table": true,
+        "is_short": false,
+        "page_intent": "corporate_governance,general_narrative",
+        "page_number": 52,
+        "parent_id": "page_52_parent",
+        "record_type": "child",
+        "table_type": "qualitative",
+        "word_count": 698,
+        "year": 2023
+      }
+    },
+    {
+      "chunk_id": "page_92_parent_child_0",
+      "parent_id": "page_92_parent",
+      "text": "Kalyan Jewellers India Limited Corporate Overview // Statutory Reports // » Financial Statements # Notes forming part of consolidated financial statements for the year ended March 31, 2023 (Amounts in ₹ million, except for shares data or as otherwise stated) ## 4 Right-of-use assets ## 5 Investment property",
+      "page_number": 92,
+      "source": null,
+      "company": "KALYANKJIL",
+      "financial_year": 2023,
+      "distance": 0.31609177589416504,
+      "metadata": {
+        "child_count": 4,
+        "child_index": 0,
+        "company": "KALYANKJIL",
+        "doc_type": "ANNUAL_REPORT",
+        "has_table": true,
+        "is_short": false,
+        "page_intent": "subsidiary_information,general_narrative",
+        "page_number": 92,
+        "parent_id": "page_92_parent",
+        "record_type": "child",
+        "table_type": "financial",
+        "word_count": 313,
+        "year": 2023
+      }
+    }
+  ],
+  "answer": "I was not able to generate an answer from the retrieved context."
+}
