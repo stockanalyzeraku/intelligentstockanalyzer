@@ -32,7 +32,6 @@ class ChromaRAGRetriever:
     def _store(self) -> Any:
         if self.chroma_store is None:
             from codebase.vectordb.chromastore import ChromaStore
-
             self.chroma_store = ChromaStore.get_instance(RAGRUN_CONFIG.chroma_path)
         return self.chroma_store
 

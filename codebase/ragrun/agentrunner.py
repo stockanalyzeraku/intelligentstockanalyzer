@@ -36,12 +36,13 @@ class BackgroundRAGWorker:
         self.llm_router = llm_router or LLMRouter()
         self.debugger = debugger or RAGDebugger()
 
-    def answer(self, query: str, top_k: int | None = None) -> RAGWorkerResponse:
+    def answer(self, query: str, top_k: int | None = 5) -> RAGWorkerResponse:
         """Answer one user query and always write a JSON debug file."""
         assert_system_health(include_llm=True)
         query = InputValidator.validate_question(query)
         limit = InputValidator.validate_top_k(top_k, default=RAGRUN_CONFIG.top_k, max_value=RAGRUN_CONFIG.top_k)
         logger.process_event("rag_query_received", "rag", query_preview=query[:120], top_k=limit)
+        
         with logger.timed("rag_answer", query_preview=query[:120], top_k=limit):
             check = self.checkpointer.validate(query)
 
@@ -56,6 +57,10 @@ class BackgroundRAGWorker:
             #     return self._answer_from_cache(query, check.to_dict(), cache_key, cached)
 
             chunks = self.retriever.search(query, top_k=limit)
+            for chunk in chunks:
+                print("*"*60)
+                print(chunk)
+                print("*"*60)
             logger.process_event("retrieval_completed", "rag", chunks_found=len(chunks), top_k=limit)
             if not chunks:
                 return self._answer_no_context(query, check.to_dict(), cache_key, cache_payload)
@@ -180,4 +185,4 @@ class BackgroundRAGWorker:
 if __name__ == "__main__":
     worker = BackgroundRAGWorker()
     example = worker.answer("What is revenue for Kalyan Jewellers for 2023?")
-    print(example.to_dict())
+    # print(example.to_dict())

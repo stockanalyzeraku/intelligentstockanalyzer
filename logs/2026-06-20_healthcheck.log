@@ -1,0 +1,2 @@
+{"ts": "2026-06-20T17:00:13.615531+05:30", "level": "INFO", "component": "healthcheck", "message": "System health check completed", "event": "system_health_completed", "status": "ok", "duration_ms": 7.13}
+{"ts": "2026-06-20T17:01:36.604360+05:30", "level": "INFO", "component": "healthcheck", "message": "System health check completed", "event": "system_health_completed", "status": "ok", "duration_ms": 5.37}

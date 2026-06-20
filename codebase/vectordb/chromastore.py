@@ -38,10 +38,6 @@ class ChromaStore:
         logger.info(f"[ChromaStore] Initialised — path='{self.chroma_path}'")
 
     
-    # ------------------------------------------------------------------ #
-    #  Client                                                              #
-    # ------------------------------------------------------------------ #
-
     def create_client(self) -> chromadb.PersistentClient:
         """Creates or reuses a persistent ChromaDB client."""
         if self._client is None:
@@ -66,6 +62,8 @@ class ChromaStore:
             for k, v in metadata.items()
             if isinstance(v, (str, int, float, bool))
         }
+    
+    #Storage in Chroma DB (Functions)
 
     def _upsert_records(self, collection_name: str, records: list[dict]) -> None:
         """Upsert a list of records into one collection."""
@@ -76,99 +74,25 @@ class ChromaStore:
         documents: list[str] = []
         metadatas: list[dict] = []
 
-        for rec in records:
-            ids.append(rec["id"])
-            documents.append(rec["text"])
-            metadatas.append(self._sanitize_metadata(rec.get("metadata", {})))
+        for record in records:
+            ids.append(record["id"])
+            documents.append(record["text"])
+            metadatas.append(self._sanitize_metadata(record.get("metadata", {})))
 
-        self.upsert_batch(collection_name, ids, documents, metadatas)
-
-    # ------------------------------------------------------------------ #
-    #  Store                                                               #
-    # ------------------------------------------------------------------ #
-
-    def store_in_chromadb(
-        self,
-        embedding_json_path : str,
-        collection_name     : str,
-        chroma_path         : str | None = None,
-    ) -> chromadb.Collection:
-        """
-        Loads records from a JSON file and upserts them into ChromaDB.
-
-        Supports:
-        - legacy flat record lists, stored into ``collection_name``
-        - parent/child bundles with ``{"parents": [...], "children": [...]}``
-          stored into ``CONFIG.COL_PARENT`` and ``CONFIG.COL_CHILD``
-
-        Parameters
-        ----------
-        embedding_json_path : Path to JSON file with records (id, text, metadata).
-        collection_name     : ChromaDB collection name.
-        chroma_path         : Optional override for ChromaDB path.
-
-        Returns
-        -------
-        chromadb.Collection
-        """
-        assert_system_health(include_chroma=False)
-        collection_name = InputValidator.validate_collection_name(collection_name)
-        embedding_json_path = InputValidator.validate_json_path(embedding_json_path, must_exist=True)
-        if chroma_path:
-            self.chroma_path = chroma_path
-            self._client     = None
-
-        logger.process_event("chroma_store_started", "vectordb", collection=collection_name, path=self.chroma_path)
-
-        with open(embedding_json_path, "r", encoding="utf-8") as fh:
-            payload: Any = json.load(fh)
-        payload = InputValidator.validate_embedding_payload(payload)
-
-        if isinstance(payload, dict) and "parents" in payload and "children" in payload:
-            parents = payload.get("parents", [])
-            children = payload.get("children", [])
-            logger.process_event("embedding_bundle_loaded", "vectordb", parents=len(parents), children=len(children))
-            self._upsert_records(CONFIG.COL_PARENT, parents)
-            self._upsert_records(CONFIG.COL_CHILD, children)
-            logger.process_event("chroma_store_completed", "vectordb", parent_collection=CONFIG.COL_PARENT, child_collection=CONFIG.COL_CHILD, parents=len(parents), children=len(children))
-            return self._get_collection(CONFIG.COL_CHILD)
-
-        records: list[dict] = payload
-        logger.process_event("embedding_records_loaded", "vectordb", records=len(records), collection=collection_name)
-        self._upsert_records(collection_name, records)
-        logger.process_event("chroma_store_completed", "vectordb", records=len(records), collection=collection_name)
-        return self._get_collection(collection_name)
-
-    # ------------------------------------------------------------------ #
-    #  Upsert                                                              #
-    # ------------------------------------------------------------------ #
-
-    def upsert_batch(
-        self,
-        collection_name : str,
-        ids             : list[str],
-        documents       : list[str],
-        metadatas       : list[dict],
-        batch_size      : int = 100,
-    ) -> None:
-        """
-        Idempotent batch upsert — safe to re-run without duplicate errors.
-
-        Parameters
-        ----------
-        collection_name : Target collection.
-        ids             : Chunk IDs.
-        documents       : Text content per chunk.
-        metadatas       : Metadata dicts per chunk.
-        batch_size      : Number of chunks per upsert call (default 100).
-        """
-        collection_name = InputValidator.validate_collection_name(collection_name)
         if not (len(ids) == len(documents) == len(metadatas)):
             raise ValueError("ids, documents, and metadatas must have matching lengths.")
         if not ids:
-            logger.warning("[ChromaStore] upsert_batch called with empty ids, skipping.")
+            logger.warning("[ChromaStore] Empty ids, SKIPPING.")
             return
 
+        self.upsert_batch(collection_name, ids, documents, metadatas)
+
+
+    def upsert_batch(self, collection_name : str, ids:list[str], documents:list[str], metadatas:list[dict], batch_size:int = 100) -> None:
+        """
+        Idempotent batch upsert — safe to re-run without duplicate errors.
+        """
+        #We are getting collection again anad again
         collection = self._get_collection(collection_name)
 
         for start in range(0, len(ids), batch_size):
@@ -184,9 +108,43 @@ class ChromaStore:
 
         logger.info(f"[ChromaStore] Upsert complete — {len(ids)} chunks into '{collection_name}'")
 
-    # ------------------------------------------------------------------ #
-    #  Query                                                               #
-    # ------------------------------------------------------------------ #
+
+    def store_in_chromadb(self, embedding_json_path : str, collection_name:str, chroma_path:str | None = None) -> chromadb.Collection:
+        """
+        Loads records from a JSON file and upserts them into ChromaDB.
+        """
+        #Checks Chroma DB Health
+        assert_system_health(include_chroma=False)
+
+        collection_name = InputValidator.validate_collection_name(collection_name)
+        embedding_json_path = InputValidator.validate_json_path(embedding_json_path, must_exist=True)
+        if chroma_path:
+            self.chroma_path = chroma_path
+            self._client     = None
+
+        logger.process_event("chroma_store_started", "vectordb", collection=collection_name, path=self.chroma_path)
+
+        with open(embedding_json_path, "r", encoding="utf-8") as fh:
+            payload: Any = json.load(fh)
+        payload = InputValidator.validate_embedding_payload(payload)
+
+        if isinstance(payload, dict) and "parents" in payload and "children" in payload:
+            parents = payload.get("parents", [])
+            children = payload.get("children", [])
+            #Validation can be added on children and parent
+            logger.process_event("embedding_bundle_loaded", "vectordb", parents=len(parents), children=len(children))
+            self._upsert_records(CONFIG.COL_PARENT, parents)
+            self._upsert_records(CONFIG.COL_CHILD, children)
+            logger.process_event("chroma_store_completed", "vectordb", parent_collection=CONFIG.COL_PARENT, child_collection=CONFIG.COL_CHILD, parents=len(parents), children=len(children))
+            return self._get_collection(CONFIG.COL_CHILD)
+
+        records: list[dict] = payload
+        logger.process_event("embedding_records_loaded", "vectordb", records=len(records), collection=collection_name)
+        self._upsert_records(collection_name, records)
+        logger.process_event("chroma_store_completed", "vectordb", records=len(records), collection=collection_name)
+        return self._get_collection(collection_name)
+
+    # ------------------------------------------------------------------------------------------------------
 
     # def query_collection(
     #     self,
@@ -223,17 +181,20 @@ class ChromaStore:
     #         logger.error(f"[ChromaStore] Query failed on '{collection_name}' — {exc}")
     #         raise
 
+    # -------------------Query Collection--------------------
+    
     def query_collection(self, collection_name: str, query_texts: list[str], n_results: int = 10, where: dict | None = None,) -> dict:
         collection_name = InputValidator.validate_collection_name(collection_name)
         query_texts = InputValidator.validate_query_texts(query_texts)
         where = InputValidator.validate_chroma_where(where)
         collection = self._get_collection(collection_name)
         n_results = InputValidator.validate_top_k(n_results, default=10, max_value=max(CONFIG.FINAL_TOP_K, CONFIG.SEMANTIC_TOP_K))
+        
         query_embeddings = [EMBEDDER.embed_query(q) for q in query_texts]
 
         logger.process_event("chroma_query_started", "vectordb", collection=collection_name, n_results=n_results, query_count=len(query_texts))
         result = collection.query(
-            query_embeddings=query_embeddings,   # ← pass embeddings, not texts
+            query_embeddings=query_embeddings,
             n_results=n_results,
             where=where,
             include=["documents", "metadatas", "distances", "embeddings"],
@@ -242,47 +203,9 @@ class ChromaStore:
         logger.process_event("chroma_query_completed", "vectordb", collection=collection_name, returned=returned)
         return result
 
-    # ------------------------------------------------------------------ #
-    #  Get by ID                                                           #
-    # ------------------------------------------------------------------ #
-
-    def get_by_id(
-        self,
-        collection_name : str,
-        chunk_id        : str,
-    ) -> dict | None:
-        """
-        Fetch a single chunk by its exact ID.
-
-        Parameters
-        ----------
-        collection_name : Collection to search.
-        chunk_id        : Exact chunk ID.
-
-        Returns
-        -------
-        dict with keys: id, document, metadata — or None if not found.
-        """
-        collection_name = InputValidator.validate_collection_name(collection_name)
-        collection = self._get_collection(collection_name)
-        try:
-            result = collection.get(ids=[chunk_id])
-            if result and result["ids"]:
-                return {
-                    "id"       : result["ids"][0],
-                    "document" : result["documents"][0],
-                    "metadata" : result["metadatas"][0],
-                }
-        except Exception as exc:
-            logger.error(f"[ChromaStore] get_by_id failed for '{chunk_id}' — {exc}")
-        return None
-
-    def get_many_by_ids(
-        self,
-        collection_name: str,
-        chunk_ids: list[str],
-    ) -> list[dict]:
+    def get_many_by_ids(self, collection_name: str, chunk_ids: list[str]) -> list[dict]:
         """Fetch multiple chunks by exact id and preserve the requested order."""
+
         collection_name = InputValidator.validate_collection_name(collection_name)
         if not chunk_ids:
             return []
@@ -306,32 +229,17 @@ class ChromaStore:
             logger.error(f"[ChromaStore] get_many_by_ids failed for '{collection_name}' — {exc}")
             return []
 
-    def query_children_with_parent_context(
-        self,
-        query_texts: list[str],
-        n_results: int = 10,
-        where: dict | None = None,
-    ) -> list[dict[str, Any]]:
+    def query_children_with_parent_context(self, query_texts: list[str], n_results: int = 10, where: dict | None = None,) -> list[dict[str, Any]]:
         """Search child records first, then return the matching parents."""
-        raw = self.query_collection(
-            collection_name=CONFIG.COL_CHILD,
-            query_texts=query_texts,
-            n_results=n_results,
-            where=where,
-        )
-
+        
+        raw = self.query_collection(collection_name=CONFIG.COL_CHILD, query_texts=query_texts, n_results=n_results, where=where,)
+        
         ids = raw.get("ids", [[]])[0]
         docs = raw.get("documents", [[]])[0]
         metas = raw.get("metadatas", [[]])[0]
         dists = raw.get("distances", [[]])[0]
 
-        self._logger.info(
-            "[ChromaStore] Child search complete",
-            query_texts=query_texts,
-            requested=n_results,
-            returned=len(ids),
-            where=where,
-        )
+        self._logger.info("[ChromaStore] Child search complete", query_texts=query_texts, requested=n_results, returned=len(ids), where=where)
 
         best_children: dict[str, dict[str, Any]] = {}
         parent_order: list[str] = []
@@ -340,7 +248,7 @@ class ChromaStore:
             parent_id = (meta or {}).get("parent_id")
             if not parent_id:
                 continue
-
+            #I feel this part has no logic to be here
             existing = best_children.get(parent_id)
             if existing is None or dist < existing["distance"]:
                 best_children[parent_id] = {
@@ -349,17 +257,15 @@ class ChromaStore:
                     "child_metadata": meta,
                     "distance": dist,
                 }
+            # Till this part
             if parent_id not in parent_order:
                 parent_order.append(parent_id)
 
         parents = self.get_many_by_ids(CONFIG.COL_PARENT, parent_order)
+
         parent_lookup = {rec["id"]: rec for rec in parents}
 
-        self._logger.info(
-            "[ChromaStore] Parent expansion complete",
-            parent_ids=parent_order,
-            parent_count=len(parents),
-        )
+        self._logger.info("[ChromaStore] Parent expansion complete", parent_ids=parent_order, parent_count=len(parents))
 
         merged: list[dict[str, Any]] = []
         for parent_id in parent_order:
@@ -395,33 +301,44 @@ class ChromaStore:
         )
 
         return merged
-
-    # ------------------------------------------------------------------ #
-    #  Status                                                              #
-    # ------------------------------------------------------------------ #
+    
+    # --------------------For showing Status-----------------
 
     def status(self, collection_name: str) -> str:
         """
         Returns a summary of chunk count in a collection.
-
-        Parameters
-        ----------
-        collection_name : Collection to inspect.
-
-        Returns
-        -------
-        str
         """
         try:
             collection = self._get_collection(collection_name)
             count      = collection.count()
-            summary    = f"=== ChromaDB Status ===\n  {collection_name}: {count} chunks"
+            summary    = f"{collection_name}: {count} chunks"
             logger.info(f"[ChromaStore] {summary}")
             return summary
         except Exception as exc:
             logger.error(f"[ChromaStore] status failed — {exc}")
             return f"Error fetching status: {exc}"
     
+    # -------------------used for debugging------------------
+
+    def get_by_id(self, collection_name : str, chunk_id:str) -> dict | None:
+        """
+        Fetch a single chunk by its exact ID.
+        Used for debugging
+        """
+        collection_name = InputValidator.validate_collection_name(collection_name)
+        collection = self._get_collection(collection_name)
+        try:
+            result = collection.get(ids=[chunk_id])
+            if result and result["ids"]:
+                return {
+                    "id"       : result["ids"][0],
+                    "document" : result["documents"][0],
+                    "metadata" : result["metadatas"][0],
+                }
+        except Exception as exc:
+            logger.error(f"[ChromaStore] get_by_id failed for '{chunk_id}' — {exc}")
+        return None
+        
     @classmethod
     def get_instance(cls, chroma_path: str | None = None) -> "ChromaStore":
         """Return the singleton ChromaStore, creating it if needed."""
