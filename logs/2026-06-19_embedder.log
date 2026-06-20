@@ -1,1 +1,0 @@
-{"ts": "2026-06-19T20:05:17.105153+05:30", "level": "INFO", "component": "embedder", "message": "Embedding model loaded.", "model": "all-MiniLM-L6-v2", "dim": 384}

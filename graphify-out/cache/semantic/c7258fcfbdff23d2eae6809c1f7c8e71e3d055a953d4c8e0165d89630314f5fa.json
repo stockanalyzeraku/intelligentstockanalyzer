@@ -1,0 +1,1 @@
+{"nodes": [{"id": "codebase_vectordb_embedder", "label": "LocalEmbedder", "file_type": "code", "source_file": "codebase/vectordb/embedder.py"}], "edges": [], "hyperedges": []}
