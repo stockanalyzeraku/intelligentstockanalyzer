@@ -1,0 +1,169 @@
+{
+  "trace_id": "dd8064a8-68ba-4389-99a4-26e1998c1fd0",
+  "created_at": "2026-06-21T07:55:30.226335+00:00",
+  "query": "What is revenue for Kalyan Jewellers for 2023?",
+  "status": "answered",
+  "checkpointer": {
+    "allowed": true,
+    "reason": "accepted",
+    "message": "Query accepted.",
+    "company": "Kalyan Jewellers",
+    "financial_year": "2023",
+    "topic": "revenue",
+    "missing_context": []
+  },
+  "cache": {
+    "enabled": true,
+    "hit": false,
+    "cache_key": "5271ba736d3bb1292eac2f786590cb3018301856ab6aafc72454f69f9f64cee3"
+  },
+  "answer_source": "llm",
+  "model": {
+    "answer": "The provided context states that Candere, a business platform of Kalyan Jewellers, reported a revenue of ₹1,567 million for FY23. However, the total revenue for Kalyan Jewellers for 2023 is not specified in the provided information.\n\nSource: Chunk 2, page 28",
+    "model_used": "gemini",
+    "provider_used": "gemini",
+    "fallback_used": true,
+    "attempts": [
+      {
+        "provider": "mistral",
+        "model": "mistral-large-latest",
+        "status": "insufficient",
+        "answer_preview": "I was not able to find the revenue for Kalyan Jewellers for 2023 in the provided context. The context only mentions revenue for Candere (₹1,567 million for FY23) but does not specify the total revenue for Kalyan Jewellers."
+      },
+      {
+        "provider": "gemini",
+        "model": "gemini",
+        "status": "answered",
+        "answer_preview": "The provided context states that Candere, a business platform of Kalyan Jewellers, reported a revenue of ₹1,567 million for FY23. However, the total revenue for Kalyan Jewellers for 2023 is not specified in the provided information.\n\nSource"
+      }
+    ]
+  },
+  "documents_used": [
+    {
+      "chunk_id": "page_61_parent_child_0",
+      "parent_id": "page_61_parent",
+      "text": "Kalyan Jewellers India Limited Corporate Overview // Statutory Reports // > Financial Statements # Notes forming part of standalone financial statements for the year ended March 31, 2023 (Amounts in ₹ million, except for shares data or as otherwise stated) a) Sale of goods: Revenue from the sale of products is recognised at the point in time when control is transferred to the customer. Revenue is measured based on the transaction price, which is the consideration, net of customer incentives, discounts, variable considerations, payments made to customers, other similar charges, as specified in the contract with the customer. Additionally, revenue excludes taxes collected from customers, which are subsequently remitted to governmental authorities.",
+      "page_number": 61,
+      "source": null,
+      "company": "KALYANKJIL",
+      "financial_year": 2023,
+      "distance": 0.22691458463668823,
+      "metadata": {
+        "child_count": 16,
+        "child_index": 0,
+        "company": "KALYANKJIL",
+        "doc_type": "ANNUAL_REPORT",
+        "has_table": false,
+        "is_short": false,
+        "page_intent": "human_resources_employees,general_narrative",
+        "page_number": 61,
+        "parent_id": "page_61_parent",
+        "record_type": "child",
+        "table_type": "financial",
+        "word_count": 1591,
+        "year": 2023
+      }
+    },
+    {
+      "chunk_id": "page_28_parent_child_9",
+      "parent_id": "page_28_parent",
+      "text": "business platform, Candere, reported a revenue of ₹1,567 million for FY23. With a focus on franchise-driven network expansion in the coming years, Kalyan Jewellers is poised to achieve continued growth and success.",
+      "page_number": 28,
+      "source": null,
+      "company": "KALYANKJIL",
+      "financial_year": 2023,
+      "distance": 0.2720593214035034,
+      "metadata": {
+        "child_count": 12,
+        "child_index": 9,
+        "company": "KALYANKJIL",
+        "doc_type": "ANNUAL_REPORT",
+        "has_table": true,
+        "is_short": false,
+        "page_intent": "company_overview,retail_footprint_expansion,product_portfolio,corporate_governance,consolidated_profit_loss,human_resources_employees,general_narrative",
+        "page_number": 28,
+        "parent_id": "page_28_parent",
+        "record_type": "child",
+        "table_type": "financial",
+        "word_count": 1196,
+        "year": 2023
+      }
+    },
+    {
+      "chunk_id": "page_112_parent_child_0",
+      "parent_id": "page_112_parent",
+      "text": "Kalyan Jewellers India Limited in accordance with the provisions of the Companies Act, 2013 effective from the financial year 2022-23 and thereafter. The payment of such remuneration shall be in addition to the sitting fees and reimbursement of expenses for attending the meetings of the Board of Directors or Committees thereof. This remuneration will be distributed amongst all or some of the Non-Executive Directors in accordance with the directions given by the Board of Directors and subject to any other applicable requirements under the Companies Act, 2013 and SEBI (Listing Obligations and Disclosure Requirements) Regulations, 2015.",
+      "page_number": 112,
+      "source": null,
+      "company": "KALYANKJIL",
+      "financial_year": 2023,
+      "distance": 0.27402701912126504,
+      "metadata": {
+        "child_count": 8,
+        "child_index": 0,
+        "company": "KALYANKJIL",
+        "doc_type": "ANNUAL_REPORT",
+        "has_table": true,
+        "is_short": false,
+        "page_intent": "corporate_governance,subsidiary_information,general_narrative",
+        "page_number": 112,
+        "parent_id": "page_112_parent",
+        "record_type": "child",
+        "table_type": "qualitative",
+        "word_count": 718,
+        "year": 2023
+      }
+    },
+    {
+      "chunk_id": "page_88_parent_child_0",
+      "parent_id": "page_88_parent",
+      "text": "Kalyan Jewellers India Limited Corporate Overview // Statutory Reports // > Financial Statements # Notes forming part of consolidated financial statements for the year ended March 31, 2023 (Amounts in ₹ million, except for shares data or as otherwise stated) take a substantial period to get ready for their intended use or sale, are added to the cost of those assets, until such time the assets are substantially ready for their intended use or sale. All other borrowing costs are recognised in profit or loss in the period in which they are incurred. ## (x) Employee benefits",
+      "page_number": 88,
+      "source": null,
+      "company": "KALYANKJIL",
+      "financial_year": 2023,
+      "distance": 0.2844458818435669,
+      "metadata": {
+        "child_count": 17,
+        "child_index": 0,
+        "company": "KALYANKJIL",
+        "doc_type": "ANNUAL_REPORT",
+        "has_table": false,
+        "is_short": false,
+        "page_intent": "accounting_policies,human_resources_employees,general_narrative",
+        "page_number": 88,
+        "parent_id": "page_88_parent",
+        "record_type": "child",
+        "table_type": "financial",
+        "word_count": 1592,
+        "year": 2023
+      }
+    },
+    {
+      "chunk_id": "page_69_parent_child_0",
+      "parent_id": "page_69_parent",
+      "text": "Kalyan Jewellers India Limited Corporate Overview // Statutory Reports // » Financial Statements # Notes forming part of standalone financial statements for the year ended March 31, 2023 (Amounts in ₹ million, except for shares data or as otherwise stated) ## (ii) Details of interest rate and securities provided for loans repayable on demand from various banks",
+      "page_number": 69,
+      "source": null,
+      "company": "KALYANKJIL",
+      "financial_year": 2023,
+      "distance": 0.2957819700241089,
+      "metadata": {
+        "child_count": 7,
+        "child_index": 0,
+        "company": "KALYANKJIL",
+        "doc_type": "ANNUAL_REPORT",
+        "has_table": true,
+        "is_short": false,
+        "page_intent": "vision_mission_values,human_resources_employees,general_narrative",
+        "page_number": 69,
+        "parent_id": "page_69_parent",
+        "record_type": "child",
+        "table_type": "qualitative",
+        "word_count": 600,
+        "year": 2023
+      }
+    }
+  ],
+  "answer": "The provided context states that Candere, a business platform of Kalyan Jewellers, reported a revenue of ₹1,567 million for FY23. However, the total revenue for Kalyan Jewellers for 2023 is not specified in the provided information.\n\nSource: Chunk 2, page 28"
+}

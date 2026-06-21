@@ -229,7 +229,7 @@ class ChromaStore:
             logger.error(f"[ChromaStore] get_many_by_ids failed for '{collection_name}' — {exc}")
             return []
 
-    def query_children_with_parent_context(self, query_texts: list[str], n_results: int = 10, where: dict | None = None,) -> list[dict[str, Any]]:
+    def query_children_with_parent_context(self, query_texts: list[str], n_results: int = 1, where: dict | None = None,) -> list[dict[str, Any]]:
         """Search child records first, then return the matching parents."""
         
         raw = self.query_collection(collection_name=CONFIG.COL_CHILD, query_texts=query_texts, n_results=n_results, where=where,)
@@ -288,17 +288,7 @@ class ChromaStore:
                 }
             )
 
-        self._logger.debug(
-            "[ChromaStore] Retrieval bundle",
-            items=[
-                {
-                    "parent_id": item["parent_id"],
-                    "child_id": item["child_id"],
-                    "distance": item["distance"],
-                }
-                for item in merged
-            ],
-        )
+        self._logger.debug("[ChromaStore] Retrieval bundle",items=[{"parent_id": item["parent_id"],"child_id": item["child_id"],"distance": item["distance"]} for item in merged])
 
         return merged
     

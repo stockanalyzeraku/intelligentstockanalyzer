@@ -57,13 +57,14 @@ class BackgroundRAGWorker:
             #     return self._answer_from_cache(query, check.to_dict(), cache_key, cached)
 
             chunks = self.retriever.search(query, top_k=limit)
-            for chunk in chunks:
-                print("*"*60)
-                print(chunk)
-                print("*"*60)
+            
             logger.process_event("retrieval_completed", "rag", chunks_found=len(chunks), top_k=limit)
             if not chunks:
                 return self._answer_no_context(query, check.to_dict(), cache_key, cache_payload)
+            print(type(chunks))
+            for chunk in chunks:
+                print(f"Chunk Information : {chunk}")
+                print(f"Chunk Type : {type(chunk)}")
 
             model_result = self.llm_router.answer(query, chunks)
             response = RAGWorkerResponse(
