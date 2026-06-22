@@ -1,75 +1,70 @@
-"""CLI entry point for the company Q&A agent.
+"""CLI entry point for the multi-agent company Q&A pipeline.
+
+This REPLACES the previous single-agent runner (financial_agent /
+general_agent + classify.py's regex-based ClassificationResult). All
+queries now go through codebase.agent.pipeline.answer_query(), which runs
+the full 8-stage pipeline (Query Understanding -> Clarification Gate ->
+Cache check -> Data Retrieval+Enrichment -> conditional Context Retrieval
+-> Synthesis -> Follow-up Suggestor -> Cache write).
+
+The old codebase/agent/classify.py, agents.py, and the original
+codebase/agent/tools.py functions (get_financial_data) are NOT deleted -
+search_annual_report and the underlying ChromaStore/financials DB access
+are still used internally by the new pipeline (context_retrieval.py,
+series_tools.py). Only the top-level entry point and routing logic have
+been replaced.
 
 Run from the project root:
 
     python codebase/agent/runner.py
-
-Flow per query:
-    1. classify_intent() deterministically extracts company/year and decides
-       financial vs general intent. No LLM call happens here.
-    2. If company or year couldn't be resolved, short-circuit with a
-       clarification message - no agent is invoked.
-    3. Otherwise invoke financial_agent (financial intent) or general_agent
-       (everything else), passing the resolved symbol/period in the message
-       so the model never has to guess them itself.
 """
 from __future__ import annotations
 
 import logging
 import os
 import sys
-# Allow `python codebase/agent/runner.py` to find the root-level config.py
-# and the codebase package regardless of the current working directory.
+
 _ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 if _ROOT not in sys.path:
     sys.path.insert(0, _ROOT)
 
-from codebase.agent.agents import financial_agent, general_agent  # noqa: E402
-from codebase.agent.classify import classify_intent  # noqa: E402
-
+from codebase.agent.pipeline import answer_query  # noqa: E402
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-def answer_query(query: str) -> str:
-    """Classify a query and route it to the appropriate agent."""
+def _format_for_display(result: dict) -> str:
+    """Turn the pipeline's structured result dict into CLI-friendly text."""
+    lines = [result["answer"]]
 
-    result = classify_intent(query)
+    if result.get("suggestions"):
+        lines.append("")
+        lines.append("You might also ask:")
+        for suggestion in result["suggestions"]:
+            lines.append(f"  - {suggestion}")
 
-    if result.unresolved_reason is not None:
-        return result.unresolved_reason
+    if result.get("from_cache"):
+        lines.append("")
+        lines.append("(served from cache)")
 
-    context = f"[Resolved context: symbol={result.symbol}, period={result.period}]"
-    user_message = f"{context}\n\nUser question: {query}"
+    return "\n".join(lines)
 
-    agent = financial_agent if result.intent == "financial" else general_agent
-    logger.info(
-        "Routing query to %s agent (symbol=%s, period=%s)",
-        result.intent,
-        result.symbol,
-        result.period,
-    )
-
-    response = agent.invoke(
-        {"messages": [{"role": "user", "content": user_message}]}
-    )
-    return response["messages"][-1].content_blocks
 
 def main() -> None:
     """Run an interactive CLI loop for ad-hoc testing."""
-    print("Company Q&A agent (POC). Type 'exit' to quit.")
+    print("Company Q&A multi-agent pipeline (POC). Type 'exit' to quit.")
     while True:
         query = input("\n> ").strip()
         if not query or query.lower() in {"exit", "quit"}:
             break
         try:
-            answer = answer_query(query)
+            result = answer_query(query)
         except Exception:  # noqa: BLE001 - top-level CLI guard for the POC
             logger.exception("Unhandled error answering query: %r", query)
             print("Sorry, something went wrong answering that question.")
             continue
-        print(answer)
+        print(_format_for_display(result))
 
 
 if __name__ == "__main__":

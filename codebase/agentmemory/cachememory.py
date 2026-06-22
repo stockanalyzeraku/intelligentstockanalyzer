@@ -78,6 +78,52 @@ class CacheMemory:
         raw = json.dumps(payload, sort_keys=True, ensure_ascii=False, default=str)
         return hashlib.sha256(raw.encode("utf-8")).hexdigest(), payload
 
+    def build_structured_cache_key(
+        self,
+        company: str | None = None,
+        doc_type: str | None = None,
+        extra_filters: dict[str, Any] | None = None,
+        top_k: int = 8,
+    ) -> tuple[str, dict[str, Any]]:
+        """Phrasing-independent variant of build_cache_key for the multi-agent
+        pipeline (codebase/agent/pipeline.py).
+
+        ADDITIVE ONLY - build_cache_key above is completely unchanged, and
+        every other method on this class is unaffected. This method exists
+        because build_cache_key always hashes the raw question text as part
+        of the cache identity, which means two different phrasings of a
+        question that resolve to the SAME company/line_items/periods (e.g.
+        "Sales for Kalyan Jewellers in 2023" vs "what was the sales figure
+        for Kalyan Jewellers in 2023") would never share a cache entry.
+
+        Callers should put everything that defines the query's *resolved*
+        identity into extra_filters (e.g. line_items, periods,
+        needs_qualitative_context, intent) - NOT raw question text. The
+        literal question the user typed is never hashed by this method; it
+        should still be passed as `original_question` to
+        set_cached_response() for display/debugging, exactly as before.
+
+        Returns the same (cache_key, normalized_payload) shape as
+        build_cache_key, so it is a drop-in replacement at call sites:
+        normalized_payload always includes a "question" key (a fixed
+        placeholder string, since set_cached_response() and the
+        normalized_question NOT NULL column both require one), but that
+        placeholder is constant and contributes nothing to differentiate
+        one cache entry from another - only company/doc_type/extra_filters/
+        top_k/pipeline_version do.
+        """
+        payload = {
+            "question": "structured_query",
+            "company": self._normalize_optional(company),
+            "year": None,
+            "doc_type": self._normalize_optional(doc_type),
+            "extra_filters": self._normalize_filters(extra_filters),
+            "top_k": top_k,
+            "pipeline_version": self.pipeline_version,
+        }
+        raw = json.dumps(payload, sort_keys=True, ensure_ascii=False, default=str)
+        return hashlib.sha256(raw.encode("utf-8")).hexdigest(), payload
+
     def get_cached_response(self, cache_key: str) -> dict[str, Any] | None:
         """Return a cached response payload and update hit metadata when present."""
         now = self._now()
