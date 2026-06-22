@@ -4,9 +4,11 @@ Central configuration for the financials package.
 Keep all "magic" constants here so scraper.py, db.py, ingest.py etc. stay
 readable and so behaviour can be tuned in one place.
 """
-import sys, os
+import sys
+import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
+from config import CONFIG
 import os
 
 # ---------------------------------------------------------------------------
@@ -59,4 +61,5 @@ STATEMENT_SECTIONS = {
 # ---------------------------------------------------------------------------
 
 DB_DIR = os.path.dirname(os.path.abspath(__file__))
-DB_PATH = os.path.join(DB_DIR, "financials.db")
+DB_PATH = os.path.join(CONFIG.FINANCIALS_PATH, "financials.db")
+

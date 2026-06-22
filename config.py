@@ -29,6 +29,7 @@ class Config:
     CHROMA_PATH: str = field(init=False)
     DB_PATH: str = field(init=False)
     LOGS_PATH: str = field(init=False)
+    FINANCIALS_PATH: str = field(init=False)
 
     # ── LLM ───────────────────────────────────────────────────────────────
     GEMINI_MODEL: str = "gemini-2.5-flash"
@@ -88,6 +89,7 @@ class Config:
         self.CHROMA_PATH = os.path.join(self.BASE_PATH, "chroma_db")
         self.DB_PATH = os.path.join(self.BASE_PATH, "database", "brain.db")
         self.LOGS_PATH = os.path.join(self.BASE_PATH, "logs")
+        self.FINANCIALS_PATH = os.path.join(self.BASE_PATH,"financials")
 
     def validate(self) -> None:
         """

@@ -16,9 +16,9 @@ Typical agent flow:
 Every function here returns plain dicts/lists (JSON-serialisable), so it is
 safe to expose directly as tool calls to an LLM agent.
 """
-import sys, os
+import sys
+import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
-
 
 from codebase.financials import db
 
@@ -148,9 +148,17 @@ def get_statement(table_name, company_id, line_items=None, periods=None,
         If omitted, all available years are returned.
     pivot : bool
         If False (default): returns tidy long rows -
-            [{"line_item": "Sales", "period_label": "Mar 2024", "value": 899041.0}, ...]
-        If True: returns one dict per line_item with years as keys -
-            [{"line_item": "Sales", "Mar 2024": 899041.0, "Mar 2025": 962820.0}, ...]
+            [{"line_item": "Sales", "period_label": "Mar 2024", "value": 899041.0, "unit": "INR_CRORE"}, ...]
+        If True: returns one dict per line_item with years as keys, plus a
+            "unit" key (constant per line_item) -
+            [{"line_item": "Sales", "unit": "INR_CRORE", "Mar 2024": 899041.0, "Mar 2025": 962820.0}, ...]
+
+        IMPORTANT: not every line_item shares the same unit. e.g. "EPS in
+        Rs" is INR (not INR_CRORE), and rows ending in "%" are PERCENT.
+        Always read the "unit" key per row rather than assuming one unit
+        for the whole table. Look up unit codes in the _meta_units table
+        (see discovery.describe_table("_meta_units") or list_tables()) for
+        the full human-readable meaning of each code.
 
     Returns
     -------
@@ -161,7 +169,7 @@ def get_statement(table_name, company_id, line_items=None, periods=None,
         raise ValueError(f"Unknown statement table '{table_name}'. Valid options: {valid_tables}")
 
     query = f"""
-        SELECT line_item, period_label, fiscal_year_end, value
+        SELECT line_item, period_label, fiscal_year_end, value, unit
           FROM {table_name}
          WHERE company_id = ?
     """
@@ -190,7 +198,7 @@ def get_statement(table_name, company_id, line_items=None, periods=None,
     for r in rows:
         li = r["line_item"]
         if li not in pivoted:
-            pivoted[li] = {"line_item": li}
+            pivoted[li] = {"line_item": li, "unit": r["unit"]}
             order.append(li)
         pivoted[li][r["period_label"]] = r["value"]
 

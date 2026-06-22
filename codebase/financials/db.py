@@ -34,7 +34,8 @@ This module only deals with schema + low-level read/write. Higher-level
 orchestration (scrape -> store) lives in ingest.py. The standalone
 explorer/debug script is debug_explore.py.
 """
-import sys, os
+import sys
+import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 import sqlite3
@@ -85,9 +86,23 @@ STATEMENT_COLUMNS = [
     ("line_item", "TEXT", "Row label exactly as shown on screener.in, e.g. 'Sales', 'Net Profit'."),
     ("period_label", "TEXT", "Period label as shown on screener.in, e.g. 'Mar 2024' (financial year ending March 2024)."),
     ("fiscal_year_end", "TEXT", "ISO date of the period end, e.g. '2024-03-31'. Derived from period_label."),
-    ("value", "REAL", "Numeric value in Rs. Crores (as published by screener.in), or NULL if not disclosed."),
+    ("unit", "TEXT", "Unit of `value` for this specific row, e.g. 'INR_CRORE', 'INR', 'PERCENT', 'RATIO'. Always check this column per-row rather than assuming a table-wide unit. See UNIT_LABELS in db.py for the full code -> human-readable mapping."),
     ("scraped_at", "TEXT", "UTC timestamp this row was last (re)scraped."),
 ]
+
+# Canonical unit codes stored in statement_*.unit, and what they mean.
+# screener.in publishes consolidated statement figures in Rs. Crores by
+# default, but a handful of line items break that pattern (EPS is in plain
+# Rupees; several rows are percentages or dimensionless ratios). The unit
+# is therefore classified per ROW (see classify_unit() in ingest.py), not
+# fixed for the whole table.
+UNIT_LABELS = {
+    "INR_CRORE": "Indian Rupees, in Crores (1 Crore = 10,000,000 / 1e7). "
+                  "This is screener.in's default reporting unit for monetary line items.",
+    "INR": "Indian Rupees, absolute value (not crores). Used for per-share figures like EPS.",
+    "PERCENT": "A percentage value, e.g. 18 means 18%. Not a currency amount.",
+    "RATIO": "A dimensionless ratio (e.g. CFO/OP). Not a currency amount.",
+}
 
 COMPANIES_COLUMNS = [
     ("id", "INTEGER", "Surrogate primary key."),
@@ -151,10 +166,18 @@ def init_schema(db_path=None):
                     period_label TEXT NOT NULL,
                     fiscal_year_end TEXT,
                     value REAL,
+                    unit TEXT,
                     scraped_at TEXT NOT NULL,
                     UNIQUE(company_id, line_item, period_label)
                 )
             """)
+            # If this DB was created before the `unit` column existed,
+            # add it now so existing installs upgrade in place instead of
+            # silently missing the column (SQLite ignores the duplicate
+            # column in CREATE TABLE IF NOT EXISTS above on existing DBs).
+            existing_cols = {row[1] for row in cur.execute(f"PRAGMA table_info({table_name})").fetchall()}
+            if "unit" not in existing_cols:
+                cur.execute(f"ALTER TABLE {table_name} ADD COLUMN unit TEXT")
             cur.execute(f"""
                 CREATE INDEX IF NOT EXISTS idx_{table_name}_company
                 ON {table_name}(company_id)
@@ -186,6 +209,12 @@ def init_schema(db_path=None):
                 table_name TEXT NOT NULL,
                 line_item TEXT NOT NULL,
                 PRIMARY KEY (table_name, line_item)
+            )
+        """)
+        cur.execute("""
+            CREATE TABLE IF NOT EXISTS _meta_units (
+                unit_code TEXT PRIMARY KEY,
+                description TEXT NOT NULL
             )
         """)
 
@@ -242,6 +271,20 @@ def _seed_metadata(conn):
          "statement_* table, e.g. 'Sales', 'Net Profit'. Use to discover "
          "*what data* exists before filtering a query by line_item."),
     )
+    cur.execute(
+        "INSERT OR REPLACE INTO _meta_tables (table_name, category, description) VALUES (?,?,?)",
+        ("_meta_units", "discovery",
+         "Lookup table explaining every unit_code that can appear in the "
+         "statement_*.unit column (e.g. INR_CRORE, INR, PERCENT, RATIO). "
+         "Always join/look up a row's unit here rather than assuming a "
+         "fixed unit for the whole table - EPS and %-rows differ from the "
+         "Rs. Crores default."),
+    )
+    for unit_code, desc in UNIT_LABELS.items():
+        cur.execute(
+            "INSERT OR REPLACE INTO _meta_units (unit_code, description) VALUES (?,?)",
+            (unit_code, desc),
+        )
 
     conn.commit()
 

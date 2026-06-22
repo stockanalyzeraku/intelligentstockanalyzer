@@ -1,52 +1,48 @@
-#!/usr/bin/env python3
 """
-Standalone debug/explore script for the financials package.
+Standalone debug/explore module for the financials package.
 
 This file is intentionally separate from the library code (db.py,
-discovery.py, ingest.py) so you can run it directly to poke at the database
-and schema without writing any code of your own - useful while developing,
+discovery.py, ingest.py) so you can poke at the database and schema
+without digging through the other modules - useful while developing,
 debugging scraper changes, or just inspecting what's in financials.db.
 
-USAGE (from inside codebase/financials/, or anywhere with this package on
-PYTHONPATH):
+NOT a CLI. Import the functions you need and call them directly with
+normal Python arguments. Every function returns a plain dict/list (no
+printing, no argparse) so you can use the result in code, print it
+yourself, or just inspect it in a REPL/notebook.
 
-    # Show every logical table + description (the discovery catalogue)
-    python3 debug_explore.py tables
+USAGE
+-----
+    from codebase.financials.debug_explore import (
+        tables, describe, companies, ingest, dump, line_items, sql
+    )
 
-    # Show columns for one table
-    python3 debug_explore.py describe statement_profit_loss
+    tables()                                  # -> list[dict] of every table + description
+    describe("statement_profit_loss")         # -> dict of columns for one table
+    companies()                               # -> list[dict] of every ingested company
+    ingest("KALYANKJIL")                      # -> scrape + store, dict summary
+    dump("KALYANKJIL")                        # -> dict of all 3 statements, pivoted by year
+    dump("KALYANKJIL", table="statement_cash_flow")  # -> just one statement
+    dump("KALYANKJIL", long=True)             # -> tidy long rows instead of pivoted
+    line_items("statement_balance_sheet")                    # -> list[str], any company
+    line_items("statement_balance_sheet", symbol="KALYANKJIL")  # -> list[str], scoped to one company
+    sql("SELECT * FROM companies")            # -> list[dict], SELECT-only
 
-    # List every company currently stored
-    python3 debug_explore.py companies
+If you just run this file directly (``python3 debug_explore.py``), the
+__main__ block at the bottom calls a few of these and prints the result -
+edit that block to try out whatever you're debugging.
 
-    # Scrape + store a company (calls ingest_company under the hood)
-    python3 debug_explore.py ingest RELIANCE
-
-    # Dump one company's full P&L / Balance Sheet / Cash Flow (pivoted by year)
-    python3 debug_explore.py dump RELIANCE
-
-    # Dump just one statement
-    python3 debug_explore.py dump RELIANCE --table statement_cash_flow
-
-    # List which line items exist for a company/table
-    python3 debug_explore.py line-items RELIANCE statement_balance_sheet
-
-    # Run an arbitrary read-only SQL query
-    python3 debug_explore.py sql "SELECT * FROM companies"
-
-If a company hasn't been ingested yet, `dump` / `line-items` will tell you
-to run `ingest` first.
+Every function raises a plain Exception (ScrapeError or ValueError) on
+failure rather than printing an error and exiting - since this is meant to
+be called from your own code now, not a terminal, callers should catch
+these themselves if they want to handle failures gracefully.
 """
-import sys, os
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
-import argparse
-import json
 import sys
 from pathlib import Path
 
-# Allow running this file directly (``python3 debug_explore.py ...``) by
-# making sure the parent of codebase/ is importable, regardless of cwd.
+# Allow importing/running this file directly regardless of cwd, by making
+# sure the parent of codebase/ is on sys.path.
 _THIS_DIR = Path(__file__).resolve().parent
 _REPO_ROOT = _THIS_DIR.parent.parent  # .../codebase/financials -> repo root
 if str(_REPO_ROOT) not in sys.path:
@@ -56,137 +52,180 @@ from codebase.financials import db, discovery  # noqa: E402
 from codebase.financials.ingest import ingest_company  # noqa: E402
 from codebase.financials.scraper import ScrapeError  # noqa: E402
 
-
-def _print_json(obj):
-    print(json.dumps(obj, indent=2, ensure_ascii=False, default=str))
+__all__ = ["tables", "describe", "companies", "ingest", "dump", "line_items", "sql"]
 
 
-def cmd_tables(args):
+def tables():
+    """List every logical table in the database with its category and description.
+
+    Returns
+    -------
+    list[dict]
+    """
     db.init_schema()
-    _print_json(discovery.list_tables())
+    return discovery.list_tables()
 
 
-def cmd_describe(args):
+def describe(table_name):
+    """Show columns (name, type, description) + row count for one table.
+
+    Parameters
+    ----------
+    table_name : str
+        e.g. "statement_profit_loss", "companies", "_meta_units".
+        Run tables() first if you're not sure of the exact name.
+
+    Returns
+    -------
+    dict
+
+    Raises
+    ------
+    ValueError if table_name doesn't exist.
+    """
     db.init_schema()
-    try:
-        _print_json(discovery.describe_table(args.table_name))
-    except ValueError as exc:
-        print(f"ERROR: {exc}", file=sys.stderr)
-        sys.exit(1)
+    return discovery.describe_table(table_name)
 
 
-def cmd_companies(args):
+def companies():
+    """List every company currently stored in the DB.
+
+    Returns
+    -------
+    list[dict]
+    """
     db.init_schema()
-    _print_json(discovery.list_companies())
+    return discovery.list_companies()
 
 
-def cmd_ingest(args):
+def ingest(symbol, years=None):
+    """Scrape `symbol` from screener.in and store it (or re-scrape/update it
+    if already stored).
+
+    Parameters
+    ----------
+    symbol : str
+        NSE trading symbol as used by screener.in, e.g. "RELIANCE", "KALYANKJIL".
+    years : int, optional
+        How many recent annual years to keep. Defaults to 5.
+
+    Returns
+    -------
+    dict
+        Summary: company_id, company_name, screener_symbol, nse_symbol,
+        bse_code, statements_written, periods.
+
+    Raises
+    ------
+    ScrapeError if the symbol can't be found/scraped on screener.in.
+    """
     db.init_schema()
-    try:
-        result = ingest_company(args.symbol, years_to_keep=args.years)
-        _print_json(result)
-    except ScrapeError as exc:
-        print(f"ERROR: {exc}", file=sys.stderr)
-        sys.exit(1)
+    return ingest_company(symbol, years_to_keep=years)
 
 
-def _resolve_company_or_die(symbol):
+def _resolve_company(symbol):
     company = discovery.find_company(symbol)
     if not company:
-        print(
-            f"No stored data for '{symbol}' yet. Run:\n"
-            f"    python3 debug_explore.py ingest {symbol}\n"
-            f"first.",
-            file=sys.stderr,
+        raise ValueError(
+            f"No stored data for '{symbol}' yet. Call ingest('{symbol}') first."
         )
-        sys.exit(1)
     return company
 
 
-def cmd_dump(args):
+def dump(symbol, table=None, long=False):
+    """Get stored statement data for a company.
+
+    Parameters
+    ----------
+    symbol : str
+        Company symbol previously passed to ingest(), e.g. "KALYANKJIL".
+    table : str, optional
+        Limit to one statement table, e.g. "statement_cash_flow".
+        If omitted, returns all three statements.
+    long : bool
+        If False (default): values pivoted by year, one dict per line_item
+            with a "unit" key and one key per period, e.g.
+            {"line_item": "Sales", "unit": "INR_CRORE", "Mar 2025": 962820.0, ...}
+        If True: tidy long rows instead, one dict per (line_item, period), e.g.
+            {"line_item": "Sales", "period_label": "Mar 2025", "value": 962820.0,
+             "fiscal_year_end": "2025-03-31", "unit": "INR_CRORE"}
+
+    Returns
+    -------
+    dict
+        {"company": {...}, "statement_profit_loss": [...], ...}
+        (or just {"company": {...}, table: [...]} if `table` was given)
+
+    Raises
+    ------
+    ValueError if the company hasn't been ingested yet, or `table` is unknown.
+    """
     db.init_schema()
-    company = _resolve_company_or_die(args.symbol)
+    company = _resolve_company(symbol)
     company_id = company["company_id"]
 
-    try:
-        if args.table:
-            data = discovery.get_statement(args.table, company_id, pivot=not args.long)
-            _print_json({"company": company, args.table: data})
-        else:
-            data = discovery.get_all_statements_for_company(company_id, pivot=not args.long)
-            _print_json({"company": company, **data})
-    except ValueError as exc:
-        print(f"ERROR: {exc}", file=sys.stderr)
-        sys.exit(1)
+    if table:
+        data = discovery.get_statement(table, company_id, pivot=not long)
+        return {"company": company, table: data}
+
+    data = discovery.get_all_statements_for_company(company_id, pivot=not long)
+    return {"company": company, **data}
 
 
-def cmd_line_items(args):
+def line_items(table_name, symbol=None):
+    """List which line_item labels (row names) exist for a statement table.
+
+    Parameters
+    ----------
+    table_name : str
+        e.g. "statement_balance_sheet".
+    symbol : str, optional
+        If given, scopes to line items actually present for that company
+        (not every company discloses every line item, e.g. banks vs
+        manufacturers). If omitted, lists every line item ever seen across
+        all ingested companies.
+
+    Returns
+    -------
+    dict
+        {"table": table_name, "company": company_or_None, "line_items": [...]}
+
+    Raises
+    ------
+    ValueError if table_name is unknown, or symbol hasn't been ingested.
+    """
     db.init_schema()
     company = None
     company_id = None
-    if args.symbol:
-        company = _resolve_company_or_die(args.symbol)
+    if symbol:
+        company = _resolve_company(symbol)
         company_id = company["company_id"]
-    try:
-        items = discovery.list_line_items(args.table_name, company_id=company_id)
-    except ValueError as exc:
-        print(f"ERROR: {exc}", file=sys.stderr)
-        sys.exit(1)
-    _print_json({"table": args.table_name, "company": company, "line_items": items})
+    items = discovery.list_line_items(table_name, company_id=company_id)
+    return {"table": table_name, "company": company, "line_items": items}
 
 
-def cmd_sql(args):
+def sql(query, params=()):
+    """Run an arbitrary read-only SQL query.
+
+    Parameters
+    ----------
+    query : str
+        Must start with SELECT - anything else raises ValueError.
+    params : tuple, optional
+        Positional parameters for "?" placeholders in `query`.
+
+    Returns
+    -------
+    list[dict]
+    """
     db.init_schema()
-    try:
-        rows = discovery.run_raw_query(args.query)
-        _print_json(rows)
-    except ValueError as exc:
-        print(f"ERROR: {exc}", file=sys.stderr)
-        sys.exit(1)
-
-
-def build_parser():
-    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    sub = parser.add_subparsers(dest="command", required=True)
-
-    p = sub.add_parser("tables", help="List every logical table + description")
-    p.set_defaults(func=cmd_tables)
-
-    p = sub.add_parser("describe", help="Show columns for one table")
-    p.add_argument("table_name")
-    p.set_defaults(func=cmd_describe)
-
-    p = sub.add_parser("companies", help="List every company stored in the DB")
-    p.set_defaults(func=cmd_companies)
-
-    p = sub.add_parser("ingest", help="Scrape + store a company from screener.in")
-    p.add_argument("symbol", help="NSE trading symbol as used by screener.in, e.g. RELIANCE")
-    p.add_argument("--years", type=int, default=None, help="How many recent annual years to keep (default: 5)")
-    p.set_defaults(func=cmd_ingest)
-
-    p = sub.add_parser("dump", help="Dump stored statement data for a company")
-    p.add_argument("symbol")
-    p.add_argument("--table", default=None, help="Limit to one statement table, e.g. statement_cash_flow")
-    p.add_argument("--long", action="store_true", help="Return tidy long rows instead of pivoted-by-year")
-    p.set_defaults(func=cmd_dump)
-
-    p = sub.add_parser("line-items", help="List line items available for a table (optionally scoped to a company)")
-    p.add_argument("symbol", nargs="?", default=None, help="Optional company symbol to scope to")
-    p.add_argument("table_name")
-    p.set_defaults(func=cmd_line_items)
-
-    p = sub.add_parser("sql", help="Run an arbitrary read-only SQL SELECT query")
-    p.add_argument("query")
-    p.set_defaults(func=cmd_sql)
-
-    return parser
-
-
-def main():
-    parser = build_parser()
-    args = parser.parse_args()
-    args.func(args)
+    return discovery.run_raw_query(query, params)
 
 
 if __name__ == "__main__":
-    main()
+    # Quick manual smoke test when running this file directly. Edit this
+    # block freely while debugging - it has no effect on the importable
+    # functions above.
+    import json
+
+    print(json.dumps(dump("KALYANKJIL"), indent=2, default=str))

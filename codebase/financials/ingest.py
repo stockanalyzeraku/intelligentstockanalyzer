@@ -12,7 +12,8 @@ screener_symbol, and statement rows are upserted by
 (company_id, line_item, period_label) so re-scraping a company updates
 existing rows rather than duplicating them.
 """
-import sys, os
+import sys
+import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 import re
@@ -21,8 +22,6 @@ from datetime import datetime, timezone
 from codebase.financials import db
 from codebase.financials.db import STATEMENT_TABLES
 from codebase.financials.scraper import ScrapeError, scrape_company
-from config import CONFIG
-    
 
 # Map a "Mon YYYY" period label (e.g. "Mar 2024") to month number, used to
 # derive a real ISO fiscal_year_end date for the typed column.
@@ -47,6 +46,49 @@ def _period_to_iso_date(period_label):
     if month_num == 2 and (year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)):
         last_day = 29
     return f"{year:04d}-{month_num:02d}-{last_day:02d}"
+
+
+# Line items that screener.in reports in plain Rupees (not Crores), or as
+# a dimensionless ratio rather than a currency amount at all. Everything
+# NOT listed here defaults to INR_CRORE, screener's standard monetary unit
+# for consolidated statements. Matching is case-insensitive and tolerant of
+# the trailing "+" expand marker already being stripped by the scraper.
+_PLAIN_INR_LINE_ITEMS = {
+    "eps in rs",
+    "eps",
+    "dividend per share",
+    "book value",
+}
+
+_RATIO_LINE_ITEMS = {
+    "cfo/op",
+}
+
+
+def classify_unit(line_item):
+    """Return the unit code (see db.UNIT_LABELS) for a given line_item label.
+
+    Rules, in order:
+      1. Row label ends with '%'  -> PERCENT  (OPM %, Tax %, Dividend Payout %, ROCE %, ...)
+      2. Row label is a known ratio (e.g. CFO/OP) -> RATIO
+      3. Row label is a known plain-Rupee figure (e.g. EPS in Rs) -> INR
+      4. Otherwise -> INR_CRORE (screener.in's default for monetary rows)
+
+    NOTE: this is a label-based heuristic, not something screener.in marks
+    explicitly per-row. If screener.in adds a new line item that doesn't
+    fit the INR_CRORE default (rare, but possible for non-standard
+    industries e.g. banks/NBFCs), add it to _PLAIN_INR_LINE_ITEMS or
+    _RATIO_LINE_ITEMS above.
+    """
+    label = line_item.strip().lower()
+
+    if label.endswith("%"):
+        return "PERCENT"
+    if label in _RATIO_LINE_ITEMS:
+        return "RATIO"
+    if label in _PLAIN_INR_LINE_ITEMS:
+        return "INR"
+    return "INR_CRORE"
 
 
 def _upsert_company(conn, company_info, scraped_at):
@@ -112,19 +154,21 @@ def _upsert_statement_rows(conn, company_id, statement_table, scraped_at):
 
     rows_written = 0
     for row in statement_table.rows:
+        unit = classify_unit(row.line_item)
         for period_label, value in row.values.items():
             fiscal_year_end = _period_to_iso_date(period_label)
             cur.execute(
                 f"""
                 INSERT INTO {table_name}
-                    (company_id, line_item, period_label, fiscal_year_end, value, scraped_at)
-                VALUES (?, ?, ?, ?, ?, ?)
+                    (company_id, line_item, period_label, fiscal_year_end, value, unit, scraped_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
                 ON CONFLICT(company_id, line_item, period_label)
                 DO UPDATE SET value = excluded.value,
                               fiscal_year_end = excluded.fiscal_year_end,
+                              unit = excluded.unit,
                               scraped_at = excluded.scraped_at
                 """,
-                (company_id, row.line_item, period_label, fiscal_year_end, value, scraped_at),
+                (company_id, row.line_item, period_label, fiscal_year_end, value, unit, scraped_at),
             )
             rows_written += 1
     return rows_written
@@ -191,7 +235,7 @@ def ingest_many(symbols, years_to_keep=None, db_path=None, stop_on_error=False):
     return results
 
 if __name__ == "__main__":
-    result = ingest_company("KALYANKJIL",5,CONFIG.DB_PATH)
+    from config import CONFIG
+    path = CONFIG.DB_PATH
+    result = ingest_company("KALYANKJIL",5)
     print(result)
-
-
