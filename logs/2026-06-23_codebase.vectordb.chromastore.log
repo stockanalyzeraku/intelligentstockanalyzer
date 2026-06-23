@@ -11,3 +11,4 @@
 {"ts": "2026-06-23T02:11:59.995974+05:30", "level": "INFO", "component": "codebase.vectordb.chromastore", "message": "[ChromaStore] Creating PersistentClient at '/workspaces/Sample-1/chroma_db'"}
 {"ts": "2026-06-23T02:11:59.998224+05:30", "level": "INFO", "component": "codebase.vectordb.chromastore", "message": "[ChromaStore] Client ready"}
 {"ts": "2026-06-23T02:12:00.017646+05:30", "level": "INFO", "component": "codebase.vectordb.chromastore", "message": "Chroma Query Started", "event": "chroma_query_started", "stage": "vectordb", "status": "ok", "collection": "child_chunks", "n_results": 3, "query_count": 1}
+{"ts": "2026-06-23T19:41:42.964607+05:30", "level": "INFO", "component": "codebase.vectordb.chromastore", "message": "[ChromaStore] Initialised — path='/workspaces/Sample-1/chroma_db'"}

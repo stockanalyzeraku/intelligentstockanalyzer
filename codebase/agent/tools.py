@@ -2,7 +2,7 @@
 
 Both tools catch their specific exceptions and return an "ERROR: ..." string
 rather than raising, so the agent loop never crashes on a bad lookup and the
-model can react to the failure in its final answer (per code-style-guide.md).
+model can react to the failure in its final answer.
 """
 
 from __future__ import annotations
@@ -18,7 +18,6 @@ from codebase.vectordb.chromastore import ChromaStore
 
 logger = logging.getLogger(__name__)
 
-# statement_* tables to search, in a fixed order, for a given line_item.
 _STATEMENT_TABLES: tuple[str, ...] = (
     "statement_profit_loss",
     "statement_balance_sheet",
@@ -27,8 +26,6 @@ _STATEMENT_TABLES: tuple[str, ...] = (
 
 
 class FinancialDataInput(BaseModel):
-    """Input schema for the get_financial_data tool."""
-
     symbol: str = Field(
         ...,
         description=(
@@ -49,8 +46,6 @@ class FinancialDataInput(BaseModel):
 
 
 class AnnualReportSearchInput(BaseModel):
-    """Input schema for the search_annual_report tool."""
-
     symbol: str = Field(..., description="Company symbol, e.g. 'KALYANKJIL'.")
     query: str = Field(
         ..., description="Natural-language question to search the annual report for."
@@ -69,52 +64,32 @@ def _find_line_item_value(
 ) -> tuple[str, float | None, str | None] | None:
     """Search statement_* tables for a (company, line_item) row and read a period.
 
-    Args:
-        cursor: An open sqlite3 cursor.
-        symbol: Company symbol to resolve against the companies table.
-        line_item: Exact line item name to match.
-        period: Column name to read, e.g. "Mar 2023".
-
     Returns:
-        A tuple of (table_name, value, unit) if found, else None. value is
-        None if the row exists but that period column is empty/NULL.
+        A tuple of (table_name, value, unit) if found, else None.
     """
     cursor.execute(
-        "SELECT id FROM companies "  # ✅ correct column name
-        "WHERE screener_symbol = ? OR nse_symbol = ? LIMIT 1",
+        "SELECT id FROM companies WHERE screener_symbol = ? OR nse_symbol = ? LIMIT 1",
         (symbol, symbol),
     )
     company_row = cursor.fetchone()
     if company_row is None:
         return None
     company_id = company_row[0]
-    for company in company_row:
-        print(f"//////{company}")
-    print(f"Company: {company_id}")
 
     for table in _STATEMENT_TABLES:
-        # period is constructed upstream from a regex-matched 4-digit year
-        # (see classify.py), so it is safe to interpolate as a quoted
-        # identifier here; it is never taken raw from user input.
         query = (
             f'SELECT "{period}", unit FROM {table} '
             "WHERE company_id = ? AND line_item = ? LIMIT 1"
         )
-        
-        print(f"QUERY: {query}")
         try:
             cursor.execute(query, (company_id, line_item))
         except sqlite3.OperationalError:
-            # Column for this period doesn't exist in this table; try next.
             continue
         row = cursor.fetchone()
-        for r in row:
-            print(f"values: {r}")
-
         if row is not None:
-            print(f"Table:{table}, Row0: {row[0]}, Row1: {row[1]}")
             return table, row[0], row[1]
     return None
+
 
 @tool("get_financial_data", args_schema=FinancialDataInput)
 def get_financial_data(symbol: str, line_item: str, period: str) -> str:
@@ -128,31 +103,17 @@ def get_financial_data(symbol: str, line_item: str, period: str) -> str:
         line_item: Exact financial line item name.
         period: Period column to read, e.g. "Mar 2023".
 
-
     Returns:
         A short string with the value and unit, or an "ERROR: ..." string
         if the company, line item, or period could not be found.
     """
     try:
-        # conn = get_connection()    
         with get_connection() as conn:
-            try:
-                cursor = conn.cursor()
-                print(f"symbol:{symbol}, lineitem:{line_item}, period: {period}")
-                result = _find_line_item_value(cursor, symbol, line_item, period)
-                if result is None:
-                    return f"No data found for {line_item} / {symbol} / {period}"
-
-                table, value, unit = result
-                return f"{line_item} for {symbol} in {period}: {value} {unit} (from {table})"
-            finally:
-                strp=""
-                # conn.close()
+            cursor = conn.cursor()
+            result = _find_line_item_value(cursor, symbol, line_item, period)
     except sqlite3.Error as exc:
-                logger.exception(
-                "DB error fetching %s/%s/%s", symbol, line_item, period
-                )
-    return f"ERROR: database error fetching {line_item} for {symbol} ({period}): {exc}"
+        logger.exception("DB error fetching %s/%s/%s", symbol, line_item, period)
+        return f"ERROR: database error fetching {line_item} for {symbol} ({period}): {exc}"
 
     if result is None:
         return (
@@ -199,7 +160,7 @@ def search_annual_report(
         results = store.query_children_with_parent_context(
             query_texts=[query], n_results=n_results, where=where
         )
-    except Exception as exc:  # noqa: BLE001 - vector store can raise various backend errors
+    except Exception as exc:
         logger.exception(
             "Vector search failed for symbol=%s year=%s query=%r", symbol, year, query
         )

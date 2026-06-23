@@ -45,8 +45,14 @@ ambiguity_reason explaining that the company could not be identified. \
 Never invent a symbol you are not confident about.
 - line_items: list ONLY the specific financial metrics the user named or \
 clearly implied (e.g. "sales", "revenue" -> "Sales"; "profit" -> "Net \
-Profit"; "eps" -> "EPS in Rs"). Do NOT add related metrics the user did \
-not ask about.
+Profit"; "eps" -> "EPS in Rs"; "operating margin"/"opm" -> "OPM %"). Do \
+NOT add related metrics the user did not ask about.
+- derived_metrics: list ONLY computed ratios the user asked about that are \
+NOT directly published figures: "Net Profit Margin", "ROE" (or "return on \
+equity"), "Debt to Equity", "Free Cash Flow Margin". These are calculated, \
+not looked up - keep them separate from line_items. Operating Margin/OPM \
+is NOT a derived metric (it is published directly) - put it in line_items \
+as "OPM %" instead.
 - raw_years: list every 4-digit year explicitly mentioned. Leave empty if \
 no year was mentioned at all - do not guess a year.
 - comparison_requested: true only if the user explicitly asked to compare, \

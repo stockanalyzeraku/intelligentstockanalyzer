@@ -65,6 +65,13 @@ it to explain WHY a number changed, but only in direct service of \
 answering what was asked - do not import the qualitative context as \
 numeric data. Any number must still come from the verified data, never \
 from the qualitative text.
+- If you are given any "Derived metric" / computed approximation (e.g. \
+ROE, Net Profit Margin, Debt-to-Equity, Free Cash Flow Margin), you MUST \
+always present it using the exact label given to you (e.g. "ROE \
+(computed, average equity)"), making clear it is a computed approximation \
+- NEVER state it as if it were a figure published directly by the data \
+source. Use phrasing like "an approximate ROE of X%, computed as..." \
+rather than "ROE was X%".
 - Keep the answer clear, well-reasoned, and grounded. Do not pad with \
 generic filler.
 """
@@ -119,10 +126,33 @@ def _format_context_snippets(snippets: list[dict]) -> str:
     return "\n\n".join(parts)
 
 
+def _format_derived_metric_for_prompt(metric) -> str:
+    """Render a DerivedMetric as plain text for the synthesis prompt.
+
+    Always includes the metric's approximation label and formula note up
+    front, so the LLM has no way to present this as a directly-sourced
+    figure - the labeling is baked into the data it's handed, not left to
+    the model's discretion.
+    """
+    lines = [
+        f"Derived metric: {metric.label}",
+        f"Formula: {metric.formula_note}",
+        "(This is a COMPUTED approximation, not a figure published directly "
+        "by the data source - always present it as such.)",
+    ]
+    for point in metric.points:
+        if point.value is not None:
+            lines.append(f"  {point.period}: {point.value * 100:.2f}%")
+        else:
+            lines.append(f"  {point.period}: not available ({point.note})")
+    return "\n".join(lines)
+
+
 def synthesize_answer(
     query: str,
     symbol: str,
     series_list: list[EnrichedSeries],
+    derived_metrics: list | None = None,
     context_snippets: list[dict] | None = None,
 ) -> str:
     """Run the Synthesis agent and return the final answer text.
@@ -137,8 +167,13 @@ def synthesize_answer(
         Resolved company symbol, for the prompt's framing only.
     series_list : list[EnrichedSeries]
         One enriched series per line_item that was actually resolved and
-        fetched in Stage 4. This is the ONLY source of numbers the agent
-        may use.
+        fetched in Stage 4. This is one of the two sources of numbers the
+        agent may use (the other being derived_metrics below).
+    derived_metrics : list[DerivedMetric], optional
+        Output of derived_metrics.compute_derived_metric() for any computed
+        ratios (ROE, Net Profit Margin, etc.) the user asked about. Always
+        rendered with an explicit "computed approximation" label - see
+        _format_derived_metric_for_prompt.
     context_snippets : list[dict], optional
         Output of context_retrieval.retrieve_context()["snippets"], if
         Stage 5 ran. Empty/None if not applicable.
@@ -148,18 +183,26 @@ def synthesize_answer(
     str
         The final answer text. On an unexpected agent failure, returns a
         plain data-only fallback string built directly from series_list
-        (never silent failure, never a fabricated answer).
+        and derived_metrics (never silent failure, never a fabricated answer).
     """
     series_text = "\n\n".join(_format_series_for_prompt(s) for s in series_list)
+    derived_text = "\n\n".join(_format_derived_metric_for_prompt(m) for m in (derived_metrics or []))
     context_text = _format_context_snippets(context_snippets or [])
 
-    prompt = (
-        f"User's question: {query}\n\n"
-        f"Company: {symbol}\n\n"
-        f"Verified financial data (the ONLY numbers you may use):\n{series_text}\n\n"
-        f"Qualitative context (annual report excerpts, optional):\n{context_text}\n\n"
-        f"Write the final answer now."
-    )
+    prompt_sections = [
+        f"User's question: {query}",
+        f"Company: {symbol}",
+        f"Verified financial data (the ONLY directly-sourced numbers you may use):\n{series_text}" if series_text else "",
+        (
+            f"Computed/derived metrics (ALWAYS present these with their label "
+            f"making clear they are computed approximations, never as directly "
+            f"published figures):\n{derived_text}"
+            if derived_text else ""
+        ),
+        f"Qualitative context (annual report excerpts, optional):\n{context_text}",
+        "Write the final answer now.",
+    ]
+    prompt = "\n\n".join(section for section in prompt_sections if section)
 
     try:
         result = synthesis_agent.invoke({"messages": [{"role": "user", "content": prompt}]})
@@ -167,7 +210,7 @@ def synthesize_answer(
         return _flatten_content_blocks(content_blocks)
     except Exception:  # noqa: BLE001 - this stage must never crash the pipeline
         logger.exception("Synthesis agent failed for query=%r symbol=%s", query, symbol)
-        return _fallback_answer(series_list)
+        return _fallback_answer(series_list, derived_metrics or [])
 
 
 def _flatten_content_blocks(content_blocks) -> str:
@@ -188,10 +231,11 @@ def _flatten_content_blocks(content_blocks) -> str:
     return "".join(parts).strip()
 
 
-def _fallback_answer(series_list: list[EnrichedSeries]) -> str:
+def _fallback_answer(series_list: list[EnrichedSeries], derived_metrics: list | None = None) -> str:
     """Plain, data-only answer with no LLM involvement, used only if the
     synthesis agent call itself fails outright. Less fluent than a real
-    synthesis, but never wrong and never silent.
+    synthesis, but never wrong and never silent. Derived metrics keep
+    their approximation label even in this fallback path.
     """
     parts = []
     for series in series_list:
@@ -200,4 +244,12 @@ def _fallback_answer(series_list: list[EnrichedSeries]) -> str:
             for p in series.points
         )
         parts.append(f"{series.line_item}: {values}")
+
+    for metric in derived_metrics or []:
+        values = ", ".join(
+            f"{p.period}: {f'{p.value * 100:.2f}%' if p.value is not None else 'not available'}"
+            for p in metric.points
+        )
+        parts.append(f"{metric.label}: {values}")
+
     return "I couldn't generate a full narrative answer, but here is the verified data:\n" + "\n".join(parts)

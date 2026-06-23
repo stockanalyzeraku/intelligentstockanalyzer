@@ -1,9 +1,5 @@
 """
 Parent-child record preparation and ChromaDB ingestion helpers.
-
-Classes
--------
-EmbeddingPrepared
 """
 
 from __future__ import annotations
@@ -15,42 +11,45 @@ from typing import Any
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
-from config import CONFIG       
-from logger import get_logger   
+from config import CONFIG
+from logger import get_logger
 
 logger = get_logger(__name__)
 
 
 class EmbeddingPrepared:
 
-    MAX_WORDS:    int = 150
+    MAX_WORDS: int = 150
     OVERLAP_WORDS: int = 30
 
-    def __init__(self, max_words:int = MAX_WORDS, overlap_words: int = OVERLAP_WORDS) -> None:
-        self.max_words    = max_words
+    def __init__(self, max_words: int = MAX_WORDS, overlap_words: int = OVERLAP_WORDS) -> None:
+        self.max_words = max_words
         self.overlap_words = overlap_words
-        logger.info(f"[EmbeddingPrepared] Initialised — "f"max_words={max_words}, overlap={overlap_words}")
+        logger.info(
+            f"[EmbeddingPrepared] Initialised — "
+            f"max_words={max_words}, overlap={overlap_words}"
+        )
 
-
-    def split_text_into_chunks(self,text:str,max_words: int | None = None,overlap:int | None = None) -> list[str]:
-    
+    def split_text_into_chunks(
+        self,
+        text: str,
+        max_words: int | None = None,
+        overlap: int | None = None,
+    ) -> list[str]:
         max_words = max_words if max_words is not None else self.max_words
-        overlap   = overlap   if overlap   is not None else self.overlap_words
+        overlap = overlap if overlap is not None else self.overlap_words
 
         paragraphs = [p.strip() for p in text.split("\n\n") if p.strip()]
-        chunks:         list[str]  = []
-        current_words:  list[str]  = []
+        chunks: list[str] = []
+        current_words: list[str] = []
 
         for para in paragraphs:
             para_words = para.split()
 
-            # ── Paragraph too long → hard-split ────────────────────────
             if len(para_words) > max_words:
-                # Flush current buffer first
                 if current_words:
                     chunks.append(" ".join(current_words))
                     current_words = []
-
                 start = 0
                 while start < len(para_words):
                     end = start + max_words
@@ -59,7 +58,6 @@ class EmbeddingPrepared:
                     start = next_start if next_start > start else end
                 continue
 
-            # ── Paragraph fits — try to accumulate ─────────────────────
             if len(current_words) + len(para_words) > max_words:
                 if current_words:
                     chunks.append(" ".join(current_words))
@@ -70,15 +68,20 @@ class EmbeddingPrepared:
             else:
                 current_words.extend(para_words)
 
-        # Flush remaining words
         if current_words:
             chunks.append(" ".join(current_words))
 
         logger.debug(f"[EmbeddingPrepared] split_text_into_chunks → {len(chunks)} chunks")
         return chunks
 
-    def _build_metadata(self, page: dict, record_type: str, parent_id: str, child_index: int | None = None, child_count: int | None = None) -> dict:
-
+    def _build_metadata(
+        self,
+        page: dict,
+        record_type: str,
+        parent_id: str,
+        child_index: int | None = None,
+        child_count: int | None = None,
+    ) -> dict:
         intents = page.get("page_intent", [])
         intent_str = ",".join(intents) if isinstance(intents, list) else ""
 
@@ -97,13 +100,14 @@ class EmbeddingPrepared:
             metadata["child_count"] = child_count
         return metadata
 
-
-    def prepare_for_embedding(self, input_path:  str, output_path: str, max_words:   int | None = None, overlap:     int | None = None) -> dict[str, list[dict]]:
-        """
-        Read cleaned page JSON, build page parents plus child records, and
-        write an embedding-ready JSON file.
-
-        """
+    def prepare_for_embedding(
+        self,
+        input_path: str,
+        output_path: str,
+        max_words: int | None = None,
+        overlap: int | None = None,
+    ) -> dict[str, list[dict]]:
+        """Read cleaned page JSON, build parent + child records, write embedding-ready JSON."""
         logger.info(f"[EmbeddingPrepared] prepare_for_embedding: {input_path}")
 
         with open(input_path, "r", encoding="utf-8") as fh:
@@ -117,8 +121,7 @@ class EmbeddingPrepared:
             clean_text = page.get("clean_text", "")
             if not clean_text.strip():
                 logger.debug(
-                    f"[EmbeddingPrepared] Page {page.get('page_number')} "
-                    f"has no clean_text — skipping"
+                    f"[EmbeddingPrepared] Page {page.get('page_number')} has no clean_text — skipping"
                 )
                 continue
 
@@ -147,8 +150,8 @@ class EmbeddingPrepared:
             for c_idx, chunk in enumerate(child_chunks):
                 bundle["children"].append(
                     {
-                        "id":       f"{parent_id}_child_{c_idx}",
-                        "text":     chunk,
+                        "id": f"{parent_id}_child_{c_idx}",
+                        "text": chunk,
                         "metadata": self._build_metadata(
                             page=page,
                             record_type="child",
@@ -160,8 +163,8 @@ class EmbeddingPrepared:
                 )
 
         logger.info(
-            f"[EmbeddingPrepared] {len(bundle['parents'])} parents and {len(bundle['children'])} children generated from "
-            f"{len(data)} pages"
+            f"[EmbeddingPrepared] {len(bundle['parents'])} parents and "
+            f"{len(bundle['children'])} children generated from {len(data)} pages"
         )
 
         with open(output_path, "w", encoding="utf-8") as fh:
@@ -169,28 +172,3 @@ class EmbeddingPrepared:
 
         logger.info(f"[EmbeddingPrepared] Embedding-ready JSON written → {output_path}")
         return bundle
-
-    
-    # def store_in_chromadb(
-    #     self,
-    #     embedding_json_path: str,
-    #     collection_name:     str = "",
-    #     chroma_path:         str | None = None,
-    # ) -> Any:
-    #     """
-    #     Load embedding-ready parent/child records and upsert them into the
-    #     ChromaDB store.
-    #     """
-
-    #     from codebase.vectordb.chromastore import CHROMA_STORE
-
-    #     chroma_path = chroma_path or CONFIG.CHROMA_PATH
-    #     logger.info(
-    #         f"[EmbeddingPrepared] store_in_chromadb — collection='{collection_name}', path='{chroma_path}'"
-    #     )
-
-    #     return CHROMA_STORE.store_in_chromadb(
-    #         embedding_json_path=embedding_json_path,
-    #         collection_name=collection_name,
-    #         chroma_path=chroma_path,
-    #     )

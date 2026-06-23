@@ -36,6 +36,7 @@ import logging
 
 from codebase.agent.clarification import resolve_query
 from codebase.agent.context_retrieval import retrieve_context
+from codebase.agent.derived_metrics import compute_derived_metric, resolve_derived_metric_name
 from codebase.agent.enrichment import EnrichedSeries, enrich_series
 from codebase.agent.followup import suggest_follow_ups
 from codebase.agent.query_understanding import understand_query
@@ -50,19 +51,20 @@ logger = logging.getLogger(__name__)
 _cache = CacheMemory()
 
 
-def _build_cache_key(symbol: str, line_items: list[str], periods: list[str],
-                      needs_qualitative_context: bool, intent: str) -> tuple[str, dict]:
+def _build_cache_key(symbol: str, line_items: list[str], derived_metric_keys: list[str],
+                      periods: list[str], needs_qualitative_context: bool, intent: str) -> tuple[str, dict]:
     """Build the structured, phrasing-independent cache key for this query.
 
-    Sorting line_items/periods before hashing means two requests for the
-    same metrics/periods in a different extraction ORDER still hit the
-    same cache entry - the resolved SET is the identity, not the sequence
-    in which Stage 1 happened to list them.
+    Sorting line_items/derived_metric_keys/periods before hashing means two
+    requests for the same metrics/periods in a different extraction ORDER
+    still hit the same cache entry - the resolved SET is the identity, not
+    the sequence in which Stage 1 happened to list them.
     """
     return _cache.build_structured_cache_key(
         company=symbol,
         extra_filters={
             "line_items": sorted(line_items),
+            "derived_metrics": sorted(derived_metric_keys),
             "periods": sorted(periods),
             "needs_qualitative_context": needs_qualitative_context,
             "intent": intent,
@@ -103,8 +105,26 @@ def answer_query(query: str) -> dict:
             "periods": [],
         }
 
+    # Resolve free-text derived metric names (from Stage 1) to internal
+    # keys up front, since both the cache key and Stage 4 computation need
+    # the canonical key, not the user's original phrasing.
+    resolved_derived_keys: list[str] = []
+    unresolved_derived_names: list[str] = []
+    for name in resolved.derived_metrics:
+        key = resolve_derived_metric_name(name)
+        if key is not None and key not in resolved_derived_keys:
+            resolved_derived_keys.append(key)
+        elif key is None:
+            unresolved_derived_names.append(name)
+
+    if unresolved_derived_names:
+        logger.info(
+            "Unrecognized derived metric name(s) %s for symbol=%s - ignoring, not treated as a stop condition",
+            unresolved_derived_names, resolved.symbol,
+        )
+
     cache_key, normalized_payload = _build_cache_key(
-        resolved.symbol, resolved.line_items, resolved.periods,
+        resolved.symbol, resolved.line_items, resolved_derived_keys, resolved.periods,
         resolved.needs_qualitative_context, resolved.intent,
     )
 
@@ -141,13 +161,19 @@ def answer_query(query: str) -> dict:
         if enriched is not None:
             series_list.append(enriched)
 
-    if not series_list:
-        # Every requested line_item failed to resolve (e.g. all misspelled
-        # or genuinely not tracked for this company). Distinct from "found
-        # the company but found nothing" at the clarification gate - this
-        # is a data-availability failure for the SPECIFIC metrics asked,
-        # discovered only after Stage 4 tried. Not cached, same reasoning
-        # as the clarification-gate stop above.
+    derived_metric_results = []
+    for metric_key in resolved_derived_keys:
+        derived = compute_derived_metric(metric_key, resolved.symbol, resolved.periods)
+        if derived is not None:
+            derived_metric_results.append(derived)
+
+    if not series_list and not derived_metric_results:
+        # Every requested line_item/derived_metric failed to resolve (e.g.
+        # all misspelled or genuinely not tracked for this company).
+        # Distinct from "found the company but found nothing" at the
+        # clarification gate - this is a data-availability failure for the
+        # SPECIFIC metrics asked, discovered only after Stage 4 tried. Not
+        # cached, same reasoning as the clarification-gate stop above.
         error_summary = "; ".join(fetch_errors) if fetch_errors else "no data found"
         return {
             "answer": f"I couldn't retrieve the requested data for {resolved.symbol}: {error_summary}",
@@ -175,6 +201,7 @@ def answer_query(query: str) -> dict:
     # --- Stage 6: Synthesis ---
     answer_text = synthesize_answer(
         query, resolved.symbol, series_list,
+        derived_metrics=derived_metric_results if derived_metric_results else None,
         context_snippets=context_snippets if context_snippets else None,
     )
 
@@ -196,8 +223,8 @@ def answer_query(query: str) -> dict:
             response={"status": "success", "answer": answer_text, "suggestions": suggestions},
         )
         logger.info(
-            "Cached new answer for symbol=%s line_items=%s periods=%s",
-            resolved.symbol, resolved.line_items, resolved.periods,
+            "Cached new answer for symbol=%s line_items=%s derived_metrics=%s periods=%s",
+            resolved.symbol, resolved.line_items, resolved_derived_keys, resolved.periods,
         )
 
     return {

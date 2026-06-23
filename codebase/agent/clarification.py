@@ -29,6 +29,7 @@ class ResolvedQuery:
     can_proceed: bool
     symbol: str | None = None
     line_items: list[str] = field(default_factory=list)
+    derived_metrics: list[str] = field(default_factory=list)
     periods: list[str] = field(default_factory=list)  # chronological order, oldest first
     comparison_requested: bool = False
     needs_qualitative_context: bool = False
@@ -146,6 +147,7 @@ def resolve_query(understanding: QueryUnderstanding) -> ResolvedQuery:
         can_proceed=True,
         symbol=understanding.symbol,
         line_items=understanding.line_items,
+        derived_metrics=understanding.derived_metrics,
         periods=periods,
         comparison_requested=understanding.comparison_requested,
         needs_qualitative_context=understanding.needs_qualitative_context,

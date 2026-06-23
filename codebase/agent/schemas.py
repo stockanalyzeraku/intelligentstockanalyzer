@@ -51,7 +51,24 @@ class QueryUnderstanding(BaseModel):
             "Use exact line item names as they appear in the financial statements "
             "(Sales, Net Profit, EPS in Rs, Borrowings, Reserves, Operating Profit, "
             "Cash from Operating Activity, etc.) - if unsure of the exact label, "
-            "use the closest common synonym and let downstream lookup resolve it."
+            "use the closest common synonym and let downstream lookup resolve it. "
+            "Do NOT put computed ratios here (e.g. ROE, Net Profit Margin, "
+            "Debt-to-Equity) - those go in derived_metrics instead. The one "
+            "exception is 'OPM %' (Operating Margin), which IS a directly "
+            "published line item, not computed - use line_items for it."
+        ),
+    )
+    derived_metrics: list[str] = Field(
+        default_factory=list,
+        description=(
+            "Computed/ratio metrics the user asked about that are NOT directly "
+            "published line items, e.g. ['ROE'], ['Net Profit Margin', "
+            "'Debt to Equity']. Recognized values: 'Net Profit Margin', 'ROE', "
+            "'Debt to Equity', 'Free Cash Flow Margin'. These are calculated "
+            "from raw line items rather than read directly from the source, "
+            "and will always be presented as approximate/computed figures. "
+            "Do NOT put 'Operating Margin'/'OPM' here - that is a directly "
+            "published line item, use line_items for it instead."
         ),
     )
     raw_years: list[str] = Field(

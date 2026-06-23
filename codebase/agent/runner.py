@@ -1,21 +1,12 @@
 """CLI entry point for the multi-agent company Q&A pipeline.
 
-This REPLACES the previous single-agent runner (financial_agent /
-general_agent + classify.py's regex-based ClassificationResult). All
-queries now go through codebase.agent.pipeline.answer_query(), which runs
-the full 8-stage pipeline (Query Understanding -> Clarification Gate ->
-Cache check -> Data Retrieval+Enrichment -> conditional Context Retrieval
--> Synthesis -> Follow-up Suggestor -> Cache write).
-
-The old codebase/agent/classify.py, agents.py, and the original
-codebase/agent/tools.py functions (get_financial_data) are NOT deleted -
-search_annual_report and the underlying ChromaStore/financials DB access
-are still used internally by the new pipeline (context_retrieval.py,
-series_tools.py). Only the top-level entry point and routing logic have
-been replaced.
+All queries go through codebase.agent.pipeline.answer_query(), which runs
+the full 8-stage pipeline:
+    Query Understanding -> Clarification Gate -> Cache check ->
+    Data Retrieval+Enrichment -> conditional Context Retrieval ->
+    Synthesis -> Follow-up Suggestor -> Cache write
 
 Run from the project root:
-
     python codebase/agent/runner.py
 """
 from __future__ import annotations
@@ -53,14 +44,14 @@ def _format_for_display(result: dict) -> str:
 
 def main() -> None:
     """Run an interactive CLI loop for ad-hoc testing."""
-    print("Company Q&A multi-agent pipeline (POC). Type 'exit' to quit.")
+    print("Company Q&A multi-agent pipeline. Type 'exit' to quit.")
     while True:
         query = input("\n> ").strip()
         if not query or query.lower() in {"exit", "quit"}:
             break
         try:
             result = answer_query(query)
-        except Exception:  # noqa: BLE001 - top-level CLI guard for the POC
+        except Exception:
             logger.exception("Unhandled error answering query: %r", query)
             print("Sorry, something went wrong answering that question.")
             continue
