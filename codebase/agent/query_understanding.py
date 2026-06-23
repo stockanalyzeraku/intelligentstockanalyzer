@@ -30,8 +30,18 @@ from langchain.agents import create_agent
 from langchain_mistralai import ChatMistralAI
 
 from codebase.agent.schemas import QueryUnderstanding
+from codebase.financials.aliases import init_aliases_schema
 
 logger = logging.getLogger(__name__)
+
+# Ensure the company_aliases table exists before _check_known_aliases /
+# _maybe_save_alias ever run. This module can be imported on its own
+# (e.g. by a test, or a future entry point other than pipeline.py) without
+# pipeline.py's own init_aliases_schema() call having run first - calling
+# it here too makes this module self-sufficient regardless of import
+# order. init_aliases_schema() is idempotent (CREATE TABLE IF NOT EXISTS),
+# so calling it from two places is safe, not wasteful in any meaningful way.
+init_aliases_schema()
 
 SYSTEM_PROMPT_QUERY_UNDERSTANDING = """You extract structured information \
 from a user's question about an Indian listed company's financial \
@@ -43,6 +53,12 @@ you recognize it (e.g. "Kalyan Jewellers" -> "KALYANKJIL"). If you do not \
 clearly recognize the company, leave symbol as null and set \
 ambiguity_reason explaining that the company could not be identified. \
 Never invent a symbol you are not confident about.
+- confident: set this True ONLY when you are highly sure of the symbol \
+resolution (well-known company name, exact ticker, or a name/alias you \
+were explicitly told maps to this symbol). Set False if you had to guess \
+or infer from a partial/unusual phrasing, even if you did still produce a \
+symbol. When in doubt, prefer False - this only affects whether the \
+resolution gets remembered for next time, not whether you can answer now.
 - line_items: list ONLY the specific financial metrics the user named or \
 clearly implied (e.g. "sales", "revenue" -> "Sales"; "profit" -> "Net \
 Profit"; "eps" -> "EPS in Rs"; "operating margin"/"opm" -> "OPM %"). Do \
@@ -68,6 +84,12 @@ no number requested.
 
 Never answer the question itself. Never call any tool. Only return the \
 structured fields.
+
+If prior conversation context is given above the question, use it ONLY to
+fill in a company/period/line_item the new question doesn't specify
+itself. A company or period named explicitly in the new question always
+overrides prior context - never let prior context override something the
+user just said.
 """
 
 _model = ChatMistralAI(
@@ -83,8 +105,45 @@ query_understanding_agent = create_agent(
 )
 
 
-def understand_query(query: str) -> QueryUnderstanding:
+def _check_known_aliases(query: str) -> str | None:
+    """Best-effort, deterministic check: does the query contain a phrase
+    we've already learned maps to a symbol? Substring match against the
+    lowercased query, same simple approach as classify.py's existing
+    COMPANY_LOOKUP dict - intentionally simple, not fuzzy, so it cannot
+    silently misfire on an unrelated phrase.
+
+    This does NOT replace the LLM call - it is only used to pre-fill a
+    hint. The LLM still runs and still makes the final call, since the
+    query may need other fields extracted (line_items, years, etc.)
+    regardless of whether the company was already known. Returns None if
+    no learned alias matches.
+    """
+    lowered = query.lower()
+    try:
+        from codebase.financials.aliases import list_aliases
+        for alias in list_aliases():
+            if alias["alias_text"] in lowered:
+                return alias["screener_symbol"]
+    except Exception:  # noqa: BLE001 - alias lookup is a convenience, never fatal
+        logger.exception("Alias lookup failed for query=%r - continuing without it", query)
+    return None
+
+
+def understand_query(query: str, prior_state=None) -> QueryUnderstanding:
     """Run the Query Understanding agent on a raw user query.
+
+    Parameters
+    ----------
+    query : str
+        The raw user question.
+    prior_state : ConversationState, optional
+        Short-term state from earlier in this conversation (see
+        conversation_state.py). If given, its rendered context is
+        prepended to the prompt so an underspecified follow-up question
+        (e.g. "what about net profit?") can fall back to the previously
+        resolved company/period. A new company/period named explicitly in
+        `query` always takes priority - this is instructed in the system
+        prompt, not enforced here.
 
     Returns
     -------
@@ -94,19 +153,41 @@ def understand_query(query: str) -> QueryUnderstanding:
         instance with ambiguity_reason set, rather than raising - so the
         pipeline can always proceed to its clarification-gate logic
         without a try/except at every call site.
+
+    Side effect: if the LLM resolves a company with confident=True AND
+    company_name_as_given is set, the exact phrase the user typed is
+    auto-saved as a new alias (codebase.financials.aliases.save_alias) for
+    next time. This never overwrites an existing alias and never raises -
+    see save_alias's own docstring for the full write policy.
     """
+    known_alias_symbol = _check_known_aliases(query)
+
+    prompt_content = query
+    if prior_state is not None:
+        prompt_content = f"{prior_state.as_prompt_context()}\n\nNew question: {query}"
+    if known_alias_symbol is not None:
+        prompt_content = (
+            f"(Note: a prior conversation/usage already established that a "
+            f"company name in this question refers to symbol "
+            f"'{known_alias_symbol}' - use this if it matches what the "
+            f"question is asking about.)\n\n{prompt_content}"
+        )
+
     try:
         result = query_understanding_agent.invoke(
-            {"messages": [{"role": "user", "content": query}]}
+            {"messages": [{"role": "user", "content": prompt_content}]}
         )
         structured = result.get("structured_response")
         if isinstance(structured, QueryUnderstanding):
+            _maybe_save_alias(structured, query)
             return structured
         # Some provider strategies may return a dict instead of the
         # validated model instance depending on LangChain version/provider
         # path - handle that defensively rather than assuming.
         if isinstance(structured, dict):
-            return QueryUnderstanding(**structured)
+            parsed = QueryUnderstanding(**structured)
+            _maybe_save_alias(parsed, query)
+            return parsed
         logger.warning(
             "Query understanding returned unexpected structured_response type: %r",
             type(structured),
@@ -120,3 +201,29 @@ def understand_query(query: str) -> QueryUnderstanding:
             "mentioning the company name explicitly?"
         )
     )
+
+
+def _maybe_save_alias(structured: QueryUnderstanding, original_query: str) -> None:
+    """Auto-save an alias ONLY when the model self-reported a confident
+    resolution and gave us the exact phrase it resolved from. Best-effort:
+    any failure here is logged and swallowed, never raised, since alias
+    learning is a convenience and must never break query answering.
+    """
+    if not (structured.confident and structured.symbol and structured.company_name_as_given):
+        return
+    try:
+        from codebase.financials.aliases import save_alias
+
+        saved = save_alias(
+            alias_text=structured.company_name_as_given,
+            screener_symbol=structured.symbol,
+            source="llm_confident",
+            source_query=original_query,
+        )
+        if saved:
+            logger.info(
+                "Learned new alias: %r -> %s (from query: %r)",
+                structured.company_name_as_given, structured.symbol, original_query,
+            )
+    except Exception:  # noqa: BLE001 - never let alias learning break the pipeline
+        logger.exception("Failed to save alias for symbol=%s", structured.symbol)

@@ -74,19 +74,23 @@ def _resolve_periods(
     raw_years: list[str],
     single_year_only: bool,
     available_periods: list[str],
+    trailing_years: int = DEFAULT_TRAILING_YEARS,
 ) -> list[str]:
     """Turn extracted raw_years into a final, chronologically-ordered list
-    of period labels to fetch, applying the trailing-3-year default.
+    of period labels to fetch, applying the trailing-year default.
 
     Rules:
-      - No years mentioned at all -> trailing DEFAULT_TRAILING_YEARS most
-        recent available periods for this company (the product default).
+      - No years mentioned at all -> trailing `trailing_years` most recent
+        available periods for this company (defaults to
+        DEFAULT_TRAILING_YEARS; callers may pass a user-preference
+        override - see pipeline.py - but this NEVER overrides an explicit
+        year/years given by the user, only the no-year-mentioned case).
       - One year mentioned, single_year_only=True -> exactly that one
         period (if it exists; if not, falls back to the closest available
         period rather than returning nothing).
       - One year mentioned, single_year_only=False (the common case) ->
-        that year PLUS the DEFAULT_TRAILING_YEARS-1 periods before it, per
-        the "default to 3 years" product decision - context is added
+        that year PLUS the (trailing_years - 1) periods before it, per
+        the "default to N years" product decision - context is added
         automatically, not asked for.
       - Multiple years mentioned -> exactly those periods, in chronological
         order (the user was explicit; we don't add more).
@@ -97,7 +101,7 @@ def _resolve_periods(
     requested_labels = [_period_label(y) for y in raw_years]
 
     if not requested_labels:
-        return available_periods[-DEFAULT_TRAILING_YEARS:]
+        return available_periods[-trailing_years:]
 
     if len(requested_labels) == 1:
         target = requested_labels[0]
@@ -105,12 +109,12 @@ def _resolve_periods(
             return [target] if target in available_periods else available_periods[-1:]
         if target in available_periods:
             idx = available_periods.index(target)
-            window_start = max(0, idx - (DEFAULT_TRAILING_YEARS - 1))
+            window_start = max(0, idx - (trailing_years - 1))
             return available_periods[window_start : idx + 1]
         # Requested year isn't in the data at all - fall back to the
         # trailing default window so the user still gets useful context
         # rather than an empty result.
-        return available_periods[-DEFAULT_TRAILING_YEARS:]
+        return available_periods[-trailing_years:]
 
     # Multiple years explicitly given - use exactly what exists among them,
     # in chronological order. Silently dropping a requested-but-nonexistent
@@ -120,8 +124,20 @@ def _resolve_periods(
     return [p for p in available_periods if p in requested_labels]
 
 
-def resolve_query(understanding: QueryUnderstanding) -> ResolvedQuery:
-    """Run the clarification gate on a Stage 1 QueryUnderstanding result."""
+def resolve_query(understanding: QueryUnderstanding, trailing_years: int = DEFAULT_TRAILING_YEARS) -> ResolvedQuery:
+    """Run the clarification gate on a Stage 1 QueryUnderstanding result.
+
+    Parameters
+    ----------
+    understanding : QueryUnderstanding
+        Stage 1's extraction result.
+    trailing_years : int
+        How many years to default to when no/a single year is mentioned.
+        Defaults to DEFAULT_TRAILING_YEARS (3). Callers (pipeline.py) may
+        pass a user-preference override here - this never overrides an
+        explicit multi-year request, only the "no year mentioned" or
+        "single year, no qualifier" defaulting behavior.
+    """
 
     if understanding.symbol is None or understanding.ambiguity_reason is not None:
         return ResolvedQuery(
@@ -140,7 +156,7 @@ def resolve_query(understanding: QueryUnderstanding) -> ResolvedQuery:
         )
 
     periods = _resolve_periods(
-        understanding.raw_years, understanding.single_year_only, available_periods
+        understanding.raw_years, understanding.single_year_only, available_periods, trailing_years
     )
 
     return ResolvedQuery(

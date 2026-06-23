@@ -38,6 +38,18 @@ class QueryUnderstanding(BaseModel):
             "None if no company could be identified in the query."
         ),
     )
+    confident: bool = Field(
+        default=False,
+        description=(
+            "True ONLY if you are highly confident in the symbol resolution - "
+            "e.g. the user typed the company's well-known name, its exact "
+            "ticker, or a name you have seen resolved before. False if you "
+            "had to guess, infer from a partial/ambiguous name, or are not "
+            "fully sure. This is used to decide whether the resolution is "
+            "safe to remember for next time - an uncertain guess should "
+            "NOT be marked confident even if symbol is set."
+        ),
+    )
     company_name_as_given: str | None = Field(
         default=None,
         description="The company name/phrase as the user wrote it, for logging/debugging.",

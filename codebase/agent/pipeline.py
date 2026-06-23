@@ -28,14 +28,35 @@ the same company/metrics/periods correctly share one cache entry. The
 ORIGINAL build_cache_key method, and every other method on CacheMemory,
 is completely untouched; this orchestrator is simply a new caller using
 the new method, exactly like runner.py uses the old one.
+
+MEMORY (added on top of the above, all additive):
+  - Short-term state: ConversationState (conversation_state.py) is
+    caller-owned, in-memory only, lives exactly as long as one
+    conversation. Pass the "state" key from a previous answer_query()
+    result back in as `prior_state` to let an underspecified follow-up
+    ("what about net profit?") resolve against the previous turn's
+    company/period. Never persisted, never shared between sessions.
+  - Long-term preferences: UserPreferences (agentmemory/preferences.py)
+    is a new, additive module - does not touch cachememory.py/
+    cachestructure.py/dbstructure.py/workingmemory.py. Single hardcoded
+    user_id for now (DEFAULT_USER_ID) since there are no real user
+    accounts yet. Preferences only ever set DEFAULTS (trailing years,
+    whether qualitative context is always pulled in) - they never
+    override an explicit instruction in the query itself.
+  - Long-term aliases: codebase/financials/aliases.py (lives in
+    financials/, not agentmemory/, since it's entity-resolution data, not
+    conversational memory) learns alias_text -> screener_symbol mappings
+    when Stage 1 self-reports a confident resolution. See
+    query_understanding.py's _maybe_save_alias for the write policy.
 """
 
 from __future__ import annotations
 
 import logging
 
-from codebase.agent.clarification import resolve_query
+from codebase.agent.clarification import DEFAULT_TRAILING_YEARS, resolve_query
 from codebase.agent.context_retrieval import retrieve_context
+from codebase.agent.conversation_state import ConversationState
 from codebase.agent.derived_metrics import compute_derived_metric, resolve_derived_metric_name
 from codebase.agent.enrichment import EnrichedSeries, enrich_series
 from codebase.agent.followup import suggest_follow_ups
@@ -43,12 +64,23 @@ from codebase.agent.query_understanding import understand_query
 from codebase.agent.series_tools import fetch_financial_series
 from codebase.agent.synthesis import synthesize_answer
 from codebase.agentmemory import CacheMemory
+from codebase.agentmemory.preferences import DEFAULT_USER_ID, PreferenceKeys, UserPreferences
+from codebase.financials.aliases import init_aliases_schema
 
 logger = logging.getLogger(__name__)
 
-# Single module-level CacheMemory instance, same pattern as runner.py's
-# module-level _cache and agents.py's module-level agent singletons.
+# Single module-level singletons, same pattern as runner.py's module-level
+# _cache and agents.py's module-level agent singletons.
 _cache = CacheMemory()
+_preferences = UserPreferences()
+
+# Ensure the company_aliases table exists before any query is answered.
+# query_understanding.py reads/writes this table via the standalone
+# functions in financials/aliases.py (resolve_alias, save_alias,
+# list_aliases) rather than a class instance, so unlike CacheMemory()/
+# UserPreferences() above there's no constructor that creates the table
+# as a side effect - it must be created explicitly, once, here.
+init_aliases_schema()
 
 
 def _build_cache_key(symbol: str, line_items: list[str], derived_metric_keys: list[str],
@@ -72,8 +104,26 @@ def _build_cache_key(symbol: str, line_items: list[str], derived_metric_keys: li
     )
 
 
-def answer_query(query: str) -> dict:
+def answer_query(query: str, prior_state: ConversationState | None = None, user_id: str = DEFAULT_USER_ID) -> dict:
     """Run the full multi-agent pipeline for one user query.
+
+    Parameters
+    ----------
+    query : str
+        The raw user question.
+    prior_state : ConversationState, optional
+        Short-term state from earlier in this conversation (see
+        conversation_state.py). The CALLER owns this - pass back in
+        whatever was returned as "state" from the previous call to keep a
+        conversation going, or omit/pass None to start fresh. This
+        pipeline holds no hidden state of its own between calls.
+    user_id : str
+        Defaults to the single-user constant (see
+        codebase.agentmemory.preferences.DEFAULT_USER_ID) - this system
+        does not yet have real multi-user accounts. Preferences are read
+        for this user_id and only ever affect DEFAULTS (trailing years,
+        whether qualitative context is always included) - they never
+        override something explicit in the query itself.
 
     Returns
     -------
@@ -86,10 +136,21 @@ def answer_query(query: str) -> dict:
           "symbol": str | None,
           "line_items": list[str],
           "periods": list[str],
+          "state": ConversationState,  # pass this back in as prior_state on the NEXT call
         }
     """
-    understanding = understand_query(query)
-    resolved = resolve_query(understanding)
+    trailing_years = _preferences.get_preference(
+        PreferenceKeys.TRAILING_YEARS, default=DEFAULT_TRAILING_YEARS, user_id=user_id
+    )
+    always_include_qualitative = _preferences.get_preference(
+        PreferenceKeys.ALWAYS_INCLUDE_QUALITATIVE, default=False, user_id=user_id
+    )
+
+    understanding = understand_query(query, prior_state=prior_state)
+    resolved = resolve_query(understanding, trailing_years=trailing_years)
+
+    if always_include_qualitative and resolved.can_proceed:
+        resolved.needs_qualitative_context = True
 
     if not resolved.can_proceed:
         # Per product decision (carried over from runner.py): a stop/
@@ -103,6 +164,7 @@ def answer_query(query: str) -> dict:
             "symbol": None,
             "line_items": [],
             "periods": [],
+            "state": prior_state if prior_state is not None else ConversationState(),
         }
 
     # Resolve free-text derived metric names (from Stage 1) to internal
@@ -142,6 +204,7 @@ def answer_query(query: str) -> dict:
             "symbol": resolved.symbol,
             "line_items": resolved.line_items,
             "periods": resolved.periods,
+            "state": ConversationState.from_resolved_query(resolved),
         }
 
     logger.info(
@@ -183,6 +246,15 @@ def answer_query(query: str) -> dict:
             "symbol": resolved.symbol,
             "line_items": resolved.line_items,
             "periods": resolved.periods,
+            # The company itself WAS validly resolved here (only the
+            # specific line_item/derived_metric failed) - keep symbol and
+            # periods in state so a follow-up question doesn't lose that
+            # context, but don't carry forward the line_items that just
+            # failed to resolve.
+            "state": ConversationState(
+                symbol=resolved.symbol, periods=resolved.periods,
+                needs_qualitative_context=resolved.needs_qualitative_context,
+            ),
         }
 
     # --- Stage 5: Context Retrieval (conditional) ---
@@ -235,4 +307,5 @@ def answer_query(query: str) -> dict:
         "symbol": resolved.symbol,
         "line_items": resolved.line_items,
         "periods": resolved.periods,
+        "state": ConversationState.from_resolved_query(resolved),
     }
