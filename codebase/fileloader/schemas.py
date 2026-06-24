@@ -57,6 +57,8 @@ FILENAME_PATTERN = re.compile(r"^[A-Za-z0-9]+_\d{4}_pdf\.pdf$")
 
 ALLOWED_STATUS_VALUES = {"SUCCESS", "FAILED"}
 
+ALLOWED_TABLES = {"processed_files"}
+
 # Max lengths — generous but bounded, to block abuse (huge strings, buffer-style abuse).
 MAX_FILENAME_LENGTH = 255
 MAX_REASON_LENGTH = 1000

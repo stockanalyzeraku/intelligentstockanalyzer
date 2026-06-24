@@ -7,6 +7,7 @@ import threading
 from contextlib import contextmanager
 from pathlib import Path
 from typing import Any, Iterator
+from datetime import datetime
 
 from codebase.fileloader.schemas import (
     TABLE_NAME,
@@ -23,10 +24,12 @@ from codebase.fileloader.schemas import (
     MAX_PATH_LENGTH,
     FORBIDDEN_CHARS_PATTERN,
     PATH_TRAVERSAL_PATTERN,
+    ALLOWED_TABLES
 )
 
 from config import CONFIG
 from codebase.common.exceptions import DatabaseValidationError
+from codebase.fileloader.skelton import UploadResult
 
 DB_PATH = Path(CONFIG.PROCESSED_FILES_DB_PATH)
 
@@ -59,9 +62,8 @@ def _get_connection() -> Iterator[sqlite3.Connection]:
 
 
 def init_db() -> Path:
-
+    CONFIG.PROCESSED_FILES_DB_PATH.mkdir(parents=True, exist_ok=True)
     with _db_lock:
-        CONFIG.PROCESSED_FILES_DB_PATH.mkdir(parents=True, exist_ok=True)
         with _get_connection() as conn:
             conn.execute(CREATE_TABLE_SQL)
             for stmt in ALL_INDEX_STATEMENTS:
@@ -69,9 +71,7 @@ def init_db() -> Path:
     return DB_PATH
 
 
-# --------------------------------------------------------------------------
 # Field validation — defense in depth, run again right before insert.
-# --------------------------------------------------------------------------
 
 def _check_forbidden_chars(field: str, value: str) -> None:
     if FORBIDDEN_CHARS_PATTERN.search(value):
@@ -80,14 +80,16 @@ def _check_forbidden_chars(field: str, value: str) -> None:
         )
 
 
-def _validate_record_fields(record: dict[str, Any]) -> None:
-    filename = record.get("filename")
-    scrip = record.get("scrip")
-    year = record.get("year")
-    filetype = record.get("filetype")
-    status = record.get("status")
-    reason = record.get("reason")
-    destination_path = record.get("destination_path")
+def _validate_record_fields(record: UploadResult) -> None:
+    filename = record.filename
+    scrip = record.scrip
+    year = record.year
+    filetype = record.file_type
+    status = record.status
+    reason = record.reason
+    destination_path = record.destination_path
+    upload_date = record.date
+    upload_time = record.time
 
     # filename
     if not filename or not isinstance(filename, str):
@@ -100,8 +102,6 @@ def _validate_record_fields(record: dict[str, Any]) -> None:
             "filename", filename, "does not match required Scrip_Year_pdf.pdf pattern."
         )
 
-    # scrip (nullable only if a filename-pattern failure occurred upstream;
-    # here we require it since this insert path assumes filename was parsed)
     if scrip is not None:
         if not isinstance(scrip, str) or not SCRIP_PATTERN.match(scrip):
             raise DatabaseValidationError("scrip", scrip, "must be alphanumeric.")
@@ -123,8 +123,7 @@ def _validate_record_fields(record: dict[str, Any]) -> None:
             "status", status, f"must be one of {ALLOWED_STATUS_VALUES}."
         )
 
-    # reason (nullable, free text — but still must not carry control chars
-    # or be unreasonably long; this is the log-injection guard)
+    # reason
     if reason is not None:
         if not isinstance(reason, str):
             raise DatabaseValidationError("reason", reason, "must be a string.")
@@ -148,65 +147,48 @@ def _validate_record_fields(record: dict[str, Any]) -> None:
                 "destination_path", destination_path, "contains path traversal sequence."
             )
 
-    # upload_datetime
-    upload_datetime = record.get("upload_datetime")
-    if not upload_datetime or not isinstance(upload_datetime, str):
+    # upload_date
+    if not upload_date or not isinstance(upload_date, str):
         raise DatabaseValidationError(
-            "upload_datetime", upload_datetime, "must be a non-empty string."
+            "upload_date", upload_date, "must be a non-empty string."
         )
-    _check_forbidden_chars("upload_datetime", upload_datetime)
+    _check_forbidden_chars("upload_datetime", upload_date)
 
+    #upload_time
+    if not upload_time or not isinstance(upload_time, str):
+        raise DatabaseValidationError(
+            "upload_time", upload_time, "must be a non-empty string"
+        )
 
-# --------------------------------------------------------------------------
+#validate table name
+def _validate_table_name(TABLE_NAME):
+    if TABLE_NAME not in ALLOWED_TABLES:
+        raise DatabaseValidationError(
+            "Table Name",
+            TABLE_NAME,
+            "Table Name not in allowed Table Name list."
+        )
+    
+def _validate_date_string(value: str, field: str) -> None:
+    for fmt in ("%Y-%m-%d", "%Y-%m-%d %H:%M:%S", "%Y-%m-%dT%H:%M:%S"):
+        try:
+            datetime.strptime(value, fmt)
+            return
+        except ValueError:
+            continue
+    raise DatabaseValidationError(field, value, "invalid date format.")
+
 # Insert
-# --------------------------------------------------------------------------
-
-def insert_upload_record(
-    filename: str,
-    status: str,
-    upload_datetime: str,
-    scrip: str | None = None,
-    year: str | None = None,
-    filetype: str | None = None,
-    reason: str | None = None,
-    destination_path: str | None = None,
-) -> int:
-    """
-    Validate and insert a single upload record into uploaded_files.
-
-    Args:
-        filename: Original filename (Scrip_Year_pdf.pdf).
-        status: 'SUCCESS' or 'FAILED'.
-        upload_datetime: ISO-formatted datetime string, e.g. '2026-06-24 09:08:00'.
-        scrip, year, filetype: Parsed components of the filename (nullable
-            only if upstream filename parsing genuinely failed before reaching
-            this point — in normal flow these are always present).
-        reason: Failure reason text (nullable, required to be set on FAILED).
-        destination_path: Where the file was saved (nullable, set only on SUCCESS).
-
-    Returns:
-        The integer row id of the inserted record.
-
-    Raises:
-        DatabaseValidationError: if any field fails validation.
-    """
-    record = {
-        "filename": filename,
-        "scrip": scrip,
-        "year": year,
-        "filetype": filetype,
-        "status": status,
-        "reason": reason,
-        "destination_path": destination_path,
-        "upload_datetime": upload_datetime,
-    }
-
+def insert_upload_record(record: UploadResult) -> int:
+    
     _validate_record_fields(record)
+    _validate_table_name(TABLE_NAME)
 
     columns = INSERTABLE_COLUMNS
     placeholders = ", ".join("?" for _ in columns)
     column_list = ", ".join(columns)
-    values = tuple(record[col] for col in columns)
+    values = tuple(getattr(record, col) for col in columns)
+
 
     sql = f"INSERT INTO {TABLE_NAME} ({column_list}) VALUES ({placeholders});"
 
@@ -216,12 +198,11 @@ def insert_upload_record(
             return cursor.lastrowid
 
 
-# --------------------------------------------------------------------------
 # Queries (all parameterized — no string-formatted SQL, ever)
-# --------------------------------------------------------------------------
 
 def get_record_by_filename(filename: str) -> dict[str, Any] | None:
     """Fetch the most recent record matching an exact filename, or None."""
+    _validate_table_name(TABLE_NAME)
     sql = f"SELECT * FROM {TABLE_NAME} WHERE filename = ? ORDER BY id DESC LIMIT 1;"
     with _db_lock:
         with _get_connection() as conn:
@@ -231,6 +212,7 @@ def get_record_by_filename(filename: str) -> dict[str, Any] | None:
 
 def get_records_by_scrip(scrip: str) -> list[dict[str, Any]]:
     """Fetch all records for a given scrip, most recent first."""
+    _validate_table_name(TABLE_NAME)
     sql = f"SELECT * FROM {TABLE_NAME} WHERE scrip = ? ORDER BY id DESC;"
     with _db_lock:
         with _get_connection() as conn:
@@ -244,6 +226,7 @@ def get_records_by_status(status: str) -> list[dict[str, Any]]:
         raise DatabaseValidationError(
             "status", status, f"must be one of {ALLOWED_STATUS_VALUES}."
         )
+    _validate_table_name(TABLE_NAME)
     sql = f"SELECT * FROM {TABLE_NAME} WHERE status = ? ORDER BY id DESC;"
     with _db_lock:
         with _get_connection() as conn:
@@ -252,17 +235,15 @@ def get_records_by_status(status: str) -> list[dict[str, Any]]:
 
 
 def get_records_by_date_range(start_date: str, end_date: str) -> list[dict[str, Any]]:
-    """
-    Fetch all records where upload_datetime falls within [start_date, end_date].
-    Dates should be in 'YYYY-MM-DD' or full 'YYYY-MM-DD HH:MM:SS' format,
-    matching how upload_datetime is stored.
-    """
+
     date_pattern = re.compile(r"^\d{4}-\d{2}-\d{2}([ T]\d{2}:\d{2}:\d{2})?$")
+
     if not date_pattern.match(start_date) or not date_pattern.match(end_date):
         raise DatabaseValidationError(
             "date_range", (start_date, end_date), "dates must be in YYYY-MM-DD format."
         )
 
+    _validate_table_name(TABLE_NAME)
     sql = (
         f"SELECT * FROM {TABLE_NAME} "
         f"WHERE upload_datetime BETWEEN ? AND ? "
@@ -276,6 +257,7 @@ def get_records_by_date_range(start_date: str, end_date: str) -> list[dict[str, 
 
 def get_all_records() -> list[dict[str, Any]]:
     """Fetch all records, most recent first."""
+    _validate_table_name(TABLE_NAME)
     sql = f"SELECT * FROM {TABLE_NAME} ORDER BY id DESC;"
     with _db_lock:
         with _get_connection() as conn:

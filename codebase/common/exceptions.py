@@ -1,7 +1,7 @@
 """Custom exceptions for the application."""
 
 from pathlib import Path
-from typing import any
+from typing import Any
 
 class Error(Exception):
     """Base exception for all application errors."""
