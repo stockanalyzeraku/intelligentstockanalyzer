@@ -22,6 +22,7 @@ class PDFProcessingStatus(Enum):
     EMBEDDED = "embedded"
     VECTORIZED = "vectorized"
     FAILED = "failed"
+    
 class QueryIntentType(Enum):
     """Type of financial query."""
     METRIC_LOOKUP = "metric_lookup"

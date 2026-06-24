@@ -87,6 +87,21 @@ class Config:
     # ── SQLite ────────────────────────────────────────────────────────────
     DB_BATCH_SIZE: int = 50
 
+    # Error codes
+    ERROR_CODE_INVALID_INPUT = "INVALID_INPUT"
+    ERROR_CODE_PROCESSING_FAILED = "PROCESSING_FAILED"
+    ERROR_CODE_CACHE_MISS = "CACHE_MISS"
+    ERROR_CODE_TIMEOUT = "TIMEOUT"
+    ERROR_CODE_EXTERNAL_API_ERROR = "EXTERNAL_API_ERROR"
+
+    # Cache
+    DEFAULT_CACHE_TTL_DAYS = 30
+    CACHE_HIT_THRESHOLD = 0.95  # 95% match required
+
+    #LoadNewPDF
+    MAX_FILE_SIZE_MB:int = 50
+    MAX_FILE_SIZE_BYTES:int = MAX_FILE_SIZE_MB*1024*1024
+
     def __post_init__(self) -> None:
         """Derive all path fields from BASE_PATH after object creation."""
         self.UPLOADS_PATH = os.path.join(self.BASE_PATH, "uploads")
