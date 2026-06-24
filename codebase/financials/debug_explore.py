@@ -43,10 +43,6 @@ from pathlib import Path
 
 # Allow importing/running this file directly regardless of cwd, by making
 # sure the parent of codebase/ is on sys.path.
-_THIS_DIR = Path(__file__).resolve().parent
-_REPO_ROOT = _THIS_DIR.parent.parent  # .../codebase/financials -> repo root
-if str(_REPO_ROOT) not in sys.path:
-    sys.path.insert(0, str(_REPO_ROOT))
 
 from codebase.financials import db, discovery  # noqa: E402
 from codebase.financials.ingest import ingest_company  # noqa: E402

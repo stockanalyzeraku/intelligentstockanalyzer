@@ -1,4 +1,0 @@
-{"ts": "2026-06-20T17:00:35.623318+05:30", "level": "INFO", "component": "guardrails", "message": "llm_mistral_answer", "event": "llm_mistral_answer_completed", "duration_ms": 2258.48}
-{"ts": "2026-06-20T17:00:41.884771+05:30", "level": "INFO", "component": "guardrails", "message": "llm_gemini_answer", "event": "llm_gemini_answer_completed", "duration_ms": 6260.86}
-{"ts": "2026-06-20T17:01:52.794538+05:30", "level": "INFO", "component": "guardrails", "message": "llm_mistral_answer", "event": "llm_mistral_answer_completed", "duration_ms": 1987.56}
-{"ts": "2026-06-20T17:01:58.678604+05:30", "level": "INFO", "component": "guardrails", "message": "llm_gemini_answer", "event": "llm_gemini_answer_completed", "duration_ms": 5883.57}

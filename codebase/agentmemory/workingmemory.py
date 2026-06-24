@@ -9,7 +9,6 @@ embedding-ready JSON, and records already stored in ChromaDB.
 from __future__ import annotations
 import sys
 import os
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 import hashlib
 import json
@@ -18,6 +17,7 @@ import sqlite3
 from contextlib import contextmanager
 from pathlib import Path
 from typing import Any, Iterator
+from config import CONFIG
 
 import logging
 from codebase.agentmemory.dbstructure import (
@@ -39,7 +39,7 @@ class WorkingMemory:
     ARTIFACT_CHROMA_STORED = "chroma_stored"
 
     def __init__(self, db_path: str | os.PathLike[str] | None = None) -> None:
-        default_db_path = Path(__file__).resolve().parents[2] / "database" / "brain.db"
+        default_db_path = CONFIG.PROCESSED_FILES_DB_PATH
         self.db_path = Path(db_path or default_db_path)
         self.db_path.parent.mkdir(parents=True, exist_ok=True)
         self.initialise_database()

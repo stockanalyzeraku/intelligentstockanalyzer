@@ -4,17 +4,9 @@ Cleans raw Mistral OCR markdown output of an annual report, page by page.
 
 from __future__ import annotations
 
-import json
-import os
 import re
-import sys
 from dataclasses import asdict, dataclass
-from typing import List, Optional
 from collections import defaultdict
-    
-_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-if _ROOT not in sys.path:
-    sys.path.insert(0, _ROOT)
 
 from config import CONFIG                       # noqa: E402  (root module)
 from logger import get_logger                   # noqa: E402  (root module)

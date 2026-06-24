@@ -1,2 +1,0 @@
-{"ts": "2026-06-21T13:25:22.849932+05:30", "level": "INFO", "component": "guardrails", "message": "llm_mistral_answer", "event": "llm_mistral_answer_completed", "duration_ms": 2518.27}
-{"ts": "2026-06-21T13:25:30.225355+05:30", "level": "INFO", "component": "guardrails", "message": "llm_gemini_answer", "event": "llm_gemini_answer_completed", "duration_ms": 7375.05}

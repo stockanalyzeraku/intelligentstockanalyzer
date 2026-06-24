@@ -18,7 +18,6 @@ safe to expose directly as tool calls to an LLM agent.
 """
 import sys
 import os
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 from codebase.financials import db
 

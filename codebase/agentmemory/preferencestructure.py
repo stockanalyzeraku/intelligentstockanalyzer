@@ -9,7 +9,6 @@ slots into the same codebase.agentmemory package consistently.
 from __future__ import annotations
 import sys
 import os
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 USER_PREFERENCES_TABLE = "user_preferences"
 

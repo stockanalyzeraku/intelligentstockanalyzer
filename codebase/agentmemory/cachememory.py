@@ -3,7 +3,6 @@
 from __future__ import annotations
 import sys
 import os
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 import hashlib
 import json
@@ -16,7 +15,7 @@ from pathlib import Path
 from typing import Any, Iterator
 
 from codebase.agentmemory.cachestructure import CACHE_SCHEMA_STATEMENTS, QUERY_CACHE_TABLE
-
+from config import CONFIG
 
 class CacheMemory:
     """Persist and retrieve RAG responses by deterministic query cache keys."""
@@ -29,7 +28,7 @@ class CacheMemory:
         default_ttl_seconds: int | None = 60 * 60 * 24 * 30,
         pipeline_version: str = DEFAULT_PIPELINE_VERSION,
     ) -> None:
-        default_db_path = Path(__file__).resolve().parents[2] / "database" / "brain.db"
+        default_db_path = CONFIG.CACHE_MEMORY_DB_PATH
         self.db_path = Path(db_path or default_db_path)
         self.default_ttl_seconds = default_ttl_seconds
         self.pipeline_version = pipeline_version

@@ -2,10 +2,6 @@ from __future__ import annotations
 import os
 import sys
 
-_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
-if _ROOT not in sys.path:
-    sys.path.insert(0, _ROOT)
-
 import json
 from typing import Any, Optional
 import chromadb
@@ -32,7 +28,7 @@ class ChromaStore:
     # ------------------------------------------------------------------ #
 
     def __init__(self, chroma_path: str | None = None):
-        self.chroma_path = chroma_path or CONFIG.CHROMA_PATH
+        self.chroma_path = chroma_path or CONFIG.CHROMA_DB_PATH
         self._client: chromadb.PersistentClient | None = None
         self._logger = logger
         logger.info(f"[ChromaStore] Initialised — path='{self.chroma_path}'")

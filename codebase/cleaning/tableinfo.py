@@ -1,30 +1,9 @@
-"""
-cleaning/tableinfo.py
-=====================
-Markdown pipe-table detection, extraction, and row-level chunking.
-
-Classes
--------
-TableExtractor
-    Stateless helper that operates on plain strings.  All methods are
-    instance methods so the class can be sub-classed or dependency-injected.
-
-    Public API
-    ----------
-    strip_tables(text)           → (clean_text: str, tables_text: str)
-    chunk_tables_by_row(...)     → list[dict]
-
-"""
 from __future__ import annotations
 
 import re
 from dataclasses import dataclass
 from typing import Optional
 
-
-# ---------------------------------------------------------------------------
-# TableExtractor
-# ---------------------------------------------------------------------------
 
 @dataclass
 class TableExtractor:

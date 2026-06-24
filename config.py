@@ -6,7 +6,7 @@ Every other module imports CONFIG from this file.
 import os
 from dataclasses import dataclass, field
 from typing import ClassVar, Optional
-
+from pathlib import Path
 from folderstructure import get_base_path
 
 
@@ -26,14 +26,20 @@ class Config:
     # ── Paths ─────────────────────────────────────────────────────────────
     BASE_PATH: str = field(default_factory=get_base_path)
     UPLOADS_PATH: str = field(init=False)
-    CHROMA_PATH: str = field(init=False)
-    DB_PATH: str = field(init=False)
     LOGS_PATH: str = field(init=False)
-    FINANCIALS_PATH: str = field(init=False)
+
+    # ──Database paths ───────────────────────────────────────────────────────    
+    FINANCIALS_DB_PATH: str = field(init=False)
+    CHROMA_DB_PATH: str = field(init=False)
+    AGENT_MEMORY_DB_PATH: str = field(init=False)
+    CACHE_MEMORY_DB_PATH:str = field(init=False)
+    PROCESSED_FILES_DB_PATH:str = field(init=False)
+    DB_PATH: str = field(init=False)    
 
     # ── LLM ───────────────────────────────────────────────────────────────
     GEMINI_MODEL: str = "gemini-2.5-flash"
     MISTRAL_MODEL_OCR: str = "mistral-ocr-latest"
+    MISTRAL_MODEL_ANSWER:str = ""
     GEMINI_API_KEY: Optional[str] = field(default_factory=lambda: os.getenv("GEMINI_API_KEY"))
     MISTRAL_API_KEY: Optional[str] = field(default_factory=lambda: os.getenv("MISTRAL_API_KEY"))
     LLM_TEMPERATURE: float = 0.1
@@ -47,8 +53,6 @@ class Config:
     # ── ChromaDB Collections ──────────────────────────────────────────────
     COL_CHILD: str = "child_chunks"
     COL_PARENT: str = "parent_sections"
-    COL_FACTS: str = "financial_facts"
-    COL_MGMT: str = "mgmt_statements"
 
     # ── Chunking ──────────────────────────────────────────────────────────
     PARENT_CHUNK_TOKENS: int = 2500
@@ -86,11 +90,21 @@ class Config:
     def __post_init__(self) -> None:
         """Derive all path fields from BASE_PATH after object creation."""
         self.UPLOADS_PATH = os.path.join(self.BASE_PATH, "uploads")
-        self.CHROMA_PATH = os.path.join(self.BASE_PATH, "chroma_db")
-        self.DB_PATH = os.path.join(self.BASE_PATH, "database", "brain.db")
         self.LOGS_PATH = os.path.join(self.BASE_PATH, "logs")
-        self.FINANCIALS_PATH = os.path.join(self.BASE_PATH, "financials")
 
+        #add a function here to create folders for database if they are not there
+        BASE_PATH_DB = Path(self.BASE_PATH)/"database"
+        folders = ["financials", "agentmemory", "cachememory", "processedfiles", "chromadb"]
+
+        self.create_db_folders(BASE_DB_PATH=BASE_PATH_DB, folders=folders)
+
+        self.FINANCIALS_DB_PATH: str = os.path.join(BASE_PATH_DB, "financials")
+        self.AGENT_MEMORY_DB_PATH: str = os.path.join(BASE_PATH_DB, "agentmemory")
+        self.CACHE_MEMORY_DB_PATH:str = os.path.join(BASE_PATH_DB, "cachememory")
+        self.PROCESSED_FILES_DB_PATH:str = os.path.join(BASE_PATH_DB, "processedfiles")
+        self.CHROMA_DB_PATH = os.path.join(BASE_PATH_DB, "chromadb")
+        self.DB_PATH = os.path.join(self.BASE_PATH, "database", "brain.db")
+            
     def validate(self) -> None:
         """Validate critical prerequisites at startup.
 
@@ -107,6 +121,14 @@ class Config:
                 "Run folderstructure.create_folder_structure() first."
             )
         print("[Config] Validation passed.")
+
+    #Should be moved to initalize project
+    def create_db_folders(self, BASE_DB_PATH:Path, folders: list[str]) -> None:
+        #If db folder not exise create db forlder
+        for folder in folders:
+            (BASE_DB_PATH/folder).mkdir(parents=True, exist_ok=True)
+
+        
 
     @classmethod
     def get_instance(cls) -> "Config":
