@@ -9,37 +9,16 @@ from pypdf import PdfReader
 from pypdf.errors import PdfReadError
 
 
-from codebase.common.exceptions import FilenameValidationError, DuplicateFileError
 from codebase.fileloader.skelton import UploadResult
+from codebase.fileloader.validator import _validate_filename, _validate_filesize
+from codebase.fileloader.exceptions import DuplicateFileError
 from config import CONFIG
 
 logger = logging.getLogger(__name__)
 
-FILENAME_PATTERN = re.compile(
-    r"^(?P<scrip>[A-Za-z0-9]+)_(?P<year>\d{4})_(?P<filetype>pdf)\.pdf$")
 PDF_MAGIC_BYTES = b"%PDF-"
 
 # Internal validation helpers
-
-def _validate_parse_filename(filename: str) -> tuple[str, str, str]:
-    match = FILENAME_PATTERN.match(filename)
-    if not match:
-        raise FilenameValidationError(
-            filename,
-            "Filename must match pattern 'Scrip_Year_pdf.pdf' "
-            "(Scrip: alphanumeric, Year: 4 digits, Filetype: 'pdf').",
-        )
-    return match.group("scrip"), match.group("year"), match.group("filetype")
-
-
-def _validate_size(file_bytes: bytes, filename: str) -> None:
-    if len(file_bytes) == 0:
-        raise ValueError(f"File '{filename}' is empty.")
-    if len(file_bytes) > CONFIG.MAX_FILE_SIZE_BYTES:
-        raise ValueError(
-            f"File '{filename}' exceeds the maximum allowed size of "
-            f"{CONFIG.MAX_FILE_SIZE_MB}MB."
-        )
 
 
 def _validate_pdf_structure(file_bytes: bytes, filename: str) -> None:
@@ -81,12 +60,9 @@ def get_or_create_upload_dir(scrip: str, year: str, report_type: str) -> Path:
 # --------------------------------------------------------------------------
 
 async def upload_file(file_bytes: bytes, filename: str) -> UploadResult:
-    # Step 1: filename pattern — raises on failure (per your instruction)
-    scrip, year, file_type = _validate_parse_filename(filename)
-
-    # Step 2: content validation — collected into a result, not raised
+    scrip, year, file_type = _validate_filename(filename)
     try:
-        _validate_size(file_bytes, filename)
+        _validate_filesize(file_bytes, filename)
         _validate_pdf_structure(file_bytes, filename)
     except ValueError as exc:
         logger.warning("Upload validation failed for '%s': %s", filename, exc)

@@ -1,0 +1,70 @@
+from codebase.fileloader.exceptions import FilenameValidationError, DatabaseValidationError, DuplicateFileError
+from codebase.fileloader.schemas import (
+    FORBIDDEN_CHARS_PATTERN,
+    TABLE_NAME,
+    ALLOWED_TABLES,
+    DATE_PATTERN,
+    SCRIP_PATTERN,
+    MAX_FILENAME_LENGTH
+)
+from codebase.fileloader.skelton import(
+    FILENAME_PATTERN
+)
+from datetime import datetime
+from config import CONFIG
+
+# Field validation — defense in depth, run again right before insert.
+def _check_forbidden_chars(field: str, value: str) -> None:
+    if FORBIDDEN_CHARS_PATTERN.search(value):
+        raise DatabaseValidationError(
+            field, value, "contains forbidden control characters (NUL/CR/LF)."
+        )
+    
+#validate filename
+def _validate_filename(filename:str) -> tuple[str, str, str]:
+    if not filename or not isinstance(filename, str):
+        raise DatabaseValidationError("filename", filename, "must be a non-empty string.")
+    if len(filename) > MAX_FILENAME_LENGTH:
+        raise DatabaseValidationError("filename", filename, "exceeds max length.")
+    _check_forbidden_chars("filename", filename)
+    match = FILENAME_PATTERN.match(filename)
+    if not FILENAME_PATTERN.match(filename):
+        raise DatabaseValidationError(
+            "filename", filename, "does not match required Scrip_Year_pdf.pdf pattern."
+        )
+    return match.group("scrip"), match.group("year"), match.group("filetype")
+ 
+#validate scrip
+def _validate_scrip(scrip:str | None) -> None:
+    if scrip is not None:
+        if not isinstance(scrip, str) or not SCRIP_PATTERN.match(scrip):
+            raise DatabaseValidationError("scrip", scrip, "must be alphanumeric.")
+        _check_forbidden_chars("scrip", scrip)
+    else:
+        raise DatabaseValidationError("scrip", scrip, "scrip is empty")
+
+def _validate_limit(limit:int = 1000)-> None:
+    if not isinstance(limit, int):
+        raise TypeError("limit must be an integer.")
+    if not (1 <= limit <= 1000):
+        raise ValueError("limit must be between 1 and 1000.")
+
+#parse date
+def _validate_parse_date(value: str, field: str) -> datetime:
+    for fmt in DATE_PATTERN:
+        try:
+            return datetime.strptime(value, fmt)
+        except ValueError:
+            continue
+    raise DatabaseValidationError(field, value, "invalid date format.")
+
+
+def _validate_filesize(file_bytes: bytes, filename: str) -> None:
+    if len(file_bytes) == 0:
+        raise ValueError(f"File '{filename}' is empty.")
+    if len(file_bytes) > CONFIG.MAX_FILE_SIZE_BYTES:
+        raise ValueError(
+            f"File '{filename}' exceeds the maximum allowed size of "
+            f"{CONFIG.MAX_FILE_SIZE_MB}MB."
+        )
+

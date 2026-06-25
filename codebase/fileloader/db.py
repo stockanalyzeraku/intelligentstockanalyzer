@@ -9,26 +9,28 @@ import threading
 from contextlib import contextmanager
 from pathlib import Path
 from typing import Any, Iterator
-from datetime import datetime
 
 from codebase.fileloader.schemas import (
     TABLE_NAME,
     CREATE_TABLE_SQL,
     ALL_INDEX_STATEMENTS,
     INSERTABLE_COLUMNS,
-    SCRIP_PATTERN,
     YEAR_PATTERN,
     FILETYPE_PATTERN,
-    FILENAME_PATTERN,
     ALLOWED_STATUS_VALUES,
-    MAX_FILENAME_LENGTH,
     MAX_REASON_LENGTH,
     MAX_PATH_LENGTH,
-    FORBIDDEN_CHARS_PATTERN,
     PATH_TRAVERSAL_PATTERN,
     ALLOWED_TABLES,
     TIME_PATTERN,
-    DATE_PATTERN
+)
+
+from codebase.fileloader.validator import (
+    _check_forbidden_chars,
+    _validate_filename,
+    _validate_limit,
+    _validate_parse_date,
+    _validate_scrip
 )
 
 from config import CONFIG
@@ -74,15 +76,6 @@ def init_db() -> Path:
                 conn.execute(stmt)
     return _db_path()
 
-
-# Field validation — defense in depth, run again right before insert.
-def _check_forbidden_chars(field: str, value: str) -> None:
-    if FORBIDDEN_CHARS_PATTERN.search(value):
-        raise DatabaseValidationError(
-            field, value, "contains forbidden control characters (NUL/CR/LF)."
-        )
-
-
 #validate table name
 if TABLE_NAME not in ALLOWED_TABLES:
     raise DatabaseValidationError(
@@ -91,37 +84,6 @@ if TABLE_NAME not in ALLOWED_TABLES:
         "Table Name not in allowed Table Name list."
         )
     
-#validate date    
-def _validate_date_string(value: str, field: str) -> None:
-    for fmt in DATE_PATTERN:
-        try:
-            datetime.strptime(value, fmt)
-            return
-        except ValueError:
-            continue
-    raise DatabaseValidationError(field, value, "invalid date format.")
-
-#validate filename
-def _validate_filename(filename:str) -> None:
-    if not filename or not isinstance(filename, str):
-        raise DatabaseValidationError("filename", filename, "must be a non-empty string.")
-    if len(filename) > MAX_FILENAME_LENGTH:
-        raise DatabaseValidationError("filename", filename, "exceeds max length.")
-    _check_forbidden_chars("filename", filename)
-    if not FILENAME_PATTERN.match(filename):
-        raise DatabaseValidationError(
-            "filename", filename, "does not match required Scrip_Year_pdf.pdf pattern."
-        )
- 
-#validate scrip
-def _validate_scrip(scrip:str | None) -> None:
-    if scrip is not None:
-        if not isinstance(scrip, str) or not SCRIP_PATTERN.match(scrip):
-            raise DatabaseValidationError("scrip", scrip, "must be alphanumeric.")
-        _check_forbidden_chars("scrip", scrip)
-    else:
-        raise DatabaseValidationError("scrip", scrip, "scrip is empty")
-
 #validate all records
 def _validate_record_fields(record: UploadResult) -> None:
     filename = record.filename
@@ -185,7 +147,7 @@ def _validate_record_fields(record: UploadResult) -> None:
         raise DatabaseValidationError(
             "upload_date", upload_date, "must be a non-empty string."
         )
-    _validate_date_string(upload_date, "upload_date")
+    _validate_parse_date(upload_date, "upload_date")
     _check_forbidden_chars("upload_date", upload_date)
 
     #upload_time
@@ -195,22 +157,7 @@ def _validate_record_fields(record: UploadResult) -> None:
         )
     _check_forbidden_chars("upload_time", upload_time)
     
-#limit records
-def _validate_limit(limit:int = 1000)-> None:
-    if not isinstance(limit, int):
-        raise TypeError("limit must be an integer.")
-    if not (1 <= limit <= 1000):
-        raise ValueError("limit must be between 1 and 1000.")
-
-#parse date
-def _parse_date(value: str, field: str) -> datetime:
-    for fmt in DATE_PATTERN:
-        try:
-            return datetime.strptime(value, fmt)
-        except ValueError:
-            continue
-    raise DatabaseValidationError(field, value, "invalid date format.")
-        
+#limit records        
 
 # Insert
 def insert_upload_record(record: UploadResult) -> int:
@@ -271,10 +218,8 @@ def get_records_by_status(status: str, limit:int = 1000) -> list[dict[str, Any]]
 def get_records_by_date_range(start_date: str, end_date: str, limit: int = 1000) -> list[dict[str, Any]]:
 
     _validate_limit(limit)
-    _validate_date_string(start_date, "start_date")
-    _validate_date_string(end_date, "end_date")
-    start_dt = _parse_date(start_date, "start_date")
-    end_dt   = _parse_date(end_date, "end_date")
+    start_dt = _validate_parse_date(start_date, "start_date")
+    end_dt   = _validate_parse_date(end_date, "end_date")
     if start_dt > end_dt:
         raise DatabaseValidationError(
             "date_range", (start_date, end_date),

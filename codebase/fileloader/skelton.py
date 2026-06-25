@@ -1,6 +1,11 @@
 from dataclasses import dataclass, field
 from datetime import datetime
+import re
+#patterns
+FILENAME_PATTERN = re.compile(
+    r"^(?P<scrip>[A-Za-z0-9]+)_(?P<year>\d{4})_(?P<filetype>pdf)\.pdf$")
 
+#classes
 @dataclass
 class UploadResult:
     filename: str
