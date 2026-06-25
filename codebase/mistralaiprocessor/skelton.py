@@ -1,8 +1,8 @@
 from dataclasses import dataclass
-from pathlib import path
+from pathlib import Path
 from config import CONFIG
 #pattern
-ALLOWED_BASE = path(CONFIG.UPLOADS_PATH).resolve()
+ALLOWED_BASE = Path(CONFIG.UPLOADS_PATH).resolve()
 ALLOWED_EXTENSIONS = {".pdf", ".json"}
 
 

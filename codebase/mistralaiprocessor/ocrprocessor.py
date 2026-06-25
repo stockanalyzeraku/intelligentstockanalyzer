@@ -19,7 +19,7 @@ from codebase.mistralaiprocessor.skelton import PageContent
 from codebase.mistralaiprocessor.validator import _validate_filepath, _validate_ocr_text
 logger = get_logger(__name__)
 
-class MistralAIProcessor:
+class OCRProcessor:
     """Orchestrates the full PDF → OCR → JSON pipeline using Mistral."""
 
     def __init__(self, pdf_path: str, output_file: str, api_key: Optional[str] = None) -> None:
@@ -87,6 +87,6 @@ if __name__ == "__main__":
     source_pdf = os.path.join(base_dir, f"{COMPANY}_{DOC_TYPE}_{YEAR}.pdf")
     output_json = os.path.join(base_dir, f"{COMPANY}_{DOC_TYPE}_{YEAR}.json")
 
-    processor = MistralAIProcessor()
+    processor = OCRProcessor()
     result_path = processor.run(source_pdf)
     print(f"Done → {result_path}")

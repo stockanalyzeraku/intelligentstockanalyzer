@@ -7,13 +7,6 @@ from typing import Optional
 
 @dataclass
 class TableExtractor:
-    """
-    Stateless helper for extracting and chunking markdown pipe-tables.
-
-    All public methods are pure functions of their arguments; no internal
-    state is mutated between calls, so a single instance may be safely
-    reused across pages.
-    """
 
     # ------------------------------------------------------------------
     # Low-level line classifiers

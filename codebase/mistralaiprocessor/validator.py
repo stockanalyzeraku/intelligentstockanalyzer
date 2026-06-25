@@ -29,8 +29,6 @@ from codebase.mistralaiprocessor.skelton import (
 import json
 from pathlib import Path
 
-
-
 def _validate_filepath(path) -> Path:
 
     if path is None or str(path).strip() == "":
