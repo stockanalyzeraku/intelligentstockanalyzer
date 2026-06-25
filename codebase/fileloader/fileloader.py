@@ -21,10 +21,7 @@ PDF_MAGIC_BYTES = b"%PDF-"
 
 # Internal validation helpers
 
-def _parse_filename(filename: str) -> tuple[str, str, str]:
-    """
-    Validate filename pattern: Scrip_Year_pdf.pdf
-    """
+def _validate_parse_filename(filename: str) -> tuple[str, str, str]:
     match = FILENAME_PATTERN.match(filename)
     if not match:
         raise FilenameValidationError(
@@ -85,7 +82,7 @@ def get_or_create_upload_dir(scrip: str, year: str, report_type: str) -> Path:
 
 async def upload_file(file_bytes: bytes, filename: str) -> UploadResult:
     # Step 1: filename pattern — raises on failure (per your instruction)
-    scrip, year, file_type = _parse_filename(filename)
+    scrip, year, file_type = _validate_parse_filename(filename)
 
     # Step 2: content validation — collected into a result, not raised
     try:

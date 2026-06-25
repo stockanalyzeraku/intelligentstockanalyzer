@@ -55,9 +55,14 @@ FILETYPE_PATTERN = re.compile(r"^pdf$")
 # Full filename pattern, same as file_loader.py.
 FILENAME_PATTERN = re.compile(r"^[A-Za-z0-9]+_\d{4}_pdf\.pdf$")
 
+TIME_PATTERN = re.compile(r"^\d{2}:\d{2}:\d{2}$")
+
+DATE_PATTERN = ("%Y-%m-%d", "%Y-%m-%d %H:%M:%S", "%Y-%m-%dT%H:%M:%S")
+
 ALLOWED_STATUS_VALUES = {"SUCCESS", "FAILED"}
 
 ALLOWED_TABLES = {"processed_files"}
+
 
 # Max lengths — generous but bounded, to block abuse (huge strings, buffer-style abuse).
 MAX_FILENAME_LENGTH = 255
