@@ -15,7 +15,12 @@ from config import CONFIG
 from logger import get_logger
 from healthcheck import assert_system_health
 from codebase.ocrprocessor.skelton import PageContent
-from codebase.ocrprocessor.validator import _validate_filepath, _validate_ocr_text
+from codebase.ocrprocessor.validator import (
+    _validate_ocr_text,
+    _validate_filepath,
+    _validate_output_path
+
+)
 logger = get_logger(__name__)
 
 class OCRProcessor:
@@ -31,9 +36,9 @@ class OCRProcessor:
             api_key=self._api_key,
             timeout = 30
             )
-        del self._api_key_ref 
+        del self._api_key
 
-    def _process_pages(self, pdf_path: str) -> None:
+    def _process_pages(self, pdf_path: str) -> Path:
         _validate_filepath(pdf_path)
         pdf_name = Path(pdf_path).name
         self.log.info(f"Opening PDF: '{pdf_name}'")
@@ -58,24 +63,23 @@ class OCRProcessor:
             self.log.info(f"Page {page_idx + 1}/{total_pages} OCR complete — {len(page_markdown)} chars")
 
         doc.close()
-        self.save_pages_to_json(self._pages, self._output_file)
+        return self.save_pages_to_json(self._pages, os.path.splitext(Path(pdf_path))[0] + ".json")
 
     def save_pages_to_json(self, pages: list[PageContent], output_path: str) -> None:
-        _validate_filepath(output_path)
+        resolved_output_path = _validate_output_path(output_path)
         parent = Path(output_path).parent
         if str(parent) != ".":
             parent.mkdir(parents=True, exist_ok=True)
-        data = [asdict(_validate_ocr_text(pc)) for pc in pages]
-        with open(output_path, "w", encoding="utf-8") as fh:
+        data = [asdict((pc)) for pc in pages]
+        with open(resolved_output_path, "w", encoding="utf-8") as fh:
             json.dump(data, fh, indent=2, ensure_ascii=False)
+        return output_path
     
     def run(self, pdf_path:str) -> str:
         assert_system_health(include_llm=True)
-        with self.log.timed("ocr_pipeline", pdf_path=pdf_path, output_file=self._output_file):
-            self._init_client()
-            self._process_pages(pdf_path=pdf_path)
-        self.log.process_event("ocr_pipeline_completed", "ocr", output_file=self._output_file)
-        return self._output_file
+        self._init_client()
+        output_path = self._process_pages(pdf_path=pdf_path)
+        return output_path
 
 
 if __name__ == "__main__":

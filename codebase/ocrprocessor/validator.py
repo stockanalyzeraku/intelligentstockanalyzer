@@ -2,6 +2,7 @@ from pathlib import Path
 import unicodedata
 import re
 from urllib.parse import urlparse
+import ipaddress
 
 
 from codebase.ocrprocessor.exceptions import (
@@ -45,7 +46,7 @@ def _validate_filepath(path) -> Path:
         )
 
     if not resolved.exists():
-        raise FilePathError(f"{path} : File does not exist: {resolved}")
+        raise FilePathError(path, f"{path} : File does not exist: {resolved}")
     if not resolved.is_file():
         raise ValueError(path,f"{path} : Path is not a regular file: {resolved}")
 
@@ -132,8 +133,6 @@ def _validate_ocr_text(text: str, *, max_length: int = MAX_TEXT_LENGTH) -> str:
         raise ValueError("Text must not be None")
     if not isinstance(text, str):
         raise ValueError(f"Text must be a string, got {type(text).__name__}")
-    if text.strip() == "":
-        raise ValueError("Text is empty or whitespace-only")
     if len(text) > max_length:
         raise ValueError(f"Text exceeds max allowed length ({len(text)} > {max_length})")
 
@@ -206,3 +205,27 @@ def _validate_ocr_text(text: str, *, max_length: int = MAX_TEXT_LENGTH) -> str:
         raise ValueError("Abnormal run of 200+ repeated characters")
 
     return normalized
+
+def _validate_output_path(output_path: str) -> Path:
+    """Validate a write-destination path. The file need not exist yet."""
+    if not output_path or str(output_path).strip() == "":
+        raise FilePathError(output_path, "Output path is empty")
+
+    resolved = Path(output_path).expanduser().resolve()
+
+    try:
+        resolved.relative_to(ALLOWED_BASE)
+    except ValueError:
+        raise FilePathError(resolved, "Output path is outside allowed base directory")
+
+    if resolved.suffix.lower() not in ALLOWED_EXTENSIONS:
+        raise FilePathError(resolved, f"Output extension '{resolved.suffix}' not allowed")
+
+    # Validate parent directory exists or can be created
+    if not resolved.parent.exists():
+        try:
+            resolved.parent.mkdir(parents=True, exist_ok=True)
+        except OSError as e:
+            raise FilePathError(resolved, f"Cannot create output directory: {e}")
+
+    return resolved
