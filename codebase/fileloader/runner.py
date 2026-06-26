@@ -3,7 +3,7 @@ import tkinter as tk
 from tkinter import filedialog
 from pathlib import Path
 
-from codebase.fileloader import upload_file 
+from codebase.fileloader.fileloader import upload_file 
 from codebase.common.exceptions import FilenameValidationError, DuplicateFileError
 
 

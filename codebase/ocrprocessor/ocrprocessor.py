@@ -34,14 +34,12 @@ class OCRProcessor:
     def _init_client(self) -> None:
         self._client = Mistral(
             api_key=self._api_key,
-            timeout = 30
             )
         del self._api_key
 
     def _process_pages(self, pdf_path: str) -> Path:
         _validate_filepath(pdf_path)
         pdf_name = Path(pdf_path).name
-        self.log.info(f"Opening PDF: '{pdf_name}'")
 
         doc = fitz.open(pdf_path)
         total_pages = len(doc)
@@ -60,7 +58,6 @@ class OCRProcessor:
             )
             page_markdown = ocr_response.pages[0].markdown if ocr_response.pages else ""
             self._pages.append(PageContent(page_number=page_idx + 1, text=_validate_ocr_text(page_markdown)))
-            self.log.info(f"Page {page_idx + 1}/{total_pages} OCR complete — {len(page_markdown)} chars")
 
         doc.close()
         return self.save_pages_to_json(self._pages, os.path.splitext(Path(pdf_path))[0] + ".json")
@@ -84,13 +81,12 @@ class OCRProcessor:
 
 if __name__ == "__main__":
     COMPANY = "KALYANKJIL"
-    YEAR = 2023
-    DOC_TYPE = "ANNUAL"
+    YEAR = "2023"
+    DOC_TYPE = "ANNUAL_REPORT"
 
-    base_dir = os.path.join(CONFIG.UPLOADS_PATH, COMPANY, f"{DOC_TYPE}_{YEAR}")
-    source_pdf = os.path.join(base_dir, f"{COMPANY}_{DOC_TYPE}_{YEAR}.pdf")
-    output_json = os.path.join(base_dir, f"{COMPANY}_{DOC_TYPE}_{YEAR}.json")
-
+    base_dir = os.path.join(CONFIG.UPLOADS_PATH, COMPANY, YEAR, DOC_TYPE)
+    source_pdf = os.path.join(base_dir, f"{COMPANY}_{YEAR}_{DOC_TYPE}.pdf")
+   
     processor = OCRProcessor()
     result_path = processor.run(source_pdf)
     print(f"Done → {result_path}")

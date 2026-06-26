@@ -161,16 +161,82 @@ PATH_TRAVERSAL_PATTERN = re.compile(
 )
 DANGEROUS_DATA_URI_PATTERN = r"(?i)data:(text/html|application/javascript|application/x-sh)"
 
-DANGEROUS_FORMAT_CHARS = {
-    "\u202a", "\u202b", "\u202c", "\u202d", "\u202e",
-    "\u2066", "\u2067", "\u2068", "\u2069",
-}
+# ═══════════════════════════════════════════════════════════════════
+# DANGEROUS FORMAT CHARACTER CONSTANTS
+# ═══════════════════════════════════════════════════════════════════
+
+# ── Bidi override / isolate characters ──────────────────────────────
+# Attack: Trojan Source (CVE-2021-42574)
+# Effect: visually reverses text to hide malicious content inside code
+#         or financial data. Hard-blocked with zero tolerance.
+BIDI_OVERRIDE_CHARS: frozenset[str] = frozenset({
+    "\u202a",  # LEFT-TO-RIGHT EMBEDDING
+    "\u202b",  # RIGHT-TO-LEFT EMBEDDING
+    "\u202c",  # POP DIRECTIONAL FORMATTING
+    "\u202d",  # LEFT-TO-RIGHT OVERRIDE
+    "\u202e",  # RIGHT-TO-LEFT OVERRIDE   ← highest-risk: can flip entire lines
+    "\u2066",  # LEFT-TO-RIGHT ISOLATE
+    "\u2067",  # RIGHT-TO-LEFT ISOLATE
+    "\u2068",  # FIRST STRONG ISOLATE
+    "\u2069",  # POP DIRECTIONAL ISOLATE
+})
+
+# ── Invisible directional marks ──────────────────────────────────────
+# Less dangerous than overrides but have no legitimate use in financial
+# OCR text. Hard-blocked for defence in depth.
+DIRECTIONAL_MARKS: frozenset[str] = frozenset({
+    "\u200e",  # LEFT-TO-RIGHT MARK
+    "\u200f",  # RIGHT-TO-LEFT MARK
+    "\u061c",  # ARABIC LETTER MARK
+})
+
+# ── Line / paragraph separator injection ─────────────────────────────
+# Attack: JSON / JavaScript string literal escape
+# Unicode category Zl / Zp — NOT caught by the Cc/Cf category sweep.
+# These characters cause silent newlines inside JSON strings and can
+# break JavaScript string literals in browsers.
+SEPARATOR_INJECTION_CHARS: frozenset[str] = frozenset({
+    "\u2028",  # LINE SEPARATOR       (Zl — JS string injection)
+    "\u2029",  # PARAGRAPH SEPARATOR  (Zp — same risk)
+})
+
+# ── Unicode Tag block (U+E0000 – U+E007F) ────────────────────────────
+# Attack: invisible steganography
+# These characters were officially deprecated in Unicode 6.0 (2010).
+# They have zero legitimate use in modern text. Used to embed hidden
+# data inside documents that is invisible to the reader.
+TAG_BLOCK_RANGE: tuple[int, int] = (0xE0000, 0xE007F)
+
+# ── Interlinear annotation characters ────────────────────────────────
+# Formatting anchors with no legitimate use in financial prose.
+# Covered by Cf category sweep but named explicitly for clarity.
+INTERLINEAR_CHARS: frozenset[str] = frozenset({
+    "\ufff9",  # INTERLINEAR ANNOTATION ANCHOR
+    "\ufffa",  # INTERLINEAR ANNOTATION SEPARATOR
+    "\ufffb",  # INTERLINEAR ANNOTATION TERMINATOR
+})
+
+# ── Object replacement character ─────────────────────────────────────
+# Unicode category So — NOT caught by the Cc/Cf category sweep.
+# A small number can appear in corrupted OCR output (legitimate).
+# A flood signals embedded binary data masked as text.
+OBJECT_REPLACEMENT_CHAR: str = "\ufffc"
+MAX_REPLACEMENT_CHAR_DENSITY: int = 10   # per page
+
+# ── Zero-width / soft-hyphen characters ──────────────────────────────
+# Legitimate in Arabic / Hindi / Punjabi shaping (ZWJ/ZWNJ).
+# Not hard-blocked individually, but:
+#   (a) stripped before pattern-matching to stop keyword-splitting evasion
+#   (b) blocked when appearing in abnormal runs (≥4 consecutive)
+ZERO_WIDTH_CHARS: str = "\u200b\u200c\u200d\u2060\ufeff\u00ad"
+
+# Backward-compatibility alias — do not remove until all imports are updated
+DANGEROUS_FORMAT_CHARS: frozenset[str] = BIDI_OVERRIDE_CHARS
 
 # Zero-width/invisible chars — legitimate in some scripts (e.g. ZWJ/ZWNJ in
 # Arabic/Hindi/Punjabi shaping), so not hard-blocked, but stripped before
 # pattern-matching (to stop keyword-splitting evasion) and checked for
 # abnormal runs (never legitimate).
-ZERO_WIDTH_CHARS = "\u200b\u200c\u200d\u2060\ufeff\u00ad"
 
 MARKDOWN_URL_PATTERN = r"!?\[[^\]]*\]\(([^)\s]+)(?:\s+['\"][^'\"]*['\"])?\)"
 DANGEROUS_URI_SCHEMES = {"javascript", "vbscript", "file", "data", "about", "chrome", "jar"}
