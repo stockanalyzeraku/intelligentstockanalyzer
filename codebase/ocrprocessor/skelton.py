@@ -1,6 +1,9 @@
 from dataclasses import dataclass
 from pathlib import Path
+import re
+from datetime import date
 from config import CONFIG
+
 #pattern
 ALLOWED_BASE = Path(CONFIG.UPLOADS_PATH).resolve()
 ALLOWED_EXTENSIONS = {".pdf", ".json"}
@@ -10,7 +13,7 @@ MAX_TEXT_LENGTH = 5_000_000
 
 SQL_INJECTION_PATTERNS = [
     r"(?i)\b(union\s+select)\b",
-    r"(?i)\b(select\s+.*\s+from)\b",
+    r"(?i)\bselect\b.{0,200}\bfrom\b",
     r"(?i)\b(insert\s+into)\b",
     r"(?i)\b(update\s+\w+\s+set)\b",
     r"(?i)\b(delete\s+from)\b",
@@ -51,7 +54,14 @@ CODE_INJECTION_PATTERNS = [
     r"(?i)os\.system\(",
 ]
 
-PATH_TRAVERSAL_PATTERN = r"(\.\./|\.\.\\)"
+PATH_TRAVERSAL_PATTERN = re.compile(
+    r"(\.\./|\.\.\\|"           # literal
+    r"%2e%2e[%/\\]|"            # single URL-encoded
+    r"%252e%252e[%/\\]|"        # double URL-encoded
+    r"\.\.[/\\]|"               # dot-dot with sep
+    r"\x00)",                   # null byte
+    re.IGNORECASE
+)
 DANGEROUS_DATA_URI_PATTERN = r"(?i)data:(text/html|application/javascript|application/x-sh)"
 
 DANGEROUS_FORMAT_CHARS = {
@@ -68,12 +78,24 @@ ZERO_WIDTH_CHARS = "\u200b\u200c\u200d\u2060\ufeff\u00ad"
 MARKDOWN_URL_PATTERN = r"!?\[[^\]]*\]\(([^)\s]+)(?:\s+['\"][^'\"]*['\"])?\)"
 DANGEROUS_URI_SCHEMES = {"javascript", "vbscript", "file", "data", "about", "chrome", "jar"}
 PRIVATE_HOSTS = {"localhost", "127.0.0.1", "0.0.0.0", "::1", "169.254.169.254"}
-PRIVATE_IP_PATTERN = r"^(10\.|192\.168\.|172\.(1[6-9]|2\d|3[01])\.)"
+PRIVATE_IP_PATTERN = re.compile(
+    r"^(10\.|192\.168\.|172\.(1[6-9]|2\d|3[01])\.|"   # RFC1918
+    r"169\.254\.|"                                       # link-local
+    r"fe[89ab][0-9a-f]:|fc[0-9a-f]{2}:|fd)",            # IPv6 private
+    re.IGNORECASE
+)
+PRIVATE_HOSTS = {
+    "localhost", "127.0.0.1", "0.0.0.0", "::1",
+    "169.254.169.254",          # cloud metadata (AWS/Azure/GCP)
+    "metadata.google.internal", # GCP alt
+    "metadata.goog",            # GCP alt
+}
 
-NESTING_THRESHOLD = 25
+_SCRIPT_NAME_RE = re.compile(r"^[A-Z0-9_\-]{1,64}$")
+NESTING_THRESHOLD = 8
 
 MIN_YEAR = 1995
-MAX_YEAR = 2026
+MAX_YEAR = date.today().year + 1
 
 
 #classes

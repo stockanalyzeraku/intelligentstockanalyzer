@@ -1,8 +1,6 @@
-from codebase.fileloader.exceptions import FilenameValidationError, DatabaseValidationError, DuplicateFileError
+from codebase.fileloader.exceptions import  DatabaseValidationError
 from codebase.fileloader.schemas import (
     FORBIDDEN_CHARS_PATTERN,
-    TABLE_NAME,
-    ALLOWED_TABLES,
     DATE_PATTERN,
     SCRIP_PATTERN,
     MAX_FILENAME_LENGTH

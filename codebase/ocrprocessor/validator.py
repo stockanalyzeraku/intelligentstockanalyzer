@@ -4,10 +4,10 @@ import re
 from urllib.parse import urlparse
 
 
-from codebase.mistralaiprocessor.exceptions import (
+from codebase.ocrprocessor.exceptions import (
     FilePathError
 )
-from codebase.mistralaiprocessor.skelton import (
+from codebase.ocrprocessor.skelton import (
     ALLOWED_BASE, 
     ALLOWED_EXTENSIONS,
     MAX_TEXT_LENGTH,
@@ -23,11 +23,11 @@ from codebase.mistralaiprocessor.skelton import (
     DANGEROUS_FORMAT_CHARS,
     ZERO_WIDTH_CHARS,
     PRIVATE_HOSTS,
-    PRIVATE_IP_PATTERN
+    PRIVATE_IP_PATTERN,
+    _SCRIPT_NAME_RE
 )
 
 import json
-from pathlib import Path
 
 def _validate_filepath(path) -> Path:
 
@@ -40,14 +40,14 @@ def _validate_filepath(path) -> Path:
         resolved.relative_to(ALLOWED_BASE)
     except ValueError:
         raise FilePathError(
-            f"{Path} : Path is not in base directory"
-            f"(possible path traversal attempt)"
+            path,
+            f"{path} : Path is not in base directory (possible path traversal attempt)"
         )
 
     if not resolved.exists():
         raise FilePathError(f"{path} : File does not exist: {resolved}")
     if not resolved.is_file():
-        raise ValueError(f"{path} : Path is not a regular file: {resolved}")
+        raise ValueError(path,f"{path} : Path is not a regular file: {resolved}")
 
     # --- Structure check: uploads/script/year/file.ext ---
     try:
@@ -64,7 +64,7 @@ def _validate_filepath(path) -> Path:
     script_name, year_str, filename = relative_parts
 
     # --- Validate script segment ---
-    if not script_name or not script_name.strip():
+    if not script_name or not script_name.strip() or not _SCRIPT_NAME_RE.match(script_name.upper()):
         raise ValueError("Script/folder name segment is empty")
     if script_name.startswith("."):
         raise ValueError(f"Script folder name looks hidden/invalid: '{script_name}'")
@@ -192,7 +192,7 @@ def _validate_ocr_text(text: str, *, max_length: int = MAX_TEXT_LENGTH) -> str:
     if match:
         raise ValueError(f"Text contains a disallowed data URI: '{match.group(0)}'")
 
-    _check_markdown_urls(normalized)
+    _check_markdown_urls(scan_text)
     _check_pathological_nesting(normalized)
 
     longest_token = max((len(tok) for tok in normalized.split()), default=0)

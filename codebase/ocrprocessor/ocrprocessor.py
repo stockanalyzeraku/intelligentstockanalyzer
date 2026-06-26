@@ -2,9 +2,8 @@ from __future__ import annotations
 
 import json
 import os
-import sys
 
-from dataclasses import asdict, dataclass
+from dataclasses import asdict
 from pathlib import Path
 from typing import Optional
 
@@ -15,24 +14,24 @@ import base64
 from config import CONFIG
 from logger import get_logger
 from healthcheck import assert_system_health
-from codebase.mistralaiprocessor.skelton import PageContent
-from codebase.mistralaiprocessor.validator import _validate_filepath, _validate_ocr_text
+from codebase.ocrprocessor.skelton import PageContent
+from codebase.ocrprocessor.validator import _validate_filepath, _validate_ocr_text
 logger = get_logger(__name__)
 
 class OCRProcessor:
     """Orchestrates the full PDF → OCR → JSON pipeline using Mistral."""
 
-    def __init__(self, pdf_path: str, output_file: str, api_key: Optional[str] = None) -> None:
-
-        # Use provided key or fall back to config — never accept a hardcoded literal
+    def __init__(self, api_key: Optional[str] = None) -> None:
         self._api_key = api_key or CONFIG.MISTRAL_API_KEY
         self._pages: list[PageContent] = []
         self._client: Optional[Mistral] = None
 
     def _init_client(self) -> None:
-        self.log.info("Creating Mistral client")
-        self._client = Mistral(api_key=self._api_key)
-        self.log.info("Mistral client ready")
+        self._client = Mistral(
+            api_key=self._api_key,
+            timeout = 30
+            )
+        del self._api_key_ref 
 
     def _process_pages(self, pdf_path: str) -> None:
         _validate_filepath(pdf_path)
@@ -62,18 +61,19 @@ class OCRProcessor:
         self.save_pages_to_json(self._pages, self._output_file)
 
     def save_pages_to_json(self, pages: list[PageContent], output_path: str) -> None:
-            """Serialise a list of PageContent objects to a JSON file."""
-            os.makedirs(os.path.dirname(output_path), exist_ok=True)
-            data = [asdict(pc) for pc in pages]
-            with open(output_path, "w", encoding="utf-8") as fh:
-                json.dump(data, fh, indent=2, ensure_ascii=False)
-            self.log.info(f"Pages saved to JSON → {output_path} ({len(pages)} pages)")
+        _validate_filepath(output_path)
+        parent = Path(output_path).parent
+        if str(parent) != ".":
+            parent.mkdir(parents=True, exist_ok=True)
+        data = [asdict(_validate_ocr_text(pc)) for pc in pages]
+        with open(output_path, "w", encoding="utf-8") as fh:
+            json.dump(data, fh, indent=2, ensure_ascii=False)
     
     def run(self, pdf_path:str) -> str:
         assert_system_health(include_llm=True)
         with self.log.timed("ocr_pipeline", pdf_path=pdf_path, output_file=self._output_file):
             self._init_client()
-            self._process_pages()
+            self._process_pages(pdf_path=pdf_path)
         self.log.process_event("ocr_pipeline_completed", "ocr", output_file=self._output_file)
         return self._output_file
 
