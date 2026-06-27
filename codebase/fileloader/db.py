@@ -44,7 +44,7 @@ def _db_path() -> Path:
 # Connection handling
 @contextmanager
 def _get_connection() -> Iterator[sqlite3.Connection]:
-    db_path = f"str(_db_path)/{DATABASE_NAME}"
+    db_path = f"{str(_db_path())}/{DATABASE_NAME}"
     conn = sqlite3.connect(db_path, timeout=30)
     conn.row_factory = sqlite3.Row
     try:
@@ -83,51 +83,28 @@ def init_db() -> Path:
     return _db_path()
 
     
-#validate all records
-def _validate_record_fields(record: UploadResult) -> None:
-    filename = record.filename
-    scrip = record.scrip
-    year = record.year
-    filetype = record.file_type
-    status = record.status
-    reason = record.reason
-    destination_path = record.destination_path
-    upload_date = record.date
-    upload_time = record.time
-
-    # filename
-    _validate_filename(filename)
-
-    #script
-    _validate_scrip(scrip)
-
-    # year
-    _validate_year(year)
-
-    # filetype
-    _validate_filetype(filetype)
-
-    # status
-    _validate_status(status)
-    
-    # reason
-    _validate_reason(reason)
-
-    # destination_path (nullable)
-    _validate_destination_path(destination_path)
-
-    # upload_date
-    _validate_parse_date(upload_date, "upload_date")
-    
-    #upload_time
-    _validate_time(upload_time)
-
-#limit records        
-
 # Insert
 def insert_upload_record(record: UploadResult) -> int:
     
-    _validate_record_fields(record)
+    # filename
+    _validate_filename(record.filename)
+    #script
+    _validate_scrip(record.scrip)
+    # year
+    _validate_year(record.year)
+    # filetype
+    _validate_filetype(record.file_type)
+    # status
+    _validate_status(record.status)
+    # reason
+    _validate_reason(record.status)
+    # destination_path (nullable)
+    _validate_destination_path(record.destination_path)
+    # upload_date
+    _validate_parse_date(record.date, "upload_date")
+    #upload_time
+    _validate_time(record.time)
+
     columns = INSERTABLE_COLUMNS
     placeholders = ", ".join("?" for _ in columns)
     column_list = ", ".join(columns)
