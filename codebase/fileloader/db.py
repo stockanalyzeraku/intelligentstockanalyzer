@@ -30,7 +30,13 @@ from codebase.fileloader.validator import (
     _validate_filename,
     _validate_limit,
     _validate_parse_date,
-    _validate_scrip
+    _validate_scrip,
+    _validate_status,
+    _validate_year,
+    _validate_filetype,
+    _validate_destination_path,
+    _validate_reason,
+    _validate_time
 )
 
 from config import CONFIG
@@ -51,9 +57,9 @@ def _get_connection() -> Iterator[sqlite3.Connection]:
     try:
         # WAL improves concurrent read/write behavior; busy_timeout makes
         # SQLite wait (instead of erroring immediately) if briefly locked.
-        row = conn.execute("PRAGMA journal_mode=WAL;").fetchone()
-        if row[0].lower() != "wal":
-            raise RuntimeError("failed to sel WAL Journal Mode")
+        # row = conn.execute("PRAGMA journal_mode=WAL;").fetchone()
+        # if row[0].lower() != "wal":
+        #     raise RuntimeError("failed to sel WAL Journal Mode")
         conn.execute("PRAGMA busy_timeout=5000;")
         conn.execute("PRAGMA foreign_keys=ON")
         conn.execute("PRAGMA trusted_schema=OFF")
@@ -103,60 +109,26 @@ def _validate_record_fields(record: UploadResult) -> None:
     _validate_scrip(scrip)
 
     # year
-    if year is not None:
-        if not isinstance(year, str) or not YEAR_PATTERN.match(year):
-            raise DatabaseValidationError("year", year, "must be a 4-digit string.")
+    _validate_year(year)
 
     # filetype
-    if filetype is not None:
-        if not isinstance(filetype, str) or not FILETYPE_PATTERN.match(filetype):
-            raise DatabaseValidationError("filetype", filetype, "must be 'pdf'.")
+    _validate_filetype(filetype)
 
     # status
-    if status not in ALLOWED_STATUS_VALUES:
-        raise DatabaseValidationError(
-            "status", status, f"must be one of {ALLOWED_STATUS_VALUES}."
-        )
-
+    _validate_status(status)
+    
     # reason
-    if reason is not None:
-        if not isinstance(reason, str):
-            raise DatabaseValidationError("reason", reason, "must be a string.")
-        if len(reason) > MAX_REASON_LENGTH:
-            raise DatabaseValidationError("reason", reason, "exceeds max length.")
-        _check_forbidden_chars("reason", reason)
+    _validate_reason(reason)
 
     # destination_path (nullable)
-    if destination_path is not None:
-        if not isinstance(destination_path, str):
-            raise DatabaseValidationError(
-                "destination_path", destination_path, "must be a string."
-            )
-        if len(destination_path) > MAX_PATH_LENGTH:
-            raise DatabaseValidationError(
-                "destination_path", destination_path, "exceeds max length."
-            )
-        _check_forbidden_chars("destination_path", destination_path)
-        if PATH_TRAVERSAL_PATTERN.search(destination_path):
-            raise DatabaseValidationError(
-                "destination_path", destination_path, "contains path traversal sequence."
-            )
+    _validate_destination_path(destination_path)
 
     # upload_date
-    if not upload_date or not isinstance(upload_date, str):
-        raise DatabaseValidationError(
-            "upload_date", upload_date, "must be a non-empty string."
-        )
     _validate_parse_date(upload_date, "upload_date")
-    _check_forbidden_chars("upload_date", upload_date)
-
-    #upload_time
-    if not upload_time or not isinstance(upload_time, str) or not TIME_PATTERN.match(upload_time):
-        raise DatabaseValidationError(
-            "upload_time", upload_time, "must be a non-empty string"
-        )
-    _check_forbidden_chars("upload_time", upload_time)
     
+    #upload_time
+    _validate_time(upload_time)
+
 #limit records        
 
 # Insert

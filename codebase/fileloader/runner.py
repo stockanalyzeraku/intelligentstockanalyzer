@@ -4,7 +4,12 @@ from tkinter import filedialog
 from pathlib import Path
 
 from codebase.fileloader.fileloader import upload_file 
-from codebase.common.exceptions import FilenameValidationError, DuplicateFileError
+from codebase.fileloader.exceptions import (
+    FilenameValidationError,
+    DuplicateFileError,
+    DatabaseInsertError
+)
+from codebase.fileloader.db import insert_upload_record
 
 
 async def run():
@@ -33,6 +38,10 @@ async def run():
         print(f"Filename rejected: {exc}")
     except DuplicateFileError as exc:
         print(f"Upload rejected: {exc}")
+    try: 
+        insert_upload_record(result)
+    except DatabaseInsertError as exc:
+        print(f"Inser to columns Failed :{exc}")
 
 
 if __name__ == "__main__":

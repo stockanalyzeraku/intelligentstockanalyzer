@@ -1,9 +1,19 @@
-from codebase.fileloader.exceptions import  DatabaseValidationError
+from codebase.fileloader.exceptions import  (
+    DatabaseValidationError,
+    FilenameValidationError
+)
 from codebase.fileloader.schemas import (
     FORBIDDEN_CHARS_PATTERN,
     DATE_PATTERN,
     SCRIP_PATTERN,
-    MAX_FILENAME_LENGTH
+    MAX_FILENAME_LENGTH,
+    YEAR_PATTERN,
+    FILETYPE_PATTERN,
+    ALLOWED_STATUS_VALUES,
+    MAX_REASON_LENGTH,
+    MAX_PATH_LENGTH,
+    PATH_TRAVERSAL_PATTERN,
+    TIME_PATTERN
 )
 from codebase.fileloader.skelton import(
     FILENAME_PATTERN
@@ -21,14 +31,14 @@ def _check_forbidden_chars(field: str, value: str) -> None:
 #validate filename
 def _validate_filename(filename:str) -> tuple[str, str, str]:
     if not filename or not isinstance(filename, str):
-        raise DatabaseValidationError("filename", filename, "must be a non-empty string.")
+        raise FilenameValidationError(filename, "must be a non-empty string.")
     if len(filename) > MAX_FILENAME_LENGTH:
-        raise DatabaseValidationError("filename", filename, "exceeds max length.")
+        raise FilenameValidationError( filename, "exceeds max length.")
     _check_forbidden_chars("filename", filename)
     match = FILENAME_PATTERN.match(filename)
     if not FILENAME_PATTERN.match(filename):
-        raise DatabaseValidationError(
-            "filename", filename, "does not match required Scrip_Year_pdf.pdf pattern."
+        raise FilenameValidationError(
+            filename, "does not match required Scrip_Year_pdf.pdf pattern."
         )
     return match.group("scrip"), match.group("year"), match.group("filetype")
  
@@ -48,13 +58,16 @@ def _validate_limit(limit:int = 1000)-> None:
         raise ValueError("limit must be between 1 and 1000.")
 
 #parse date
-def _validate_parse_date(value: str, field: str) -> datetime:
+def _validate_parse_date(date: str, field: str) -> datetime:
+    if not date or not isinstance(date, str):
+        raise DatabaseValidationError("date", date, "Empty date given or is not in string format")
+    _check_forbidden_chars("date",date)
     for fmt in DATE_PATTERN:
         try:
-            return datetime.strptime(value, fmt)
+            return datetime.strptime(date, fmt)
         except ValueError:
             continue
-    raise DatabaseValidationError(field, value, "invalid date format.")
+    raise DatabaseValidationError(field, date, "invalid date format.")
 
 
 def _validate_filesize(file_bytes: bytes, filename: str) -> None:
@@ -66,3 +79,48 @@ def _validate_filesize(file_bytes: bytes, filename: str) -> None:
             f"{CONFIG.MAX_FILE_SIZE_MB}MB."
         )
 
+def _validate_year(year: str) -> None:
+    if year is not None:
+        if not isinstance(year, str) or not YEAR_PATTERN.match(year):
+            raise DatabaseValidationError("year", year, "must be a 4-digit string.")
+
+def _validate_filetype(filetype: str) -> None:
+    if filetype is not None:
+        if not isinstance(filetype, str) or not FILETYPE_PATTERN.match(filetype):
+            raise DatabaseValidationError("filetype", filetype, "must be 'pdf'.")
+    
+def _validate_status(status) -> None:
+    if status is not None:
+        if not isinstance(status, str) or not ALLOWED_STATUS_VALUES.MATCH(status):
+            raise DatabaseValidationError("status", status, "Not a valid status'.")
+
+def _validate_reason(reason: str) -> None:
+    if reason is not None:
+        if not isinstance(reason, str):
+            raise DatabaseValidationError("reason", reason, "must be a string.")
+        if len(reason) > MAX_REASON_LENGTH:
+            raise DatabaseValidationError("reason", reason, "exceeds max length.")
+        _check_forbidden_chars("reason", reason)
+
+def _validate_destination_path(destination_path: str) -> None:
+    if destination_path is not None:
+        if not isinstance(destination_path, str):
+            raise DatabaseValidationError(
+                "destination_path", destination_path, "must be a string."
+            )
+        if len(destination_path) > MAX_PATH_LENGTH:
+            raise DatabaseValidationError("destination_path", destination_path, "exceeds max length.")
+        _check_forbidden_chars("destination_path", destination_path)
+        if PATH_TRAVERSAL_PATTERN.search(destination_path):
+            raise DatabaseValidationError(
+                "destination_path", destination_path, "contains path traversal sequence."
+            )
+
+def _validate_time(time: str) -> None:
+    if not time or not isinstance(time, str) or not TIME_PATTERN.match(time):
+            raise DatabaseValidationError(
+                "upload_time", time, "must be a non-empty string"
+            )
+    _check_forbidden_chars("upload_time", time)
+        
+    

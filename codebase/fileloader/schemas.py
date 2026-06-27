@@ -1,9 +1,11 @@
 
 from __future__ import annotations
+from dataclasses import dataclass
+from codebase.fileloader.skelton import UploadResult
 
 import re
 
-TABLE_NAME = "file_stats"
+TABLE_NAME = "processed_files"
 
 CREATE_TABLE_SQL = f"""
 CREATE TABLE IF NOT EXISTS {TABLE_NAME} (
@@ -31,16 +33,18 @@ CREATE_INDEX_STATUS_SQL = (
 ALL_INDEX_STATEMENTS = [CREATE_INDEX_SCRIP_SQL, CREATE_INDEX_STATUS_SQL]
 
 # Columns allowed to be inserted (excludes id/created_at, which are DB-managed).
-INSERTABLE_COLUMNS = [
-    "filename",
-    "scrip",
-    "year",
-    "filetype",
-    "status",
-    "reason",
-    "destination_path",
-    "upload_datetime",
-]
+# INSERTABLE_COLUMNS = [
+#     "filename",
+#     "scrip",
+#     "year",
+#     "file_type",
+#     "status",
+#     "reason",
+#     "destination_path",
+#     "date",
+#     "time"
+# ]
+INSERTABLE_COLUMNS = dataclass.fields(UploadResult)
 
 # Validation
 # Same pattern used in file_loader.py for Scrip — alphanumeric only.

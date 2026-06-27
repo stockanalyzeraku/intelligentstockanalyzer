@@ -46,10 +46,6 @@ def _validate_pdf_structure(file_bytes: bytes, filename: str) -> None:
 def get_or_create_upload_dir(scrip: str, year: str, report_type: str) -> Path:
 
     target_dir = Path(CONFIG.UPLOADS_PATH) / scrip / year / report_type
-
-    if target_dir.is_dir():
-        return target_dir
-
     target_dir.mkdir(parents=True, exist_ok=True)
     return target_dir
 
@@ -64,7 +60,6 @@ async def upload_file(file_bytes: bytes, filename: str) -> UploadResult:
         _validate_filesize(file_bytes, filename)
         _validate_pdf_structure(file_bytes, filename)
     except ValueError as exc:
-        logger.warning("Upload validation failed for '%s': %s", filename, exc)
         return UploadResult(
             filename=filename,
             status="FAILED",
@@ -76,9 +71,17 @@ async def upload_file(file_bytes: bytes, filename: str) -> UploadResult:
     # Step 3: prepare destination folder
     destination_dir = get_or_create_upload_dir(scrip, year, file_type)
     destination_path = destination_dir / filename
+    try:
+        destination_path.exists()
+    except DuplicateFileError(destination_path) as exc:
+        return UploadResult(
+            filename=filename,
+            status="FAILED",
+            reason=str(exc),
+            scrip=scrip,
+            year=year
+            )
 
-    if destination_path.exists():
-        raise DuplicateFileError(destination_path)
 
     try:
         destination_path.write_bytes(file_bytes)

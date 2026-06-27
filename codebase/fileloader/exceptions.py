@@ -25,3 +25,14 @@ class DatabaseValidationError(Exception):
         self.reason = reason
         super().__init__(f"Invalid value for '{field}': {reason} (got: {value!r})")
 
+class DatabaseInsertError(Exception):
+    """Raised when a value about to be written to the DB fails upload."""
+
+    def __init__(self, field: str, value: Any, reason: str):
+        self.field = field
+        self.value = value
+        self.reason = reason
+        super().__init__(f"Invalid value for '{field}': {reason} (got: {value!r})")
+
+
+

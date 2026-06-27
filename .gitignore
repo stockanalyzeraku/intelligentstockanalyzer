@@ -86,3 +86,7 @@ Thumbs.db
 *.psd
 *.tar.gz
 *.zip
+
+tests
+setup.cfg
+pytest.ini
