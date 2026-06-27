@@ -1,6 +1,6 @@
 
 from __future__ import annotations
-from dataclasses import dataclass
+from dataclasses import dataclasses
 from codebase.fileloader.skelton import UploadResult
 
 import re
@@ -17,7 +17,8 @@ CREATE TABLE IF NOT EXISTS {TABLE_NAME} (
     status            TEXT    NOT NULL CHECK (status IN ('SUCCESS', 'FAILED')),
     reason            TEXT,
     destination_path  TEXT,
-    upload_datetime   TEXT    NOT NULL,
+    date              TEXT    NOT NULL,
+    time              TEXT    NOT NULL,
     created_at        TEXT    NOT NULL DEFAULT (datetime('now'))
 );
 """
@@ -44,7 +45,7 @@ ALL_INDEX_STATEMENTS = [CREATE_INDEX_SCRIP_SQL, CREATE_INDEX_STATUS_SQL]
 #     "date",
 #     "time"
 # ]
-INSERTABLE_COLUMNS = dataclass.fields(UploadResult)
+INSERTABLE_COLUMNS = [f.name for f in dataclasses.fields(UploadResult)]
 
 # Validation
 # Same pattern used in file_loader.py for Scrip — alphanumeric only.

@@ -36,7 +36,7 @@ def _validate_filename(filename:str) -> tuple[str, str, str]:
         raise FilenameValidationError( filename, "exceeds max length.")
     _check_forbidden_chars("filename", filename)
     match = FILENAME_PATTERN.match(filename)
-    if not FILENAME_PATTERN.match(filename):
+    if not match:
         raise FilenameValidationError(
             filename, "does not match required Scrip_Year_pdf.pdf pattern."
         )
@@ -91,7 +91,7 @@ def _validate_filetype(filetype: str) -> None:
     
 def _validate_status(status) -> None:
     if status is not None:
-        if not isinstance(status, str) or not ALLOWED_STATUS_VALUES.MATCH(status):
+        if not isinstance(status, str) or status not in ALLOWED_STATUS_VALUES:
             raise DatabaseValidationError("status", status, "Not a valid status'.")
 
 def _validate_reason(reason: str) -> None:

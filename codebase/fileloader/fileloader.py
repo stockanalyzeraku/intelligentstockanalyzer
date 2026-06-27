@@ -71,9 +71,7 @@ async def upload_file(file_bytes: bytes, filename: str) -> UploadResult:
     # Step 3: prepare destination folder
     destination_dir = get_or_create_upload_dir(scrip, year, file_type)
     destination_path = destination_dir / filename
-    try:
-        destination_path.exists()
-    except DuplicateFileError(destination_path) as exc:
+    if destination_path.exists():
         return UploadResult(
             filename=filename,
             status="FAILED",

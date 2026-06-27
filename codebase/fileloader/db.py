@@ -15,18 +15,10 @@ from codebase.fileloader.schemas import (
     CREATE_TABLE_SQL,
     ALL_INDEX_STATEMENTS,
     INSERTABLE_COLUMNS,
-    YEAR_PATTERN,
-    FILETYPE_PATTERN,
-    ALLOWED_STATUS_VALUES,
-    MAX_REASON_LENGTH,
-    MAX_PATH_LENGTH,
-    PATH_TRAVERSAL_PATTERN,
     ALLOWED_TABLES,
-    TIME_PATTERN,
 )
 
 from codebase.fileloader.validator import (
-    _check_forbidden_chars,
     _validate_filename,
     _validate_limit,
     _validate_parse_date,
@@ -40,7 +32,7 @@ from codebase.fileloader.validator import (
 )
 
 from config import CONFIG
-from codebase.common.exceptions import DatabaseValidationError
+from codebase.fileloader.exceptions import DatabaseValidationError
 from codebase.fileloader.skelton import UploadResult
 
 
@@ -75,6 +67,13 @@ def _get_connection() -> Iterator[sqlite3.Connection]:
 
 def init_db() -> Path:
     _db_path().mkdir(parents=True, exist_ok=True)
+    #validate table name
+    if TABLE_NAME not in ALLOWED_TABLES:
+        raise DatabaseValidationError(
+            "Table Name",
+            TABLE_NAME,
+            "Table Name not in allowed Table Name list."
+            )
     with _db_lock:
         with _get_connection() as conn:
             conn.execute(CREATE_TABLE_SQL)
@@ -82,13 +81,6 @@ def init_db() -> Path:
                 conn.execute(stmt)
     return _db_path()
 
-#validate table name
-if TABLE_NAME not in ALLOWED_TABLES:
-    raise DatabaseValidationError(
-        "Table Name",
-        TABLE_NAME,
-        "Table Name not in allowed Table Name list."
-        )
     
 #validate all records
 def _validate_record_fields(record: UploadResult) -> None:
@@ -176,10 +168,8 @@ def get_records_by_scrip(scrip: str, limit:int = 1000) -> list[dict[str, Any]]:
 
 def get_records_by_status(status: str, limit:int = 1000) -> list[dict[str, Any]]:
     _validate_limit(limit) 
-    if status not in ALLOWED_STATUS_VALUES:
-        raise DatabaseValidationError(
-            "status", status, f"must be one of {ALLOWED_STATUS_VALUES}."
-        )
+    _validate_status(status)
+
     sql = f"SELECT * FROM {TABLE_NAME} WHERE status = ? ORDER BY id DESC LIMIT ?;"
     with _db_lock:
         with _get_connection() as conn:
