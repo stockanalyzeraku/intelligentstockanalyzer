@@ -75,7 +75,7 @@ async def upload_file(file_bytes: bytes, filename: str) -> UploadResult:
         return UploadResult(
             filename=filename,
             status="FAILED",
-            reason=str(exc),
+            reason="File Already Exists",
             scrip=scrip,
             year=year
             )

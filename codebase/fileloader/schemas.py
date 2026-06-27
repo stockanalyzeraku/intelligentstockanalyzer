@@ -1,10 +1,11 @@
 
 from __future__ import annotations
-from dataclasses import dataclasses
+import dataclasses
 from codebase.fileloader.skelton import UploadResult
 
 import re
 
+DATABASE_NAME = "processedfilesdb.db"
 TABLE_NAME = "processed_files"
 
 CREATE_TABLE_SQL = f"""

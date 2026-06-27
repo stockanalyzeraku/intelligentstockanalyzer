@@ -16,6 +16,7 @@ from codebase.fileloader.schemas import (
     ALL_INDEX_STATEMENTS,
     INSERTABLE_COLUMNS,
     ALLOWED_TABLES,
+    DATABASE_NAME
 )
 
 from codebase.fileloader.validator import (
@@ -43,8 +44,8 @@ def _db_path() -> Path:
 # Connection handling
 @contextmanager
 def _get_connection() -> Iterator[sqlite3.Connection]:
-
-    conn = sqlite3.connect(str(_db_path()), timeout=30)
+    db_path = f"str(_db_path)/{DATABASE_NAME}"
+    conn = sqlite3.connect(db_path, timeout=30)
     conn.row_factory = sqlite3.Row
     try:
         # WAL improves concurrent read/write behavior; busy_timeout makes
@@ -189,7 +190,7 @@ def get_records_by_date_range(start_date: str, end_date: str, limit: int = 1000)
     )
     sql = (
         f"SELECT * FROM {TABLE_NAME} "
-        f"WHERE upload_datetime BETWEEN ? AND ? "
+        f"WHERE date BETWEEN ? AND ? "
         f"ORDER BY id DESC LIMIT ?;"
     )
     with _db_lock:
