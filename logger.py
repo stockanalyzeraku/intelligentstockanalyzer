@@ -95,7 +95,7 @@ class StructuredLogger:
         )
 
     def event(self, message: str, **kwargs: Any) -> None:
-        self.write("EVENT", message, echo=True, **kwargs)
+        self._write("EVENT", message, echo=True, **kwargs)
 
 
     def process_event(self, event: str, stage: str, status: str = "ok", **fields: Any) -> None:

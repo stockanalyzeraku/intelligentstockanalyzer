@@ -13,7 +13,6 @@ from codebase.fileloader.validator import _validate_filename, _validate_filesize
 from codebase.fileloader.exceptions import DuplicateFileError
 from config import CONFIG
 
-logger = logging.getLogger(__name__)
 
 PDF_MAGIC_BYTES = b"%PDF-"
 
@@ -81,18 +80,17 @@ def upload_file(file_bytes: bytes, filename: str, logger: StructuredLogger) -> U
     destination_dir = get_or_create_upload_dir(scrip, year, file_type)
     destination_path = destination_dir / filename
     if destination_path.exists():
-        logger.event(f"{filename} : destinantion folder created succesffully")
+        logger.event(f"{filename} : destinantion folder exists")
     else:
-        logger.event(f"{filename} : destination folder creation failed")
-        return "Cant upload right now"
-    
+        logger.event(f"{filename} : destination folder was creates")
+        
     try:
         destination_path.write_bytes(file_bytes)
     except OSError as exc:
         logger.event("Failed to write file '%s' to disk: %s", filename, exc)
         return "Cant upload right now"
 
-    logger.info("File '%s' uploaded successfully to '%s'.", filename, destination_path)
+    logger.info("File {filename} uploaded successfully to {destination_path}.")
     return UploadResult(
         filename=filename,
         status="SUCCESS",
@@ -103,7 +101,7 @@ def upload_file(file_bytes: bytes, filename: str, logger: StructuredLogger) -> U
     )
 
 
-async def delete_file(filepath: str | Path) -> bool:
+async def delete_file(filepath: str | Path, logger: StructuredLogger) -> bool:
     """
     Delete a previously uploaded file from disk.
     """
@@ -114,7 +112,7 @@ async def delete_file(filepath: str | Path) -> bool:
 
     try:
         path.unlink()
-        logger.info("File '%s' deleted successfully.", path)
+        logger.info("File {path} deleted successfully.",)
         return True
     except OSError as exc:
         logger.error("Failed to delete file '%s': %s", path, exc)
