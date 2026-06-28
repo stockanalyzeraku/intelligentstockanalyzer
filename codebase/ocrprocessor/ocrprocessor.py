@@ -1,92 +1,118 @@
+"""
+ocrprocessor.py — OCRProcessor orchestrator.
+
+Coordinates the full pipeline:
+    validate path → render pages → call OCR → validate text → save JSON
+
+The OCR client is injected via the constructor, so adding a second provider
+requires no changes here — only the caller changes.
+
+    # Default — uses Mistral
+    processor = OCRProcessor()
+
+    # Inject any client with a process_page(image_bytes) -> str method
+    processor = OCRProcessor(client=GoogleOcrClient(...))
+    processor = OCRProcessor(client=AWSTextractClient(...))
+    processor = OCRProcessor(client=MockOcrClient())   # in tests
+"""
 from __future__ import annotations
 
 import json
 import os
-
 from dataclasses import asdict
 from pathlib import Path
 from typing import Optional
 
-import fitz  # PyMuPDF
-from mistralai.client import Mistral
-import base64
-
 from config import CONFIG
-from logger import get_logger
+from logger import get_logger, StructuredLogger
 from healthcheck import assert_system_health
+
 from codebase.ocrprocessor.skelton import PageContent
 from codebase.ocrprocessor.validator import (
     _validate_ocr_text,
     _validate_filepath,
-    _validate_output_path
-
+    _validate_output_path,
 )
-logger = get_logger(__name__)
+from codebase.ocrprocessor.mistralclient import MistralClient
+from codebase.ocrprocessor.pdfrenderer import PDFRenderer
+from codebase.ocrprocessor.exceptions import FilenameValidationError
+
 
 class OCRProcessor:
-    """Orchestrates the full PDF → OCR → JSON pipeline using Mistral."""
+    """
+    Orchestrates the full PDF → OCR → JSON pipeline.
 
-    def __init__(self, api_key: Optional[str] = None) -> None:
-        self._api_key = api_key or CONFIG.MISTRAL_API_KEY
-        self._pages: list[PageContent] = []
-        self._client: Optional[Mistral] = None
+    Args:
+        client:  Any object with a process_page(image_bytes: bytes) -> str
+                 method. Defaults to MistralClient if not provided.
+        api_key: Mistral API key — only used when client is not supplied.
+    """
 
-    def _init_client(self) -> None:
-        self._client = Mistral(
-            api_key=self._api_key,
-            )
-        del self._api_key
+    def __init__(
+        self,
+        client=None,
+        api_key: Optional[str] = None,
+    ) -> None:
+        self.log = get_logger(__name__)
 
-    def _process_pages(self, pdf_path: str) -> Path:
-        _validate_filepath(pdf_path)
-        pdf_name = Path(pdf_path).name
-
-        doc = fitz.open(pdf_path)
-        total_pages = len(doc)
-
-        for page_idx in range(total_pages):
-            pix = doc[page_idx].get_pixmap(dpi=200)
-            img_bytes = pix.tobytes("png")
-            b64 = base64.b64encode(img_bytes).decode("utf-8")
-
-            ocr_response = self._client.ocr.process(
+        if client is None:
+            # Default provider. Pass a different client to use another OCR service.
+            resolved_key = api_key or CONFIG.MISTRAL_API_KEY
+            client = MistralClient(
+                api_key=resolved_key,
                 model=CONFIG.MISTRAL_MODEL_OCR,
-                document={
-                    "type": "image_url",
-                    "image_url": f"data:image/png;base64,{b64}",
-                },
             )
-            page_markdown = ocr_response.pages[0].markdown if ocr_response.pages else ""
-            self._pages.append(PageContent(page_number=page_idx + 1, text=_validate_ocr_text(page_markdown)))
 
-        doc.close()
-        return self.save_pages_to_json(self._pages, os.path.splitext(Path(pdf_path))[0] + ".json")
+        self._client   = client
+        self._renderer = PDFRenderer()
 
-    def save_pages_to_json(self, pages: list[PageContent], output_path: str) -> None:
-        resolved_output_path = _validate_output_path(output_path)
+    def _process_pages(self, pdf_path: str) -> str:
+        """Render every page, call OCR, validate text, collect results."""
+        try:
+            _validate_filepath(pdf_path)
+        except:
+            raise FilenameValidationError("filename","filename is not valid")
+
+        pages: list[PageContent] = []          # local — never carried between runs
+
+        for page_number, image_bytes in self._renderer.render_pages(pdf_path):
+            raw_text   = self._client.process_page(image_bytes)
+            clean_text = _validate_ocr_text(raw_text)
+
+            if clean_text:                     # blank pages are skipped silently
+                pages.append(PageContent(page_number=page_number, text=clean_text))
+                self.log.info(f"Page {page_number} — {len(clean_text):,} chars")
+
+        output_path = os.path.splitext(pdf_path)[0] + ".json"
+        return self.save_pages_to_json(pages, output_path)
+
+    def save_pages_to_json(self, pages: list[PageContent], output_path: str) -> str:
+        """Validate the output path and write pages to a JSON file."""
+        resolved = _validate_output_path(output_path)
         parent = Path(output_path).parent
         if str(parent) != ".":
             parent.mkdir(parents=True, exist_ok=True)
-        data = [asdict((pc)) for pc in pages]
-        with open(resolved_output_path, "w", encoding="utf-8") as fh:
+        data = [asdict(pc) for pc in pages]
+        with open(resolved, "w", encoding="utf-8") as fh:
             json.dump(data, fh, indent=2, ensure_ascii=False)
-        return output_path
-    
-    def run(self, pdf_path:str) -> str:
+        return str(resolved)
+
+    def run(self, pdf_path: str, logger: StructuredLogger) -> str:
+        """Run the full OCR pipeline on a single PDF."""
         assert_system_health(include_llm=True)
-        self._init_client()
-        output_path = self._process_pages(pdf_path=pdf_path)
-        return output_path
+        return self._process_pages(pdf_path=pdf_path)
 
 
 if __name__ == "__main__":
     COMPANY = "KALYANKJIL"
-    YEAR = "2023"
+    YEAR    = "2023"
     DOC_TYPE = "ANNUAL_REPORT"
+    filename = f"{COMPANY}/{YEAR}/{DOC_TYPE}/.pdf"
+    logger = get_logger("OCRPROCESSOR", filename)
 
-    base_dir = os.path.join(CONFIG.UPLOADS_PATH, COMPANY, YEAR, DOC_TYPE)
+    base_dir   = os.path.join(CONFIG.UPLOADS_PATH, COMPANY, YEAR, DOC_TYPE)
     source_pdf = os.path.join(base_dir, f"{COMPANY}_{YEAR}_{DOC_TYPE}.pdf")
-   
-    processor = OCRProcessor()
-    result_path = processor.run(source_pdf)
+
+    processor   = OCRProcessor()
+    result_path = processor.run(source_pdf, logger)
     print(f"Done → {result_path}")
