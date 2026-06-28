@@ -7,8 +7,8 @@ exception logging. Every module creates its own StructuredLogger instance.
 """
 
 from __future__ import annotations
-
 import json
+from pathlib import Path
 import os
 import sys
 import time
@@ -17,9 +17,11 @@ from contextlib import contextmanager
 from datetime import datetime, timedelta, timezone
 from typing import Any, Dict, Iterator, Mapping, Optional
 from uuid import uuid4
-
+from enum import Enum
 from config import CONFIG
 
+class LoggerClasses(Enum):
+    FILELOADER = "FILELOADER"
 
 _SENSITIVE_KEYS = (
     "api_key",
@@ -42,9 +44,10 @@ class StructuredLogger:
     every entry from child loggers created with :meth:`bind`.
     """
 
-    def __init__(self, component: str, config=None, context: Optional[Mapping[str, Any]] = None):
+    def __init__(self, component: str, identifier: str, config=None, context: Optional[Mapping[str, Any]] = None):
         """Initialise logger for the given component."""
         self._component = component
+        self._identifier = identifier
         self._config = config or CONFIG
         self._context: Dict[str, Any] = dict(context or {})
         self._ist = timezone(timedelta(hours=5, minutes=30))
@@ -91,6 +94,10 @@ class StructuredLogger:
             **kwargs,
         )
 
+    def event(self, message: str, **kwargs: Any) -> None:
+        self.write("EVENT", message, echo=True, **kwargs)
+
+
     def process_event(self, event: str, stage: str, status: str = "ok", **fields: Any) -> None:
         """Log a normalized pipeline/process lifecycle event."""
         level = "ERROR" if status == "failed" else "WARNING" if status in {"warning", "degraded", "skipped"} else "INFO"
@@ -132,12 +139,24 @@ class StructuredLogger:
 
     # ── Private helpers ───────────────────────────────────────────────────
 
+    def _check_log_folder_with_component(self) -> Path:
+        valid_logger_classes = [c.value for c in LoggerClasses]
+        if self._component in valid_logger_classes:
+            folder_path = Path(CONFIG.LOGS_PATH) / self._component
+            os.makedirs(folder_path, exist_ok=True)
+            return folder_path
+        else:
+            raise ValueError(
+                f"Invalid Component {self._component}"
+            )
+
     def _resolve_log_path(self) -> str:
         """Compute today's log file path."""
+        log_path_folder_with_component = self._check_log_folder_with_component()
         date_str = datetime.now(self._ist).strftime("%Y-%m-%d")
-        safe_component = str(self._component).replace(os.sep, ".")
-        filename = f"{date_str}_{safe_component}.log"
-        return os.path.join(self._config.LOGS_PATH, filename)
+        safe_identifier = str(self._identifier).replace(os.sep, ".")
+        log_filename = f"{safe_identifier}_{date_str}.log"
+        return os.path.join(log_path_folder_with_component, log_filename)
 
     def _write(self, level: str, message: str, echo: bool = False, **kwargs: Any) -> None:
         entry: Dict[str, Any] = {
@@ -177,8 +196,8 @@ class StructuredLogger:
 _cache_logger: dict[str, StructuredLogger] = {}
 
 
-def get_logger(component: str) -> StructuredLogger:
+def get_logger(component: str, identifier: str) -> StructuredLogger:
     """Factory function to obtain a StructuredLogger for a named component."""
     if component not in _cache_logger:
-        _cache_logger[component] = StructuredLogger(component, CONFIG)
-    return _cache_logger[component]
+        _cache_logger[component, identifier] = StructuredLogger(component, identifier, CONFIG)
+    return _cache_logger[component, identifier]

@@ -7,7 +7,7 @@ from pathlib import Path
 from pypdf import PdfReader
 from pypdf.errors import PdfReadError
 
-
+from logger import StructuredLogger
 from codebase.fileloader.skelton import UploadResult
 from codebase.fileloader.validator import _validate_filename, _validate_filesize
 from codebase.fileloader.exceptions import DuplicateFileError
@@ -54,45 +54,43 @@ def get_or_create_upload_dir(scrip: str, year: str, report_type: str) -> Path:
 # Public API
 # --------------------------------------------------------------------------
 
-async def upload_file(file_bytes: bytes, filename: str) -> UploadResult:
+def upload_file(file_bytes: bytes, filename: str, logger: StructuredLogger) -> UploadResult | str:
     scrip, year, file_type = _validate_filename(filename)
+    is_valid_filename = all(v is not None for v in (scrip, year, file_type))
+    if is_valid_filename:
+        logger.event(f"{filename} : Validated file name, Successfull. Scrip : {scrip}, Year: {year}, File Type: {file_type}")
+    else:
+        logger.event(f"{filename} : Validated file Name, Not Succesfull. Scrip : {scrip}, Year: {year}, File Type: {file_type}")
+        return "Put a valid filename"
+
     try:
         _validate_filesize(file_bytes, filename)
-        _validate_pdf_structure(file_bytes, filename)
+        logger.event(f"{filename} : File size is valid")
     except ValueError as exc:
-        return UploadResult(
-            filename=filename,
-            status="FAILED",
-            reason=str(exc),
-            scrip=scrip,
-            year=year,
-        )
+        logger.event(f"{filename} : File size inappropriate : {exc}")
+        return "Put a valid filesize"
+
+    try: 
+        _validate_pdf_structure(file_bytes, filename)
+        logger.event(f"{filename} : File structure is valid")
+    except ValueError as exc:
+        logger.event(f"{filename} : File structure invalid : {exc}")
+        return "Put a valid file structure"
 
     # Step 3: prepare destination folder
     destination_dir = get_or_create_upload_dir(scrip, year, file_type)
     destination_path = destination_dir / filename
     if destination_path.exists():
-        return UploadResult(
-            filename=filename,
-            status="FAILED",
-            reason="File Already Exists",
-            scrip=scrip,
-            year=year
-            )
-
-
+        logger.event(f"{filename} : destinantion folder created succesffully")
+    else:
+        logger.event(f"{filename} : destination folder creation failed")
+        return "Cant upload right now"
+    
     try:
         destination_path.write_bytes(file_bytes)
     except OSError as exc:
-        logger.error("Failed to write file '%s' to disk: %s", filename, exc)
-        return UploadResult(
-            filename=filename,
-            status="FAILED",
-            reason=f"Failed to save file: {exc}",
-            scrip=scrip,
-            year=year,
-            file_type = file_type
-        )
+        logger.event("Failed to write file '%s' to disk: %s", filename, exc)
+        return "Cant upload right now"
 
     logger.info("File '%s' uploaded successfully to '%s'.", filename, destination_path)
     return UploadResult(

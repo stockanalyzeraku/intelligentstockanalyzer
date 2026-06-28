@@ -10,9 +10,10 @@ from codebase.fileloader.exceptions import (
     DatabaseInsertError
 )
 from codebase.fileloader.db import insert_upload_record
+from logger import get_logger
 
 
-async def run():
+def run():
     # Hide the empty root tkinter window, only show the file dialog
     root = tk.Tk()
     root.withdraw()
@@ -31,17 +32,28 @@ async def run():
     filename = file_path.name
     file_bytes = file_path.read_bytes()
 
+    logger = get_logger("FILELOADER", filename)
+
     try:
-        result = await upload_file(file_bytes, filename)
-        print(result)
+        logger.event(
+            f"{filename} : File stored in temporary storage succesfully",
+        )
+        result = upload_file(file_bytes, filename, logger)
     except FilenameValidationError as exc:
         print(f"Filename rejected: {exc}")
     except DuplicateFileError as exc:
         print(f"Upload rejected: {exc}")
-    try: 
-        insert_upload_record(result)
-    except DatabaseInsertError as exc:
-        print(f"Inser to columns Failed :{exc}")
+    if result is not None and not isinstance(result, str):
+        try: 
+            insert_upload_record(result)
+        except DatabaseInsertError as exc:
+            logger.event(f"File uploaded but records were not appended to Database : {exc}")
+    else:
+        if isinstance(result, str):
+            return result
+        else:
+            return None
+    
 
 
 if __name__ == "__main__":

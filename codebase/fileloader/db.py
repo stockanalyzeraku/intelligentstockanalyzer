@@ -9,6 +9,7 @@ import threading
 from contextlib import contextmanager
 from pathlib import Path
 from typing import Any, Iterator
+from logger import StructuredLogger
 
 from codebase.fileloader.schemas import (
     TABLE_NAME,
@@ -84,10 +85,14 @@ def init_db() -> Path:
 
     
 # Insert
-def insert_upload_record(record: UploadResult) -> int:
-    
+def insert_upload_record(record: UploadResult, logger: StructuredLogger) -> int | str:
+    logger.event(f"Validation Started for record upload to DB")
     # filename
-    _validate_filename(record.filename)
+    try:
+        _validate_filename(record.filename)
+    except:
+        logger.event(f"Filename is not valid")
+        return "Filename is not valid"
     #script
     _validate_scrip(record.scrip)
     # year
@@ -113,12 +118,15 @@ def insert_upload_record(record: UploadResult) -> int:
 
     sql = f"INSERT INTO {TABLE_NAME} ({column_list}) VALUES ({placeholders});"
 
+    logger.event("Upload to db started")
     with _db_lock:
         with _get_connection() as conn:
             cursor = conn.execute(sql, values)
             rowid = cursor.lastrowid
             if rowid is None:
+                logger.event("Record was not updated in db")
                 raise RuntimeError("INSERT returned no row ID — insert may have silently failed.")
+            logger.event("Record was updated in db")
             return rowid
 
 
