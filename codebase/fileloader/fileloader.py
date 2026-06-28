@@ -9,43 +9,37 @@ from pypdf.errors import PdfReadError
 
 from logger import StructuredLogger
 from codebase.fileloader.skelton import UploadResult
-from codebase.fileloader.validator import _validate_filename, _validate_filesize
-from codebase.fileloader.exceptions import DuplicateFileError
+from codebase.fileloader.validator import (
+    _validate_filename,
+    _validate_filesize,
+    _validate_pdf_structure
+)
+from codebase.fileloader.exceptions import DuplicateFileError, FilenameValidationError
 from config import CONFIG
 
 
-PDF_MAGIC_BYTES = b"%PDF-"
-
-# Internal validation helpers
 
 
-def _validate_pdf_structure(file_bytes: bytes, filename: str) -> None:
+
+def get_or_create_upload_dir(scrip: str, year: str, report_type: str, logger: StructuredLogger) -> Path:
     """
-    Confirm the file is a genuine, parseable, non-encrypted PDF.
-    Raises ValueError on any failure.
+    Resolve (and create if missing) the directory a file should live in,
+    based on scrip/year/report_type. Raises OSError on failure (e.g.
+    permissions, disk full, invalid path) — caller decides how to report it.
     """
-    if not file_bytes.startswith(PDF_MAGIC_BYTES):
-        raise ValueError(f"File '{filename}' is not a valid PDF (missing PDF header).")
-
-    try:
-        reader = PdfReader(io.BytesIO(file_bytes))
-    except PdfReadError as exc:
-        raise ValueError(f"File '{filename}' could not be parsed as a PDF: {exc}") from exc
-    except Exception as exc:  # noqa: BLE001 - any other parse failure means bogus file
-        raise ValueError(f"File '{filename}' is not a valid/readable PDF: {exc}") from exc
-
-    if reader.is_encrypted:
-        raise ValueError(f"File '{filename}' is encrypted/password-protected and is rejected.")
-
-    if len(reader.pages) == 0:
-        raise ValueError(f"File '{filename}' contains no pages and is rejected.")
-
-
-
-def get_or_create_upload_dir(scrip: str, year: str, report_type: str) -> Path:
-
     target_dir = Path(CONFIG.UPLOADS_PATH) / scrip / year / report_type
-    target_dir.mkdir(parents=True, exist_ok=True)
+    try:
+        target_dir.mkdir(parents=True, exist_ok=True)
+    except OSError as exc:
+        logger.error(
+            f"Could not create upload directory '{target_dir}': {exc}",
+            scrip=scrip,
+            year=year,
+            report_type=report_type,
+            step="prepare_destination_dir",
+            outcome="failed",
+        )
+        raise
     return target_dir
 
 
@@ -54,50 +48,118 @@ def get_or_create_upload_dir(scrip: str, year: str, report_type: str) -> Path:
 # --------------------------------------------------------------------------
 
 def upload_file(file_bytes: bytes, filename: str, logger: StructuredLogger) -> UploadResult | str:
-    scrip, year, file_type = _validate_filename(filename)
-    is_valid_filename = all(v is not None for v in (scrip, year, file_type))
-    if is_valid_filename:
-        logger.event(f"{filename} : Validated file name, Successfull. Scrip : {scrip}, Year: {year}, File Type: {file_type}")
-    else:
-        logger.event(f"{filename} : Validated file Name, Not Succesfull. Scrip : {scrip}, Year: {year}, File Type: {file_type}")
+    """
+    Validate, store, and report on a single PDF upload.
+    Returns:
+        UploadResult on success.
+        A short, user-facing failure string on any rejected step (current
+        convention for this function) — full detail goes to the logs.
+    """
+    logger.event(
+        f"{filename} : Upload started",
+        filename=filename, step="upload_file", stage="start",
+    )
+
+    # Step 1: filename -> scrip / year / file_type
+    try:
+        scrip, year, file_type = _validate_filename(filename)
+    except FilenameValidationError as exc:
+        logger.event(
+            f"{filename} : Filename validation failed: {exc}",
+            filename=filename, step="filename_validation", outcome="failed",
+        )
         return "Put a valid filename"
 
+    logger.event(
+        f"{filename} : Filename validated successfully "
+        f"(scrip={scrip}, year={year}, file_type={file_type})",
+        filename=filename, step="filename_validation", outcome="passed",
+        scrip=scrip, year=year, file_type=file_type,
+    )
+
+    # Step 2: file size
     try:
         _validate_filesize(file_bytes, filename)
-        logger.event(f"{filename} : File size is valid")
     except ValueError as exc:
-        logger.event(f"{filename} : File size inappropriate : {exc}")
+        logger.event(
+            f"{filename} : File size validation failed: {exc}",
+            filename=filename, step="filesize_validation", outcome="failed",
+            size_bytes=len(file_bytes),
+        )
         return "Put a valid filesize"
 
-    try: 
+    logger.event(
+        f"{filename} : File size validated successfully ({len(file_bytes)} bytes)",
+        filename=filename, step="filesize_validation", outcome="passed",
+        size_bytes=len(file_bytes),
+    )
+
+    # Step 3: PDF structure (header, parseable, not encrypted, has pages)
+    try:
         _validate_pdf_structure(file_bytes, filename)
-        logger.event(f"{filename} : File structure is valid")
     except ValueError as exc:
-        logger.event(f"{filename} : File structure invalid : {exc}")
+        logger.event(
+            f"{filename} : PDF structure validation failed: {exc}",
+            filename=filename, step="pdf_structure_validation", outcome="failed",
+        )
         return "Put a valid file structure"
 
-    # Step 3: prepare destination folder
-    destination_dir = get_or_create_upload_dir(scrip, year, file_type)
+    logger.event(
+        f"{filename} : PDF structure validated successfully",
+        filename=filename, step="pdf_structure_validation", outcome="passed",
+    )
+
+    # Step 4: resolve destination directory
+    try:
+        destination_dir = get_or_create_upload_dir(scrip, year, file_type, logger)
+    except OSError as exc:
+        logger.event(
+            f"{filename} : Could not prepare destination directory: {exc}",
+            filename=filename, step="prepare_destination_dir", outcome="failed",
+        )
+        return "Cant upload right now"
+
     destination_path = destination_dir / filename
+
+    # Step 5: duplicate check — must actually stop the upload, not just log it
     if destination_path.exists():
-        logger.event(f"{filename} : destinantion folder exists")
-    else:
-        logger.event(f"{filename} : destination folder was creates")
-        
+        logger.event(
+            f"{filename} : Rejected — {DuplicateFileError(destination_path)}",
+            filename=filename, step="duplicate_check", outcome="failed",
+            destination_path=str(destination_path),
+        )
+        return "File already exists"
+
+    logger.event(
+        f"{filename} : No existing file at destination, safe to write",
+        filename=filename, step="duplicate_check", outcome="passed",
+        destination_path=str(destination_path),
+    )
+
+    # Step 6: write to disk
     try:
         destination_path.write_bytes(file_bytes)
     except OSError as exc:
-        logger.event("Failed to write file '%s' to disk: %s", filename, exc)
+        logger.error(
+            f"{filename} : Failed to write file to disk at '{destination_path}': {exc}",
+            filename=filename, step="write_to_disk", outcome="failed",
+            destination_path=str(destination_path),
+        )
         return "Cant upload right now"
 
-    logger.info("File {filename} uploaded successfully to {destination_path}.")
+    logger.info(
+        f"{filename} : Uploaded successfully to '{destination_path}'",
+        filename=filename, step="write_to_disk", outcome="passed",
+        destination_path=str(destination_path),
+    )
+
     return UploadResult(
         filename=filename,
         status="SUCCESS",
         scrip=scrip,
         year=year,
         destination_path=str(destination_path),
-        file_type = file_type
+        file_type=file_type,
     )
 
 
@@ -107,13 +169,22 @@ async def delete_file(filepath: str | Path, logger: StructuredLogger) -> bool:
     """
     path = Path(filepath)
     if not path.exists():
-        logger.warning("Delete requested for non-existent file: '%s'", path)
+        logger.warning(
+            f"Delete requested for non-existent file: '{path}'",
+            filepath=str(path), step="delete", outcome="not_found",
+        )
         return False
 
     try:
         path.unlink()
-        logger.info("File {path} deleted successfully.",)
+        logger.info(
+            f"File '{path}' deleted successfully.",
+            filepath=str(path), step="delete", outcome="passed",
+        )
         return True
     except OSError as exc:
-        logger.error("Failed to delete file '%s': %s", path, exc)
+        logger.error(
+            f"Failed to delete file '{path}': {exc}",
+            filepath=str(path), step="delete", outcome="failed",
+        )
         raise

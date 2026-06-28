@@ -13,13 +13,17 @@ from codebase.fileloader.schemas import (
     MAX_REASON_LENGTH,
     MAX_PATH_LENGTH,
     PATH_TRAVERSAL_PATTERN,
-    TIME_PATTERN
+    TIME_PATTERN,
+    PDF_MAGIC_BYTES
 )
 from codebase.fileloader.skelton import(
     FILENAME_PATTERN
 )
 from datetime import datetime
 from config import CONFIG
+from pypdf import PdfReader
+from pypdf.errors import PdfReadError
+import io
 
 # Field validation — defense in depth, run again right before insert.
 def _check_forbidden_chars(field: str, value: str) -> None:
@@ -122,5 +126,29 @@ def _validate_time(time: str) -> None:
                 "upload_time", time, "must be a non-empty string"
             )
     _check_forbidden_chars("upload_time", time)
+
+
+def _validate_pdf_structure(file_bytes: bytes, filename: str) -> None:
+    """
+    Confirm the file is a genuine, parseable, non-encrypted PDF.
+    Raises ValueError on any failure.
+    """
+    if not file_bytes.startswith(PDF_MAGIC_BYTES):
+        raise ValueError(f"File '{filename}' is not a valid PDF (missing PDF header).")
+
+    try:
+        reader = PdfReader(io.BytesIO(file_bytes))
+    except PdfReadError as exc:
+        raise ValueError(f"File '{filename}' could not be parsed as a PDF: {exc}") from exc
+    except Exception as exc:  # noqa: BLE001 - any other parse failure means bogus file
+        raise ValueError(f"File '{filename}' is not a valid/readable PDF: {exc}") from exc
+
+    if reader.is_encrypted:
+        raise ValueError(f"File '{filename}' is encrypted/password-protected and is rejected.")
+
+    if len(reader.pages) == 0:
+        raise ValueError(f"File '{filename}' contains no pages and is rejected.")
+
+
         
     

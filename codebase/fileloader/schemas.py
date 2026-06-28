@@ -87,3 +87,5 @@ FORBIDDEN_CHARS_PATTERN = re.compile(r"[\x00\r\n]")
 
 # Path traversal indicators — destination_path should never contain these.
 PATH_TRAVERSAL_PATTERN = re.compile(r"(\.\./|\.\.\\)")
+
+PDF_MAGIC_BYTES = b"%PDF-"
