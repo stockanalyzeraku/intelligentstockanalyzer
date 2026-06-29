@@ -1,3 +1,7 @@
+"""
+All input validation for the fileloader module lives here: filenames,
+file size, PDF structure, and every field that goes into the database.
+"""
 from codebase.fileloader.exceptions import  (
     DatabaseValidationError,
     FilenameValidationError
@@ -27,13 +31,18 @@ import io
 
 # Field validation — defense in depth, run again right before insert.
 def _check_forbidden_chars(field: str, value: str) -> None:
+    """Reject a value if it contains a NUL byte, carriage return, or newline."""
     if FORBIDDEN_CHARS_PATTERN.search(value):
         raise DatabaseValidationError(
             field, value, "contains forbidden control characters (NUL/CR/LF)."
         )
-    
+
 #validate filename
 def _validate_filename(filename:str) -> tuple[str, str, str]:
+    """
+    Check that a filename matches the required Scrip_Year_pdf.pdf pattern.
+    Returns (scrip, year, filetype) pulled out of the name if it's valid.
+    """
     if not filename or not isinstance(filename, str):
         raise FilenameValidationError(filename, "must be a non-empty string.")
     if len(filename) > MAX_FILENAME_LENGTH:
@@ -45,9 +54,10 @@ def _validate_filename(filename:str) -> tuple[str, str, str]:
             filename, "does not match required Scrip_Year_pdf.pdf pattern."
         )
     return match.group("scrip"), match.group("year"), match.group("filetype")
- 
+
 #validate scrip
-def _validate_scrip(scrip:str | None) -> None:
+def _validate_scrip(scrip:str) -> None:
+    """Check that a scrip (stock symbol) is a non-empty alphanumeric string."""
     if scrip is not None:
         if not isinstance(scrip, str) or not SCRIP_PATTERN.match(scrip):
             raise DatabaseValidationError("scrip", scrip, "must be alphanumeric.")
@@ -56,6 +66,7 @@ def _validate_scrip(scrip:str | None) -> None:
         raise DatabaseValidationError("scrip", scrip, "scrip is empty")
 
 def _validate_limit(limit:int = 1000)-> None:
+    """Check that a query's row limit is a whole number between 1 and 1000."""
     if not isinstance(limit, int):
         raise TypeError("limit must be an integer.")
     if not (1 <= limit <= 1000):
@@ -63,6 +74,7 @@ def _validate_limit(limit:int = 1000)-> None:
 
 #parse date
 def _validate_parse_date(date: str, field: str) -> datetime:
+    """Check that a date string is valid and parse it into a datetime."""
     if not date or not isinstance(date, str):
         raise DatabaseValidationError("date", date, "Empty date given or is not in string format")
     _check_forbidden_chars("date",date)
@@ -75,6 +87,7 @@ def _validate_parse_date(date: str, field: str) -> datetime:
 
 
 def _validate_filesize(file_bytes: bytes, filename: str) -> None:
+    """Check that a file is not empty and not larger than the configured limit."""
     if len(file_bytes) == 0:
         raise ValueError(f"File '{filename}' is empty.")
     if len(file_bytes) > CONFIG.MAX_FILE_SIZE_BYTES:
@@ -84,21 +97,25 @@ def _validate_filesize(file_bytes: bytes, filename: str) -> None:
         )
 
 def _validate_year(year: str) -> None:
+    """Check that a year is a 4-digit string, if one was given."""
     if year is not None:
         if not isinstance(year, str) or not YEAR_PATTERN.match(year):
             raise DatabaseValidationError("year", year, "must be a 4-digit string.")
 
 def _validate_filetype(filetype: str) -> None:
+    """Check that a file type is exactly 'pdf', if one was given."""
     if filetype is not None:
         if not isinstance(filetype, str) or not FILETYPE_PATTERN.match(filetype):
             raise DatabaseValidationError("filetype", filetype, "must be 'pdf'.")
-    
+
 def _validate_status(status) -> None:
+    """Check that a status is either 'SUCCESS' or 'FAILED', if one was given."""
     if status is not None:
         if not isinstance(status, str) or status not in ALLOWED_STATUS_VALUES:
             raise DatabaseValidationError("status", status, "Not a valid status'.")
 
 def _validate_reason(reason: str) -> None:
+    """Check that a reason string is short enough and contains no bad characters."""
     if reason is not None:
         if not isinstance(reason, str):
             raise DatabaseValidationError("reason", reason, "must be a string.")
@@ -107,6 +124,7 @@ def _validate_reason(reason: str) -> None:
         _check_forbidden_chars("reason", reason)
 
 def _validate_destination_path(destination_path: str) -> None:
+    """Check that a saved file's path is short, clean, and has no path-traversal tricks."""
     if destination_path is not None:
         if not isinstance(destination_path, str):
             raise DatabaseValidationError(
@@ -121,12 +139,18 @@ def _validate_destination_path(destination_path: str) -> None:
             )
 
 def _validate_time(time: str) -> None:
-    if not time or not isinstance(time, str) or not TIME_PATTERN.match(time):
-            raise DatabaseValidationError(
-                "upload_time", time, "must be a non-empty string"
-            )
+    """Check that a time string is a real time of day, in HH:MM:SS format."""
+    if not time or not isinstance(time, str):
+        raise DatabaseValidationError("upload_time", time, "must be a non-empty string")
     _check_forbidden_chars("upload_time", time)
-
+    try:
+        datetime.strptime(time, "%H:%M:%S")
+    except ValueError:
+        raise DatabaseValidationError(
+            "upload_time", time, "must be a valid time between 00:00:00 and 23:59:59."
+        )
+    _check_forbidden_chars("upload_time", time)
+    
 
 def _validate_pdf_structure(file_bytes: bytes, filename: str) -> None:
     """
@@ -148,7 +172,3 @@ def _validate_pdf_structure(file_bytes: bytes, filename: str) -> None:
 
     if len(reader.pages) == 0:
         raise ValueError(f"File '{filename}' contains no pages and is rejected.")
-
-
-        
-    

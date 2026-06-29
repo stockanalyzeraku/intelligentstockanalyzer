@@ -1,3 +1,4 @@
+"""Defines the shape of an upload result: what fields it has and their defaults."""
 from dataclasses import dataclass, field
 from datetime import datetime
 import re
@@ -8,6 +9,7 @@ FILENAME_PATTERN = re.compile(
 #classes
 @dataclass
 class UploadResult:
+    """Holds the outcome of one upload attempt: what happened, and to which file."""
     filename: str
     status: str            # "SUCCESS" or "FAILED"
     reason: str = ""        # empty on success, error message on failure

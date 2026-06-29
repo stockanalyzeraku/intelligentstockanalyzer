@@ -1,3 +1,8 @@
+"""
+Public entry point for the fileloader module: upload/delete a file, save
+its record, and look records up. Everything exported here is meant to be
+used by other parts of the app.
+"""
 from codebase.fileloader.fileloader import (upload_file, delete_file)
 from codebase.fileloader.exceptions import DuplicateFileError,FilenameValidationError, DatabaseValidationError
 from .db import (

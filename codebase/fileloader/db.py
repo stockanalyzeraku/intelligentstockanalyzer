@@ -1,6 +1,13 @@
 #YET TO ADD
 #RETRY CONNECTION AFTER SOME TIME AND RELEASE RESOURCES
 #PROGRESS BAR
+"""
+Database layer for the fileloader module.
+
+Owns the SQLite connection, table/index creation, the insert of an upload
+record, and all read queries against the processed_files table. No file
+validation logic lives here — that's all in validator.py.
+"""
 from __future__ import annotations
 
 import sqlite3
@@ -42,12 +49,19 @@ _db_lock = threading.Lock()
 
 
 def _db_path() -> Path:
+    """Return the folder where the SQLite database file lives."""
     return Path(CONFIG.PROCESSED_FILES_DB_PATH)
+
+
+def _friendly_field_message(field_name: str) -> str:
+    """Turn an internal field name into a short, plain-English error message."""
+    return f"Invalid {field_name.replace('_', ' ')}. Could not save the record."
 
 
 # Connection handling
 @contextmanager
 def _get_connection() -> Iterator[sqlite3.Connection]:
+    """Open a SQLite connection with safe defaults, and close it when done."""
     db_path = f"{str(_db_path())}/{DATABASE_NAME}"
     conn = sqlite3.connect(db_path, timeout=30)
     conn.row_factory = sqlite3.Row
@@ -68,6 +82,7 @@ def _get_connection() -> Iterator[sqlite3.Connection]:
 
 
 def init_db() -> Path:
+    """Create the processed_files table and its indexes if they don't exist yet."""
     if TABLE_NAME not in ALLOWED_TABLES:
         raise DatabaseValidationError(
             "Table Name",
@@ -85,9 +100,9 @@ def init_db() -> Path:
 
 def _run_field_validations(record: UploadResult, logger: StructuredLogger) -> str | None:
     """
-    Run every per-field validator against `record`, logging each outcome.
-    Returns a short failure string on the first failed field, or None if
-    every field passed.
+    Check every field on an upload record before it is saved.
+    Logs each field as it passes or fails. Returns a friendly error message
+    if a field fails, or None if everything is valid.
     """
     validations = (
         ("filename", lambda: _validate_filename(record.filename)),
@@ -110,7 +125,7 @@ def _run_field_validations(record: UploadResult, logger: StructuredLogger) -> st
                 filename=record.filename, step="validation", field=field_name,
                 outcome="failed",
             )
-            return f"{field_name} is not valid"
+            return _friendly_field_message(field_name)
 
     logger.event(
         f"{record.filename} : All fields validated successfully",
@@ -122,10 +137,8 @@ def _run_field_validations(record: UploadResult, logger: StructuredLogger) -> st
 # Insert
 def insert_upload_record(record: UploadResult, logger: StructuredLogger) -> int | str:
     """
-    Validate every field on `record` and persist it to the processed-files
-    table. Every validation step and the DB write itself are logged with
-    enough context (filename, field, reason) to diagnose a failure from the
-    logs alone, without needing to reproduce it.
+    Validate an upload record and save it to the database.
+    Returns the new row's id on success, or a short error message on failure.
     """
     logger.event(
         f"{record.filename} : Validation started for DB insert",
@@ -176,27 +189,50 @@ def insert_upload_record(record: UploadResult, logger: StructuredLogger) -> int 
 
 # Queries (all parameterized — no string-formatted SQL, ever)
 
-def get_record_by_filename(filename: str) -> dict[str, Any] | None:
-    """Fetch the most recent record matching an exact filename, or None."""
+def get_record_by_filename(filename: str, logger: StructuredLogger) -> dict[str, Any] | None:
+    """Look up the most recent record for an exact filename. Returns None if not found."""
+    logger.event(
+        f"{filename} : Looking up record by filename",
+        filename=filename, step="get_record_by_filename", stage="start",
+    )
     _validate_filename(filename)
     sql = f"SELECT * FROM {TABLE_NAME} WHERE filename = ? ORDER BY id DESC LIMIT 1;"
     with _db_lock:
         with _get_connection() as conn:
             row = conn.execute(sql, (filename,)).fetchone()
+    found = row is not None
+    logger.event(
+        f"{filename} : Lookup by filename {'found a record' if found else 'found no record'}",
+        filename=filename, step="get_record_by_filename", outcome="passed", found=found,
+    )
     return dict(row) if row else None
 
 
-def get_records_by_scrip(scrip: str, limit: int = 1000) -> list[dict[str, Any]]:
+def get_records_by_scrip(scrip: str, logger: StructuredLogger, limit: int = 1000) -> list[dict[str, Any]]:
+    """Look up all records for a given scrip (stock symbol), newest first."""
+    logger.event(
+        f"Looking up records for scrip '{scrip}'",
+        scrip=scrip, step="get_records_by_scrip", stage="start",
+    )
     _validate_limit(limit)
     _validate_scrip(scrip)
     sql = f"SELECT * FROM {TABLE_NAME} WHERE scrip = ? ORDER BY id DESC LIMIT ?;"
     with _db_lock:
         with _get_connection() as conn:
             rows = conn.execute(sql, (scrip, limit)).fetchall()
+    logger.event(
+        f"Found {len(rows)} record(s) for scrip '{scrip}'",
+        scrip=scrip, step="get_records_by_scrip", outcome="passed", count=len(rows),
+    )
     return [dict(r) for r in rows]
 
 
-def get_records_by_status(status: str, limit: int = 1000) -> list[dict[str, Any]]:
+def get_records_by_status(status: str, logger: StructuredLogger, limit: int = 1000) -> list[dict[str, Any]]:
+    """Look up all records with a given status (SUCCESS or FAILED), newest first."""
+    logger.event(
+        f"Looking up records with status '{status}'",
+        status=status, step="get_records_by_status", stage="start",
+    )
     _validate_limit(limit)
     _validate_status(status)
 
@@ -204,15 +240,31 @@ def get_records_by_status(status: str, limit: int = 1000) -> list[dict[str, Any]
     with _db_lock:
         with _get_connection() as conn:
             rows = conn.execute(sql, (status, limit)).fetchall()
+    logger.event(
+        f"Found {len(rows)} record(s) with status '{status}'",
+        status=status, step="get_records_by_status", outcome="passed", count=len(rows),
+    )
     return [dict(r) for r in rows]
 
 
-def get_records_by_date_range(start_date: str, end_date: str, limit: int = 1000) -> list[dict[str, Any]]:
-
+def get_records_by_date_range(
+    start_date: str, end_date: str, logger: StructuredLogger, limit: int = 1000
+) -> list[dict[str, Any]]:
+    """Look up all records uploaded between two dates (inclusive), newest first."""
+    logger.event(
+        f"Looking up records between '{start_date}' and '{end_date}'",
+        start_date=start_date, end_date=end_date,
+        step="get_records_by_date_range", stage="start",
+    )
     _validate_limit(limit)
     start_dt = _validate_parse_date(start_date, "start_date")
     end_dt = _validate_parse_date(end_date, "end_date")
     if start_dt > end_dt:
+        logger.event(
+            f"Invalid date range: start '{start_date}' is after end '{end_date}'",
+            start_date=start_date, end_date=end_date,
+            step="get_records_by_date_range", outcome="failed",
+        )
         raise DatabaseValidationError(
             "date_range", (start_date, end_date),
             "start_date must be before or equal to end_date."
@@ -225,14 +277,27 @@ def get_records_by_date_range(start_date: str, end_date: str, limit: int = 1000)
     with _db_lock:
         with _get_connection() as conn:
             rows = conn.execute(sql, (start_date, end_date, limit)).fetchall()
+    logger.event(
+        f"Found {len(rows)} record(s) between '{start_date}' and '{end_date}'",
+        start_date=start_date, end_date=end_date,
+        step="get_records_by_date_range", outcome="passed", count=len(rows),
+    )
     return [dict(r) for r in rows]
 
 
-def get_all_records(limit: int = 1000) -> list[dict[str, Any]]:
-    """Fetch all records, most recent first."""
+def get_all_records(logger: StructuredLogger, limit: int = 1000) -> list[dict[str, Any]]:
+    """Look up every record in the table, newest first, up to `limit` rows."""
+    logger.event(
+        "Looking up all records",
+        step="get_all_records", stage="start", limit=limit,
+    )
     _validate_limit(limit)
     sql = f"SELECT * FROM {TABLE_NAME} ORDER BY id DESC LIMIT ?;"
     with _db_lock:
         with _get_connection() as conn:
             rows = conn.execute(sql, (limit,)).fetchall()
+    logger.event(
+        f"Found {len(rows)} record(s) in total",
+        step="get_all_records", outcome="passed", count=len(rows),
+    )
     return [dict(r) for r in rows]

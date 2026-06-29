@@ -1,6 +1,7 @@
+"""Custom error types used across the fileloader module."""
 from pathlib import Path
 from typing import Any
-#Load New FIle
+
 class FilenameValidationError(Exception):
     """Raised when the uploaded filename does not match the required pattern."""
 
@@ -33,6 +34,3 @@ class DatabaseInsertError(Exception):
         self.value = value
         self.reason = reason
         super().__init__(f"Invalid value for '{field}': {reason} (got: {value!r})")
-
-
-

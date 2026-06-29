@@ -1,4 +1,8 @@
-
+"""
+Constants used across the fileloader module: the database table definition,
+the regex patterns used for validation, and the size/length limits.
+No logic lives here, just shared definitions.
+"""
 from __future__ import annotations
 import dataclasses
 from codebase.fileloader.skelton import UploadResult
@@ -34,18 +38,6 @@ CREATE_INDEX_STATUS_SQL = (
 
 ALL_INDEX_STATEMENTS = [CREATE_INDEX_SCRIP_SQL, CREATE_INDEX_STATUS_SQL]
 
-# Columns allowed to be inserted (excludes id/created_at, which are DB-managed).
-# INSERTABLE_COLUMNS = [
-#     "filename",
-#     "scrip",
-#     "year",
-#     "file_type",
-#     "status",
-#     "reason",
-#     "destination_path",
-#     "date",
-#     "time"
-# ]
 INSERTABLE_COLUMNS = [f.name for f in dataclasses.fields(UploadResult)]
 
 # Validation

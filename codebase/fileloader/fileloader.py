@@ -1,11 +1,10 @@
+"""
+Handles the actual work of uploading a PDF: checking it, saving it to disk,
+and reporting what happened. The database side of things lives in db.py.
+"""
 from __future__ import annotations
 
-import io
-import logging
 from pathlib import Path
-
-from pypdf import PdfReader
-from pypdf.errors import PdfReadError
 
 from logger import StructuredLogger
 from codebase.fileloader.skelton import UploadResult
@@ -18,14 +17,10 @@ from codebase.fileloader.exceptions import DuplicateFileError, FilenameValidatio
 from config import CONFIG
 
 
-
-
-
 def get_or_create_upload_dir(scrip: str, year: str, report_type: str, logger: StructuredLogger) -> Path:
     """
-    Resolve (and create if missing) the directory a file should live in,
-    based on scrip/year/report_type. Raises OSError on failure (e.g.
-    permissions, disk full, invalid path) — caller decides how to report it.
+    Find the folder a file should be saved in (based on scrip, year, and
+    report type), creating it if it doesn't exist yet.
     """
     target_dir = Path(CONFIG.UPLOADS_PATH) / scrip / year / report_type
     try:
@@ -49,11 +44,16 @@ def get_or_create_upload_dir(scrip: str, year: str, report_type: str, logger: St
 
 def upload_file(file_bytes: bytes, filename: str, logger: StructuredLogger) -> UploadResult | str:
     """
-    Validate, store, and report on a single PDF upload.
+    Check, save, and record a single PDF upload.
+
+    Args:
+        file_bytes: the raw bytes of the file being uploaded.
+        filename: the name the file was uploaded with.
+        logger: where every step of the process gets logged.
+
     Returns:
-        UploadResult on success.
-        A short, user-facing failure string on any rejected step (current
-        convention for this function) — full detail goes to the logs.
+        An UploadResult if the upload succeeded.
+        A short, plain-English error message if it was rejected at any step.
     """
     logger.event(
         f"{filename} : Upload started",
@@ -68,7 +68,7 @@ def upload_file(file_bytes: bytes, filename: str, logger: StructuredLogger) -> U
             f"{filename} : Filename validation failed: {exc}",
             filename=filename, step="filename_validation", outcome="failed",
         )
-        return "Put a valid filename"
+        return "Invalid filename. Please use the format Scrip_Year_pdf.pdf."
 
     logger.event(
         f"{filename} : Filename validated successfully "
@@ -86,7 +86,7 @@ def upload_file(file_bytes: bytes, filename: str, logger: StructuredLogger) -> U
             filename=filename, step="filesize_validation", outcome="failed",
             size_bytes=len(file_bytes),
         )
-        return "Put a valid filesize"
+        return "File size is invalid. Please check the file and try again."
 
     logger.event(
         f"{filename} : File size validated successfully ({len(file_bytes)} bytes)",
@@ -102,7 +102,7 @@ def upload_file(file_bytes: bytes, filename: str, logger: StructuredLogger) -> U
             f"{filename} : PDF structure validation failed: {exc}",
             filename=filename, step="pdf_structure_validation", outcome="failed",
         )
-        return "Put a valid file structure"
+        return "This file is not a valid PDF. Please upload a proper PDF file."
 
     logger.event(
         f"{filename} : PDF structure validated successfully",
@@ -117,7 +117,7 @@ def upload_file(file_bytes: bytes, filename: str, logger: StructuredLogger) -> U
             f"{filename} : Could not prepare destination directory: {exc}",
             filename=filename, step="prepare_destination_dir", outcome="failed",
         )
-        return "Cant upload right now"
+        return "Upload failed. Please try again later."
 
     destination_path = destination_dir / filename
 
@@ -128,7 +128,7 @@ def upload_file(file_bytes: bytes, filename: str, logger: StructuredLogger) -> U
             filename=filename, step="duplicate_check", outcome="failed",
             destination_path=str(destination_path),
         )
-        return "File already exists"
+        return "A file with this name already exists."
 
     logger.event(
         f"{filename} : No existing file at destination, safe to write",
@@ -145,7 +145,7 @@ def upload_file(file_bytes: bytes, filename: str, logger: StructuredLogger) -> U
             filename=filename, step="write_to_disk", outcome="failed",
             destination_path=str(destination_path),
         )
-        return "Cant upload right now"
+        return "Upload failed while saving the file. Please try again."
 
     logger.info(
         f"{filename} : Uploaded successfully to '{destination_path}'",
@@ -166,6 +166,7 @@ def upload_file(file_bytes: bytes, filename: str, logger: StructuredLogger) -> U
 async def delete_file(filepath: str | Path, logger: StructuredLogger) -> bool:
     """
     Delete a previously uploaded file from disk.
+    Returns True if it was deleted, False if it didn't exist.
     """
     path = Path(filepath)
     if not path.exists():
