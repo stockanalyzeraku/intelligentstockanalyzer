@@ -1,95 +1,78 @@
-"""Generic, collection-agnostic record operations against Chroma.
+"""Parent/child aware retrieval, built on top of ChromaRecordStore.
 
-Nothing here knows about parent/child sections — that's ParentChildRetriever's
-job (retriever.py), built on top of this. This file also doesn't validate
-caller input; that happens once, at the ChromaStore facade boundary, so it
-isn't repeated on every internal call.
+This is the one piece of the module that's genuinely domain-specific
+(it knows what a "parent section" and "child chunk" are). Keeping it
+separate from ChromaRecordStore means the generic store stays generic,
+and this class stays free of connection/upsert concerns.
 """
 
 from __future__ import annotations
 
 from typing import Any
 
-from codebase.vectordb.db import ChromaConnection
-from codebase.vectordb.exceptions import QueryError, UpsertError
-from codebase.vectordb.schemas import sanitize_metadata, to_records
-from codebase.vectordb.skelton import DEFAULT_UPSERT_BATCH_SIZE, ChromaRecord
+from codebase.vectordb.skelton import ChildMatch, RetrievedItem
+from codebase.vectordb.store import ChromaRecordStore
 
 
-class ChromaRecordStore:
-    """Upsert/query/fetch operations scoped to one ChromaConnection."""
+class ParentChildRetriever:
+    """Searches child chunks, then expands each match to its parent section."""
 
-    def __init__(self, connection: ChromaConnection, embedder: Any):
-        self._connection = connection
-        self._embedder = embedder
+    def __init__(self, store: ChromaRecordStore, parent_collection: str, child_collection: str):
+        self._store = store
+        self._parent_collection = parent_collection
+        self._child_collection = child_collection
 
-    def upsert_records(
+    def retrieve(
         self,
-        collection_name: str,
-        raw_records: list[dict[str, Any]],
-        batch_size: int = DEFAULT_UPSERT_BATCH_SIZE,
-    ) -> int:
-        """Upsert a list of {id, text, metadata} dicts. Returns count stored."""
-        if not raw_records:
-            return 0
-
-        records: list[ChromaRecord] = to_records(raw_records)
-        collection = self._connection.get_or_create_collection(collection_name)
-
-        stored = 0
-        for start in range(0, len(records), batch_size):
-            batch = records[start : start + batch_size]
-            try:
-                collection.upsert(
-                    ids=[r.id for r in batch],
-                    documents=[r.text for r in batch],
-                    metadatas=[sanitize_metadata(r.metadata) for r in batch],
-                )
-            except Exception as exc:
-                raise UpsertError(
-                    f"Upsert failed for '{collection_name}' at offset {start}"
-                ) from exc
-            stored += len(batch)
-        return stored
-
-    def query(
-        self,
-        collection_name: str,
         query_texts: list[str],
         n_results: int,
         where: dict[str, Any] | None = None,
-    ) -> dict[str, Any]:
-        collection = self._connection.get_or_create_collection(collection_name)
-        query_embeddings = self._embedder(query_texts)
-        try:
-            return collection.query(
-                query_embeddings=query_embeddings,
-                n_results=n_results,
-                where=where,
-                include=["documents", "metadatas", "distances", "embeddings"],
-            )
-        except Exception as exc:
-            raise QueryError(f"Query failed for '{collection_name}'") from exc
+    ) -> list[RetrievedItem]:
+        raw = self._store.query(self._child_collection, query_texts, n_results, where)
 
-    def get_many_by_ids(self, collection_name: str, chunk_ids: list[str]) -> list[ChromaRecord]:
-        """Fetch multiple chunks by exact id, preserving the requested order."""
-        if not chunk_ids:
-            return []
-        collection = self._connection.get_or_create_collection(collection_name)
-        result = collection.get(ids=chunk_ids)
-        if not result or not result.get("ids"):
-            return []
-        lookup = {
-            cid: ChromaRecord(id=cid, text=doc, metadata=meta or {})
-            for cid, doc, meta in zip(
-                result.get("ids", []), result.get("documents", []), result.get("metadatas", [])
-            )
+        ids = raw.get("ids", [[]])[0]
+        docs = raw.get("documents", [[]])[0]
+        metas = raw.get("metadatas", [[]])[0]
+        dists = raw.get("distances", [[]])[0]
+
+        best_children: dict[str, ChildMatch] = {}
+        parent_order: list[str] = []
+
+        for child_id, doc, meta, dist in zip(ids, docs, metas, dists):
+            parent_id = (meta or {}).get("parent_id")
+            if not parent_id:
+                continue
+            existing = best_children.get(parent_id)
+            if existing is None or dist < existing.distance:
+                best_children[parent_id] = ChildMatch(
+                    child_id=child_id, child_text=doc, child_metadata=meta or {}, distance=dist
+                )
+            if parent_id not in parent_order:
+                parent_order.append(parent_id)
+
+        parents = {
+            record.id: record
+            for record in self._store.get_many_by_ids(self._parent_collection, parent_order)
         }
-        return [lookup[cid] for cid in chunk_ids if cid in lookup]
 
-    def get_by_id(self, collection_name: str, chunk_id: str) -> ChromaRecord | None:
-        matches = self.get_many_by_ids(collection_name, [chunk_id])
-        return matches[0] if matches else None
-
-    def count(self, collection_name: str) -> int:
-        return self._connection.get_or_create_collection(collection_name).count()
+        merged: list[RetrievedItem] = []
+        for parent_id in parent_order:
+            parent = parents.get(parent_id)
+            child = best_children.get(parent_id)
+            if not parent or not child:
+                continue
+            merged.append(
+                RetrievedItem(
+                    id=parent.id,
+                    text=parent.text,
+                    metadata=parent.metadata,
+                    parent_id=parent.id,
+                    parent_text=parent.text,
+                    parent_metadata=parent.metadata,
+                    child_id=child.child_id,
+                    child_text=child.child_text,
+                    child_metadata=child.child_metadata,
+                    distance=child.distance,
+                )
+            )
+        return merged
