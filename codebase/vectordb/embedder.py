@@ -1,26 +1,23 @@
-# =============================================================================
-# CELL 7 — Embedding Model
-# =============================================================================
+"""LocalEmbedder: wraps all-MiniLM-L6-v2 via sentence-transformers.
+
+Implements ChromaDB's EmbeddingFunction protocol (a callable taking a
+list of strings and returning a list of vectors) so it can be passed
+directly to chromadb.Collection constructors, and called the same way
+by anything else in the app that needs a vector for a single piece of
+text — there's exactly one way to get an embedding out of this class.
 """
-LocalEmbedder: wraps all-MiniLM-L6-v2 via sentence-transformers.
-Implements the ChromaDB EmbeddingFunction interface.
-No API calls, no quota concerns. Singleton pattern.
-"""
+
 from __future__ import annotations
-import os
-import sys
 
 from typing import List, Optional
+
 import numpy as np
+from config import CONFIG
 from logger import get_logger
-from config import Config
+
 
 class LocalEmbedder:
-    """
-    Local embedding model wrapping all-MiniLM-L6-v2.
-
-    Implements ChromaDB's EmbeddingFunction protocol so it can be passed
-    directly to chromadb.Collection constructors.
+    """Local embedding model wrapping all-MiniLM-L6-v2.
 
     Singleton — use get_instance() rather than constructing directly.
     """
@@ -29,19 +26,18 @@ class LocalEmbedder:
     _model = None
 
     def __init__(self):
-        """Load the sentence-transformer model once."""
         self._logger = get_logger("embedder")
-        self._CONFIG = Config.get_instance()
+        self._CONFIG = CONFIG
         self._load_model()
 
     def name(self) -> str:
-        """Return the embedding function identifier for ChromaDB compatibility."""
-        return self._CONFIG.EMBEDDING_MODEL  # ← THIS IS THE FIX
+        """Embedding function identifier, for ChromaDB compatibility."""
+        return self._CONFIG.EMBEDDING_MODEL
 
     def _load_model(self) -> None:
-        """Load all-MiniLM-L6-v2 from sentence-transformers."""
         try:
             from sentence_transformers import SentenceTransformer
+
             self._model = SentenceTransformer(self._CONFIG.EMBEDDING_MODEL)
             self._logger.info(
                 "Embedding model loaded.", model=self._CONFIG.EMBEDDING_MODEL, dim=self._CONFIG.EMBEDDING_DIM
@@ -51,19 +47,8 @@ class LocalEmbedder:
             raise
 
     def __call__(self, input: List[str]) -> List[List[float]]:
-        """
-        Embed a batch of texts — called by ChromaDB on store and query.
-
-        Parameters
-        ----------
-        input : List[str]
-            Texts to embed.
-
-        Returns
-        -------
-        List[List[float]]
-            List of 384-dimensional float vectors.
-        """
+        """Embed a batch of texts. Used for both documents and queries —
+        pass a single-item list to embed one piece of text."""
         if not input:
             return []
         try:
@@ -75,71 +60,13 @@ class LocalEmbedder:
             self._logger.error("Embedding failed", error=str(exc), batch_size=len(input))
             raise
 
-    # def embed_query(self, input: str) -> List[float]:
-    #     """
-    #     Embed a single query string for retrieval.
-
-    #     Parameters
-    #     ----------
-    #     text : str
-    #         Query text
-
-    #     Returns
-    #     -------
-    #     List[float]
-    #         384-dimensional float vector.
-    #     """
-    #     text=input
-    #     return self([text])[0]
-
-    def embed_query(self, input: str, **kwargs) -> List[float]:
-        # input should always be a plain string here
-        result = self([input])   # returns shape (1, dim)
-        return result[0].tolist() if hasattr(result[0], 'tolist') else list(result[0])
-    
-    # def embed_query(self, input: str, **kwargs) -> List[float]:
-    #     if isinstance(input, list):
-    #         if len(input) == 1:
-    #             # single query — return one vector
-    #             return self(input)[0]
-    #         else:
-    #             # multiple queries — return list of vectors
-    #             return self(input)
-    #     else:
-    #         return self([input])[0]
-    
     @classmethod
     def get_instance(cls) -> "LocalEmbedder":
-        """
-        Return the singleton LocalEmbedder, loading the model if needed.
-
-        Returns
-        -------
-        LocalEmbedder
-        """
+        """Return the singleton LocalEmbedder, loading the model if needed."""
         if cls._instance is None:
             cls._instance = cls()
         return cls._instance
 
 
-# Load at import time so subsequent cells don't wait
+# Loaded once at import time so every caller shares the same model in memory.
 EMBEDDER = LocalEmbedder.get_instance()
-
-
-# ----------------------------------------------------------------------------
-# Cell 7: Embedding Model
-# Purpose: Provide a singleton sentence-transformer embedder for ChromaDB.
-# Key Classes: LocalEmbedder
-# Key Functions:
-#   LocalEmbedder.__call__(input: List[str]) → List[List[float]]
-#   LocalEmbedder.embed_query(text: str) → List[float]
-#   LocalEmbedder.get_instance() → LocalEmbedder
-# Key Constants/Config: CONFIG.EMBEDDING_MODEL, CONFIG.EMBEDDING_DIM
-# Imports exported: LocalEmbedder, EMBEDDER
-# Depends on: Cell 3 (CONFIG), Cell 4 (get_logger)
-# Critical notes: EMBEDDER is the shared singleton — pass it to ChromaDB
-#   collection constructors as the embedding_function parameter.
-#   __call__ signature matches chromadb.api.types.EmbeddingFunction.
-# Context Update: None
-# Status: Complete
-# ----------------------------------------------------------------------------

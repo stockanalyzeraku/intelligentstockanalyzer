@@ -72,20 +72,19 @@ def _check_chroma(collection_name: str | None = None) -> dict[str, Any]:
     try:
         from codebase.vectordb.chromastore import ChromaStore
 
-        store = ChromaStore.get_instance(CONFIG.CHROMA_PATH)
+        store = ChromaStore.get_instance(CONFIG.CHROMA_DB_PATH)
         target_collection = collection_name or CONFIG.COL_CHILD
-        collection = store._get_collection(target_collection)
-        count = collection.count()
-        return {"status": "ok", "path": CONFIG.CHROMA_PATH, "collection": target_collection, "count": count}
+        count = store.collection_count(target_collection)
+        return {"status": "ok", "path": CONFIG.CHROMA_DB_PATH, "collection": target_collection, "count": count}
     except Exception as exc:
-        return {"status": "failed", "path": CONFIG.CHROMA_PATH, "error": str(exc), "error_type": exc.__class__.__name__}
+        return {"status": "failed", "path": CONFIG.CHROMA_DB_PATH, "error": str(exc), "error_type": exc.__class__.__name__}
 
 
 def _check_embedder() -> dict[str, Any]:
     try:
         from codebase.vectordb.embedder import EMBEDDER
 
-        vector = EMBEDDER.embed_query("health check")
+        vector = EMBEDDER(["health check"])[0]
         dim = len(vector)
         return {"status": "ok" if dim == CONFIG.EMBEDDING_DIM else "degraded", "dimension": dim, "expected_dimension": CONFIG.EMBEDDING_DIM}
     except Exception as exc:

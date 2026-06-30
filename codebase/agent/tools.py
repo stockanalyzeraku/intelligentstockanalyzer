@@ -156,7 +156,7 @@ def search_annual_report(
         where["year"] = int(year)
 
     try:
-        store = ChromaStore()
+        store = ChromaStore.get_instance()
         results = store.query_children_with_parent_context(
             query_texts=[query], n_results=n_results, where=where
         )
