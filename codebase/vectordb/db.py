@@ -2,8 +2,7 @@
 
 This is the only file in the module allowed to know how a Chroma
 PersistentClient is constructed. It has no knowledge of parent/child
-chunking, JSON payloads, or health checks — those are higher-level
-concerns layered on top in store.py / retriever.py / chromastore.py.
+chunking, JSON payloads, or health checks.
 """
 
 from __future__ import annotations
@@ -12,6 +11,7 @@ import threading
 from typing import Any, Optional
 
 import chromadb
+from logger import StructuredLogger
 
 from codebase.vectordb.skelton import HNSW_SPACE
 
@@ -19,9 +19,8 @@ from codebase.vectordb.skelton import HNSW_SPACE
 class ChromaConnection:
     """Owns the single PersistentClient for a given on-disk Chroma path.
 
-    True singleton: `ChromaConnection(path)` called twice always returns
-    the same object, so nothing in the app can end up holding two live
-    Chroma clients by accident.
+    True singleton: calling ChromaConnection(path) twice always returns
+    the same object.
     """
 
     _instance: Optional["ChromaConnection"] = None
@@ -45,9 +44,17 @@ class ChromaConnection:
     def chroma_path(self) -> str:
         return self._chroma_path
 
-    def client(self) -> chromadb.ClientAPI:
+    def client(self, logger: StructuredLogger) -> chromadb.ClientAPI:
         if self._client is None:
+            logger.event(
+                f"{self._chroma_path} : Creating PersistentClient",
+                step="create_client", stage="start", chroma_path=self._chroma_path,
+            )
             self._client = chromadb.PersistentClient(path=self._chroma_path)
+            logger.event(
+                f"{self._chroma_path} : PersistentClient ready",
+                step="create_client", outcome="passed", chroma_path=self._chroma_path,
+            )
         return self._client
 
     def reset_path(self, chroma_path: str) -> None:
@@ -55,9 +62,20 @@ class ChromaConnection:
         self._chroma_path = chroma_path
         self._client = None
 
-    def get_or_create_collection(self, collection_name: str) -> chromadb.Collection:
-        return self.client().get_or_create_collection(
+    def get_or_create_collection(
+        self, collection_name: str, logger: StructuredLogger
+    ) -> chromadb.Collection:
+        logger.event(
+            f"{collection_name} : Accessing collection",
+            step="get_or_create_collection", stage="start", collection=collection_name,
+        )
+        collection = self.client(logger).get_or_create_collection(
             name=collection_name,
             embedding_function=self._embedding_function,
-            metadata={"hnsw:space": HNSW_SPACE},  # set once, can't change later
+            metadata={"hnsw:space": HNSW_SPACE},
         )
+        logger.event(
+            f"{collection_name} : Collection ready",
+            step="get_or_create_collection", outcome="passed", collection=collection_name,
+        )
+        return collection

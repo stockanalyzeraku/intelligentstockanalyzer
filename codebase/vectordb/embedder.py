@@ -26,7 +26,7 @@ class LocalEmbedder:
     _model = None
 
     def __init__(self):
-        self._logger = get_logger("embedder")
+        self._logger = get_logger("VECTORDB", "embedder")
         self._CONFIG = CONFIG
         self._load_model()
 
