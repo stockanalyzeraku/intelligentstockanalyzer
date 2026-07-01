@@ -139,9 +139,11 @@ def _validate_destination_path(destination_path: str) -> None:
             )
 
 def _validate_time(time: str) -> None:
-    """Check that a time string is a real time of day, in HH:MM:SS format."""
-    if not time or not isinstance(time, str):
-        raise DatabaseValidationError("upload_time", time, "must be a non-empty string")
+    """Check that a time string is a real time of day, in HH:MM:SS format (00:00:00 to 23:59:59)."""
+    if not time or not isinstance(time, str) or not TIME_PATTERN.match(time):
+        raise DatabaseValidationError(
+            "upload_time", time, "must be a non-empty string in HH:MM:SS format"
+        )
     _check_forbidden_chars("upload_time", time)
     try:
         datetime.strptime(time, "%H:%M:%S")
@@ -149,8 +151,6 @@ def _validate_time(time: str) -> None:
         raise DatabaseValidationError(
             "upload_time", time, "must be a valid time between 00:00:00 and 23:59:59."
         )
-    _check_forbidden_chars("upload_time", time)
-    
 
 def _validate_pdf_structure(file_bytes: bytes, filename: str) -> None:
     """
