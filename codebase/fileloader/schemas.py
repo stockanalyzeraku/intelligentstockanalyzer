@@ -1,8 +1,4 @@
-"""
-Constants used across the fileloader module: the database table definition,
-the regex patterns used for validation, and the size/length limits.
-No logic lives here, just shared definitions.
-"""
+
 from __future__ import annotations
 import dataclasses
 from codebase.fileloader.skelton import UploadResult
@@ -24,6 +20,9 @@ CREATE TABLE IF NOT EXISTS {TABLE_NAME} (
     destination_path  TEXT,
     date              TEXT    NOT NULL,
     time              TEXT    NOT NULL,
+    ocr_status        TEXT    NOT NULL DEFAULT 'PENDING'
+                              CHECK (ocr_status IN ('PENDING', 'SUCCESS', 'FAILED')),
+    ocr_reason        TEXT,
     created_at        TEXT    NOT NULL DEFAULT (datetime('now'))
 );
 """
@@ -38,6 +37,18 @@ CREATE_INDEX_STATUS_SQL = (
 
 ALL_INDEX_STATEMENTS = [CREATE_INDEX_SCRIP_SQL, CREATE_INDEX_STATUS_SQL]
 
+# Columns allowed to be inserted (excludes id/created_at, which are DB-managed).
+# INSERTABLE_COLUMNS = [
+#     "filename",
+#     "scrip",
+#     "year",
+#     "file_type",
+#     "status",
+#     "reason",
+#     "destination_path",
+#     "date",
+#     "time"
+# ]
 INSERTABLE_COLUMNS = [f.name for f in dataclasses.fields(UploadResult)]
 
 # Validation
@@ -58,6 +69,11 @@ TIME_PATTERN = re.compile(r"^\d{2}:\d{2}:\d{2}$")
 DATE_PATTERN = ("%Y-%m-%d", "%Y-%m-%d %H:%M:%S", "%Y-%m-%dT%H:%M:%S")
 
 ALLOWED_STATUS_VALUES = {"SUCCESS", "FAILED"}
+
+# Separate from ALLOWED_STATUS_VALUES (upload result) — this tracks the
+# OCR step's own outcome in the ocr_status column. PENDING is the DB
+# default for rows that have been uploaded but not yet OCR-processed.
+OCR_STATUS_VALUES = {"PENDING", "SUCCESS", "FAILED"}
 
 ALLOWED_TABLES = {"processed_files"}
 

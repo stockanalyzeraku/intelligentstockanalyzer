@@ -4,6 +4,10 @@ ocrprocessor.py — OCRProcessor orchestrator.
 Coordinates the full pipeline:
     validate path → render pages → call OCR → validate text → save JSON
 
+No database awareness lives here. fileloader owns record creation,
+vectordb owns marking those records' ocr_status once the full
+OCR → clean → embed → store pipeline completes.
+
 The OCR client is injected via the constructor, so adding a second provider
 requires no changes here — only the caller changes.
 
@@ -36,6 +40,7 @@ from codebase.ocrprocessor.validator import (
 from codebase.ocrprocessor.mistralclient import MistralClient
 from codebase.ocrprocessor.pdfrenderer import PDFRenderer
 from codebase.ocrprocessor.exceptions import FilenameValidationError
+from codebase.ocrprocessor.db import mark_ocr_success, mark_ocr_failed
 
 
 class OCRProcessor:
@@ -71,7 +76,7 @@ class OCRProcessor:
         try:
             _validate_filepath(pdf_path)
         except:
-            raise FilenameValidationError("filename","filename is not valid")
+            raise FilenameValidationError("filename", "filename is not valid")
 
         pages: list[PageContent] = []          # local — never carried between runs
 
@@ -98,9 +103,26 @@ class OCRProcessor:
         return str(resolved)
 
     def run(self, pdf_path: str, logger: StructuredLogger) -> str:
-        """Run the full OCR pipeline on a single PDF."""
+        """
+        Run the full OCR pipeline on a single PDF.
+
+        On completion, marks the processed_files row's ocr_status via
+        codebase.ocrprocessor.db (mark_ocr_success / mark_ocr_failed) —
+        identity is parsed from pdf_path's own filename.
+
+            SUCCESS — pipeline completed and wrote the output JSON.
+            FAILED  — any exception was raised; ocr_reason carries the
+                      error message. The exception is re-raised afterwards
+                      so the caller still sees the original failure.
+        """
         assert_system_health(include_llm=True)
-        return self._process_pages(pdf_path=pdf_path)
+        try:
+            result_path = self._process_pages(pdf_path=pdf_path)
+        except Exception as exc:
+            mark_ocr_failed(pdf_path, reason=str(exc))
+            raise
+        mark_ocr_success(pdf_path)
+        return result_path
 
 
 if __name__ == "__main__":
