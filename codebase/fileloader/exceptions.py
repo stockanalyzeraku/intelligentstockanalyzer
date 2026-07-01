@@ -34,3 +34,11 @@ class DatabaseInsertError(Exception):
         self.value = value
         self.reason = reason
         super().__init__(f"Invalid value for '{field}': {reason} (got: {value!r})")
+
+class RecordNotFoundError(Exception):
+    """Raised when update_ocr_status finds no row matching scrip/year/file_type."""
+    def __init__(self, scrip: str, year: str, file_type: str):
+        super().__init__(
+            f"No record found for scrip='{scrip}', year='{year}', file_type='{file_type}'."
+        )
+        self.scrip = scrip; self.year = year; self.file_type = file_type

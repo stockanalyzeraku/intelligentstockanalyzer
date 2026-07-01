@@ -172,3 +172,15 @@ def _validate_pdf_structure(file_bytes: bytes, filename: str) -> None:
 
     if len(reader.pages) == 0:
         raise ValueError(f"File '{filename}' contains no pages and is rejected.")
+    
+ALLOWED_OCR_STATUS_VALUES = {"PENDING", "SUCCESS", "FAILED"}
+
+def _validate_ocr_status(ocr_status: str) -> None:
+    """Check that an OCR status is PENDING, SUCCESS, or FAILED."""
+    if not isinstance(ocr_status, str) or ocr_status not in ALLOWED_OCR_STATUS_VALUES:
+        raise DatabaseValidationError("ocr_status", ocr_status, "must be PENDING, SUCCESS or FAILED.")
+
+def _validate_ocr_reason(ocr_reason: str | None) -> None:
+    """Check that an OCR reason string is short and clean, if one is given."""
+    if ocr_reason is not None:
+        _validate_reason(ocr_reason)   # reuses the existing reason validator
